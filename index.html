@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pncodeit.com | Under Construction</title>
+    <style>
+        :root {
+            --primary-color: #00c689;
+            --dark-text: #1a1a1a;
+            --light-text: #666666;
+            --bg-color: #f9fbfd;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #fff;
+            padding: 1.5rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-full {
+            max-width: 250px;
+            height: auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 5% 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            color: var(--light-text);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-btn {
+            background-color: transparent;
+            color: var(--dark-text);
+            border: 2px solid var(--dark-text);
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .contact-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Grid Layout for Banners */
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5% 4rem;
+        }
+
+        .grid-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .grid-bottom {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #fff;
+            padding: 3rem 5% 1rem;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-logo img {
+            max-width: 80px;
+        }
+
+        .footer-info {
+            text-align: center;
+        }
+
+        .footer-info p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eaeaea;
+            color: var(--light-text);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .grid-top, .grid-bottom {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="FB_IMG_1778854644537.jpg" alt="Pincode Logo" class="logo-full">
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1><span>PNCODEIT.com</span> is currently<br>Under Construction</h1>
+            <p>We are architecting our digital future. Stand by for the full launch of our comprehensive IT and web services.</p>
+            <button class="contact-btn">Contact Us</button>
+        </section>
+
+        <section class="services-container">
+            
+            <div class="grid-top">
+                <div class="card">
+                    <img src="FB_IMG_1778854639661.jpg" alt="Business Solutions">
+                    <div class="card-content">
+                        <h3>Business Solutions</h3>
+                        <p>We are here to make your business successful.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="FB_IMG_1778854636890.jpg" alt="Site Performance">
+                    <div class="card-content">
+                        <h3>Site Performance</h3>
+                        <p>Worried about a slow website? Let us speed it up.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-bottom">
+                <div class="card">
+                    <img src="FB_IMG_1778854634411.jpg" alt="Data Security">
+                    <div class="card-content">
+                        <h3>Data Security</h3>
+                        <p>Complete security solutions for your platform.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="FB_IMG_1778854632236.jpg" alt="E-Commerce Platforms">
+                    <div class="card-content">
+                        <h3>E-Commerce Platforms</h3>
+                        <p>Build your online store at the lowest cost.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="FB_IMG_1778854611661.jpg" alt="Peace of Mind">
+                    <div class="card-content">
+                        <h3>Peace of Mind</h3>
+                        <p>Hand over your website's security to us and sleep soundly.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="1000027932.jpg" alt="Pincode Icon">
+            </div>
+            <div class="footer-info">
+                <strong>Contact Us</strong>
+                <p>Ready to build the future?</p>
+                <p>www.pincodebd.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 PINCODE. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

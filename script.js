@@ -5,15 +5,27 @@
   const mega = q('[data-mega]');
   const menuButton = q('[data-menu-button]');
   const navTriggers = qa('[data-mega-trigger]');
+  const ensureMobileNav = () => {
+    if (!mega || !matchMedia('(max-width:900px)').matches || q('.mobile-primary', mega)) return;
+    const source = q('.nav-links');
+    const inner = q('.mega-inner', mega);
+    if (!source || !inner) return;
+    const block = document.createElement('div');
+    block.className = 'mega-primary mobile-primary';
+    block.innerHTML = '<div class="mega-label">Navigate</div>' + qa('a', source).map(a => `<a href="${a.getAttribute('href')}">${a.textContent.trim()}</a>`).join('');
+    inner.prepend(block);
+  };
   const closeMega = () => {
     mega?.classList.remove('open');
     menuButton?.setAttribute('aria-expanded', 'false');
     navTriggers.forEach(x => x.setAttribute('aria-expanded', 'false'));
   };
   const openMega = () => {
+    ensureMobileNav();
     mega?.classList.add('open');
     menuButton?.setAttribute('aria-expanded', 'true');
   };
+  menuButton?.setAttribute('aria-label', 'Open navigation');
   menuButton?.addEventListener('click', () => mega?.classList.contains('open') ? closeMega() : openMega());
   navTriggers.forEach(trigger => {
     trigger.addEventListener('mouseenter', openMega);
@@ -25,7 +37,8 @@
       }
     });
   });
-  mega?.addEventListener('mouseleave', closeMega);
+  mega?.addEventListener('mouseleave', () => { if (!matchMedia('(max-width:900px)').matches) closeMega(); });
+  mega?.addEventListener('click', e => { if (e.target.closest('a')) closeMega(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMega(); });
   document.addEventListener('click', e => {
     if (mega?.classList.contains('open') && !mega.contains(e.target) && !e.target.closest('[data-mega-trigger]') && !e.target.closest('[data-menu-button]')) closeMega();

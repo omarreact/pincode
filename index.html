@@ -1,378 +1,321 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pncodeit.com | Under Construction</title>
-    <style>
-        :root {
-            --primary-color: #00c689;
-            --primary-light: rgba(0, 198, 137, 0.1);
-            --dark-text: #1a1a1a;
-            --light-text: #666666;
-            --bg-color: #f9fbfd;
-            --card-bg: #ffffff;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pincode — Digital Solutions for Modern Business</title>
+  <meta name="description" content="Pincode is a Dhaka-based digital solutions company providing web, e-commerce, performance, security and ongoing website support for modern businesses.">
+  <meta name="theme-color" content="#00c689">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://pincodeit.com/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pincode — Digital Solutions for Modern Business">
+  <meta property="og:description" content="Reliable, modern and practical digital solutions from Dhaka, Bangladesh.">
+  <meta property="og:url" content="https://pincodeit.com/">
+  <meta property="og:site_name" content="Pincode">
+  <meta name="twitter:card" content="summary">
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--dark-text);
-            line-height: 1.6;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: #fff;
-            padding: 1rem 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-hexagon {
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--dark-text);
-            text-transform: uppercase;
-        }
-
-        .logo-text span {
-            font-weight: 400;
-            font-size: 0.9rem;
-            display: block;
-            letter-spacing: 3px;
-            color: var(--light-text);
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 4rem 5% 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 span {
-            color: var(--primary-color);
-        }
-
-        .hero p {
-            color: var(--light-text);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-size: 1.1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .contact-btn {
-            background-color: transparent;
-            color: var(--dark-text);
-            border: 2px solid var(--dark-text);
-            padding: 0.75rem 2rem;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            position: relative;
-            z-index: 2;
-        }
-
-        .contact-btn:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: white;
-        }
-
-        /* Grid Layout for Banners */
-        .services-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 5% 4rem;
-        }
-
-        .grid-top {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .grid-bottom {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
-        }
-
-        /* CSS Graphic Elements */
-        .card-graphic {
-            height: 180px;
-            background: linear-gradient(135deg, var(--primary-light) 0%, rgba(255,255,255,1) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 3px solid var(--primary-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-graphic::before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle, var(--primary-light) 10%, transparent 20%);
-            background-size: 20px 20px;
-            opacity: 0.4;
-            animation: moveBackground 20s linear infinite;
-        }
-
-        @keyframes moveBackground {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-50px, -50px); }
-        }
-
-        .card-graphic svg {
-            width: 70px;
-            height: 70px;
-            color: var(--primary-color);
-            position: relative;
-            z-index: 2;
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .card:hover .card-graphic svg {
-            transform: scale(1.15) translateY(-5px);
-        }
-
-        .card-content {
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .card-content h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark-text);
-        }
-
-        .card-content p {
-            font-size: 0.95rem;
-            color: var(--light-text);
-        }
-
-        /* Footer Styles */
-        footer {
-            background-color: #fff;
-            padding: 3rem 5% 1rem;
-            border-top: 1px solid #eaeaea;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .footer-info {
-            text-align: center;
-        }
-
-        .footer-info p {
-            color: var(--light-text);
-            font-size: 0.9rem;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #eaeaea;
-            color: var(--light-text);
-            font-size: 0.85rem;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .grid-top, .grid-bottom {
-                grid-template-columns: 1fr;
-            }
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Pincode",
+    "url": "https://pincodeit.com/",
+    "email": "pincodeit.com.bd@gmail.com",
+    "telephone": "+8801575412056",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Dhaka",
+      "addressCountry": "BD"
+    },
+    "sameAs": [
+      "https://www.facebook.com/pincode.com.bd/"
+    ]
+  }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <header>
-        <div class="logo-container">
-            <div class="logo-hexagon">
-                <svg viewBox="0 0 100 100" fill="none" stroke="var(--primary-color)" stroke-width="8" stroke-linejoin="round">
-                    <polygon points="50 5, 90 27.5, 90 72.5, 50 95, 10 72.5, 10 27.5"></polygon>
-                    <polygon points="50 25, 70 37.5, 70 62.5, 50 75, 30 62.5, 30 37.5" fill="var(--primary-light)"></polygon>
-                    <text x="50" y="62" font-family="Arial" font-size="38" font-weight="bold" fill="var(--primary-color)" text-anchor="middle">P</text>
-                </svg>
-            </div>
-            <div class="logo-text">
-                PINCODE
-                <span>Ready for the future</span>
-            </div>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Pincode home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none">
+            <path d="M24 3 42 13.5v21L24 45 6 34.5v-21L24 3Z" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M18 31V16h7.2c4.8 0 7.8 2.6 7.8 6.7 0 4-3 6.7-7.8 6.7H22V31h-4Zm4-5.2h3c2.5 0 4-1 4-3.1 0-2.1-1.5-3.1-4-3.1h-3v6.2Z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <span class="brand-name">PINCODE</span>
+          <span class="brand-tag">READY FOR THE FUTURE</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" data-nav-links aria-label="Primary navigation">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#process">Process</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="button button-primary" href="#contact">Start a project</a>
+        <button class="menu-button" type="button" data-menu-button aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Dhaka · Bangladesh</div>
+          <h1>Digital solutions built around <span>your business.</span></h1>
+          <p class="hero-copy">Pincode helps businesses create, improve and protect their digital presence with practical technology, clear communication and dependable ongoing support.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#contact">Start a project →</a>
+            <a class="button button-light" href="#services">Explore services</a>
+          </div>
+          <div class="hero-meta" aria-label="Business highlights">
+            <span><i></i> Web & business solutions</span>
+            <span><i></i> Direct WhatsApp support</span>
+            <span><i></i> Dhaka-based</span>
+          </div>
         </div>
-    </header>
 
-    <main>
-        <section class="hero">
-            <h1><span>PNCODEIT.com</span> is currently<br>Under Construction</h1>
-            <p>We are architecting our digital future. Stand by for the full launch of our comprehensive IT and web services.</p>
-            <button class="contact-btn">Contact Us</button>
-        </section>
+        <aside class="hero-panel" aria-label="Pincode capabilities">
+          <div class="hero-panel-top">
+            <span class="hero-panel-label">Pincode / Digital</span>
+            <span class="status-dot">Available for projects</span>
+          </div>
+          <h2>Build smarter. Perform faster. Stay secure.</h2>
+          <p>From launch to maintenance, Pincode focuses on the pieces that keep a modern business website useful, fast and reliable.</p>
+          <div class="capability-strip">
+            <div class="capability-pill"><b>01</b> Web solutions</div>
+            <div class="capability-pill"><b>02</b> E-commerce</div>
+            <div class="capability-pill"><b>03</b> Performance</div>
+            <div class="capability-pill"><b>04</b> Security & care</div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-        <section class="services-container">
-            
-            <div class="grid-top">
-                <div class="card">
-                    <div class="card-graphic">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="3" y1="9" x2="21" y2="9"></line>
-                            <line x1="9" y1="21" x2="9" y2="9"></line>
-                            <polyline points="12 17 15 14 18 17"></polyline>
-                            <line x1="15" y1="14" x2="15" y2="21"></line>
-                        </svg>
-                    </div>
-                    <div class="card-content">
-                        <h3>Business Solutions</h3>
-                        <p>We are here to make your business successful with scalable data architecture.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-graphic">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                        </svg>
-                    </div>
-                    <div class="card-content">
-                        <h3>Site Performance</h3>
-                        <p>Worried about a slow website? Let us accelerate your platform's speed.</p>
-                    </div>
-                </div>
-            </div>
+    <section class="trust-bar" aria-label="Pincode facts">
+      <div class="container trust-grid">
+        <div class="trust-item"><strong>100% recommended</strong><span>Facebook recommendation rate</span></div>
+        <div class="trust-item"><strong>8 reviews</strong><span>Public Facebook recommendations</span></div>
+        <div class="trust-item"><strong>WhatsApp direct</strong><span>+880 1575-412056</span></div>
+        <div class="trust-item"><strong>Dhaka, Bangladesh</strong><span>Local business presence</span></div>
+      </div>
+    </section>
 
-            <div class="grid-bottom">
-                <div class="card">
-                    <div class="card-graphic">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            <circle cx="12" cy="11" r="3"></circle>
-                        </svg>
-                    </div>
-                    <div class="card-content">
-                        <h3>Data Security</h3>
-                        <p>Complete encrypted security solutions for your digital infrastructure.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-graphic">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="9" cy="21" r="1"></circle>
-                            <circle cx="20" cy="21" r="1"></circle>
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                        </svg>
-                    </div>
-                    <div class="card-content">
-                        <h3>E-Commerce Platforms</h3>
-                        <p>Build your robust online store at the lowest development cost.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-graphic">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                    </div>
-                    <div class="card-content">
-                        <h3>Peace of Mind</h3>
-                        <p>Hand over your website's security and maintenance to us and rest easy.</p>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="logo-hexagon" style="width: 40px; height: 40px;">
-                <svg viewBox="0 0 100 100" fill="none" stroke="var(--primary-color)" stroke-width="8" stroke-linejoin="round">
-                    <polygon points="50 5, 90 27.5, 90 72.5, 50 95, 10 72.5, 10 27.5"></polygon>
-                    <text x="50" y="66" font-family="Arial" font-size="45" font-weight="bold" fill="var(--primary-color)" text-anchor="middle">P</text>
-                </svg>
-            </div>
-            <div class="footer-info">
-                <strong>Contact Us</strong>
-                <p>Ready to build the future?</p>
-                <p>www.pincodeit.com</p>
-            </div>
+    <section class="section section-soft" id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Services</div>
+            <h2>Useful technology, not unnecessary complexity.</h2>
+          </div>
+          <p>These are the capability areas already reflected in Pincode's existing site direction. Each engagement can be scoped around the actual business need rather than a fixed package.</p>
         </div>
-        <div class="copyright">
-            &copy; 2026 PINCODE. All rights reserved.
-        </div>
-    </footer>
 
+        <div class="services-grid">
+          <article class="service-card">
+            <div>
+              <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M8 20V9"/></svg></span>
+              <h3>Web & Business Solutions</h3>
+              <p>Purpose-built websites and digital business experiences designed around real requirements, clear user journeys and maintainable delivery.</p>
+            </div>
+            <a class="service-link" href="#contact">Discuss your project →</a>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m13 2-9 12h8l-1 8 9-12h-8l1-8Z"/></svg></span>
+              <h3>Site Performance</h3>
+              <p>Improve slow web experiences by reducing unnecessary weight, tightening delivery and focusing on the factors that matter to visitors.</p>
+            </div>
+            <a class="service-link" href="#contact">Improve a site →</a>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg></span>
+              <h3>Data & Website Security</h3>
+              <p>Practical protection and safer configuration for websites and digital infrastructure, with security treated as an ongoing responsibility.</p>
+            </div>
+            <a class="service-link" href="#contact">Talk security →</a>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M3 4h2l2.5 11h10.7a2 2 0 0 0 2-1.6L22 7H6"/></svg></span>
+              <h3>E-commerce Platforms</h3>
+              <p>Online storefronts designed to make browsing, purchasing and management straightforward for both customers and the business team.</p>
+            </div>
+            <a class="service-link" href="#contact">Plan a store →</a>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.3-5.7L4 8.6V4"/><path d="M4 8.6h4.6"/></svg></span>
+              <h3>Maintenance & Support</h3>
+              <p>Keep websites healthy after launch with updates, monitoring, fixes and practical technical support instead of leaving them unattended.</p>
+            </div>
+            <a class="service-link" href="#contact">Get ongoing support →</a>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3"/></svg></span>
+              <h3>Digital Improvement</h3>
+              <p>Review an existing digital presence, identify the highest-value issues and create a practical path toward a better experience.</p>
+            </div>
+            <a class="service-link" href="#contact">Review what you have →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div class="about-card">
+          <small>Our direction</small>
+          <blockquote>Technology should make a business clearer, faster and easier to run—not harder.</blockquote>
+          <div class="origin">Pincode · Dhaka, Bangladesh</div>
+        </div>
+        <div class="about-copy">
+          <div class="eyebrow">About Pincode</div>
+          <h2>A practical digital partner for growing businesses.</h2>
+          <p>Pincode is a Dhaka-based digital solutions business focused on modern, reliable and cost-conscious technology. The goal is simple: understand the real problem, choose an appropriate solution and support it responsibly after launch.</p>
+          <p>Rather than presenting unverified client counts or project claims, this website keeps the public story factual and lets the work speak through the projects Pincode chooses to publish over time.</p>
+          <ul class="check-list">
+            <li>Modern, responsive digital experiences</li>
+            <li>Performance and maintainability considered from the start</li>
+            <li>Direct communication through phone, email and WhatsApp</li>
+            <li>Support that can continue beyond initial delivery</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="process">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Process</div>
+            <h2>Clear steps from idea to launch.</h2>
+          </div>
+          <p>A straightforward process makes it easier to make decisions, control scope and keep both sides aligned throughout a project.</p>
+        </div>
+        <div class="process-grid">
+          <article class="process-step"><span class="process-number">01 / DISCOVER</span><h3>Understand</h3><p>Clarify the business, audience, current problems and the result the project needs to deliver.</p></article>
+          <article class="process-step"><span class="process-number">02 / PLAN</span><h3>Define</h3><p>Agree on scope, priorities, content, technical direction and what success should look like.</p></article>
+          <article class="process-step"><span class="process-number">03 / BUILD</span><h3>Create</h3><p>Design, develop, review and refine the solution with usability, performance and reliability in mind.</p></article>
+          <article class="process-step"><span class="process-number">04 / SUPPORT</span><h3>Launch & care</h3><p>Deploy carefully, resolve launch issues and continue supporting the product where ongoing help is needed.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reviews">
+      <div class="container">
+        <div class="review-banner">
+          <div class="review-score"><strong>100%</strong><span>recommended on Facebook</span></div>
+          <div class="review-copy">
+            <h3>Small sample, positive signal.</h3>
+            <p>Pincode's Facebook page currently shows a 100% recommendation rate based on 8 public recommendations. We present the sample size clearly rather than turning it into a larger claim.</p>
+            <p class="fineprint">Public Facebook information reviewed September 2026. Recommendation counts can change over time.</p>
+            <div style="margin-top:20px"><a class="button button-dark" href="https://www.facebook.com/pincode.com.bd/" target="_blank" rel="noopener noreferrer">Visit Facebook</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">FAQ</div>
+            <h2 id="faq-title">Before we start.</h2>
+          </div>
+          <p>A few practical answers for businesses considering a project with Pincode.</p>
+        </div>
+        <div class="faq">
+          <div class="faq-item">
+            <button class="faq-question" type="button" data-faq-question aria-expanded="false"><span>What kind of project can I discuss with Pincode?</span><span data-faq-indicator>+</span></button>
+            <div class="faq-answer">You can discuss a new business website, e-commerce platform, an existing slow website, website security or ongoing maintenance. If a requirement falls outside the right fit, the first conversation can establish that clearly.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button" data-faq-question aria-expanded="false"><span>Can Pincode work on an existing website?</span><span data-faq-indicator>+</span></button>
+            <div class="faq-answer">Yes. Existing websites can be reviewed for performance, maintenance, usability and security needs before any work is proposed.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button" data-faq-question aria-expanded="false"><span>How do I get a quote?</span><span data-faq-indicator>+</span></button>
+            <div class="faq-answer">Use the inquiry form below. It prepares a structured WhatsApp message containing the details you provide, so the conversation can start with useful context.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button" data-faq-question aria-expanded="false"><span>Where is Pincode based?</span><span data-faq-indicator>+</span></button>
+            <div class="faq-answer">Pincode publicly lists Dhaka, Bangladesh as its location. A specific street address is not currently published, so this site does not invent one.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-wrap">
+        <div class="contact-copy">
+          <div class="eyebrow">Contact</div>
+          <h2>Tell us what you want to build.</h2>
+          <p>Share the essentials and continue the conversation directly on WhatsApp. No account or portal is required.</p>
+          <div class="contact-cards">
+            <a class="contact-card" href="tel:+8801575412056"><small>Phone / WhatsApp</small><strong>+880 1575-412056</strong></a>
+            <a class="contact-card" href="mailto:pincodeit.com.bd@gmail.com"><small>Email</small><strong>pincodeit.com.bd@gmail.com</strong></a>
+            <div class="contact-card"><small>Location</small><strong>Dhaka, Bangladesh</strong></div>
+          </div>
+        </div>
+
+        <form class="contact-form" data-inquiry-form>
+          <div class="form-grid">
+            <div class="form-field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required></div>
+            <div class="form-field"><label for="company">Company <span aria-hidden="true">(optional)</span></label><input id="company" name="company" autocomplete="organization"></div>
+            <div class="form-field"><label for="service">What do you need?</label><select id="service" name="service" required><option value="" selected disabled>Select a service</option><option>Web & Business Solution</option><option>E-commerce Platform</option><option>Site Performance</option><option>Data & Website Security</option><option>Maintenance & Support</option><option>Digital Improvement / Review</option><option>Not sure yet</option></select></div>
+            <div class="form-field"><label for="contactMethod">Email or phone</label><input id="contactMethod" name="contact" autocomplete="email" required></div>
+            <div class="form-field full"><label for="message">Project details</label><textarea id="message" name="message" required placeholder="What are you trying to achieve? What already exists, if anything?"></textarea></div>
+            <div class="form-field full"><button class="button button-primary" type="submit">Continue on WhatsApp →</button></div>
+          </div>
+          <p class="form-note">Submitting this form opens WhatsApp with your message prepared. The website does not store the form contents.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#top" aria-label="Pincode home">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M24 3 42 13.5v21L24 45 6 34.5v-21L24 3Z" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/><path d="M18 31V16h7.2c4.8 0 7.8 2.6 7.8 6.7 0 4-3 6.7-7.8 6.7H22V31h-4Zm4-5.2h3c2.5 0 4-1 4-3.1 0-2.1-1.5-3.1-4-3.1h-3v6.2Z" fill="currentColor"/></svg>
+            </span>
+            <span class="brand-copy"><span class="brand-name">PINCODE</span><span class="brand-tag">READY FOR THE FUTURE</span></span>
+          </a>
+          <p>Modern, reliable digital solutions for businesses that want a clearer and stronger online presence.</p>
+        </div>
+        <div><div class="footer-title">Navigate</div><div class="footer-links"><a href="#services">Services</a><a href="#about">About</a><a href="#process">Process</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a></div></div>
+        <div><div class="footer-title">Connect</div><div class="footer-links"><a href="https://wa.me/8801575412056" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="tel:+8801575412056">Phone</a><a href="mailto:pincodeit.com.bd@gmail.com">Email</a><a href="https://www.facebook.com/pincode.com.bd/" target="_blank" rel="noopener noreferrer">Facebook</a></div></div>
+      </div>
+      <div class="footer-bottom"><span>© <span data-year>2026</span> Pincode. All rights reserved.</span><span>Dhaka, Bangladesh · pincodeit.com</span></div>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp" href="https://wa.me/8801575412056" target="_blank" rel="noopener noreferrer" aria-label="Chat with Pincode on WhatsApp"><b>●</b><span>WhatsApp</span></a>
+  <script src="/script.js" defer></script>
 </body>
 </html>

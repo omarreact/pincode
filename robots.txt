@@ -1,4 +1,4 @@
-# Pincode production site
+# Pincode multi-page production site
 User-agent: *
 Allow: /
 

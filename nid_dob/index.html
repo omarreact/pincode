@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src https://ilm.pincodeit.com; connect-src 'self'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src https://ilm.pincodeit.com; connect-src 'self' https://ilm.pincodeit.com; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'self'">
   <title>Identity Verification Console — Pincode</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
@@ -63,7 +63,7 @@
     .frame-toolbar{height:44px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#fbfcfc}
     .dots{display:flex;gap:6px}.dots span{width:8px;height:8px;border-radius:50%;background:#c6d1cc}.dots span:nth-child(2){background:#9ecdbd}.dots span:nth-child(3){background:#50c69c}
     .frame-label{font-size:11px;color:#728078;font-weight:700}
-    iframe{display:block;width:100%;height:calc(100svh - 164px);min-height:680px;border:0;background:#fff}
+    iframe{display:block;width:100%;height:calc(100svh - 164px);min-height:680px;border:0;background:#fff}.frame-stage{position:relative;min-height:680px;background:#f7f9f8}.frame-state{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:28px;background:#f7f9f8}.state-card{width:min(520px,100%);background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;text-align:center;box-shadow:0 16px 45px rgba(10,31,23,.08)}.state-icon{width:46px;height:46px;margin:0 auto 14px;border-radius:14px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:22px}.state-card h2{margin:0 0 8px;font-size:20px;letter-spacing:-.02em}.state-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}.retry{margin-top:16px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;font-weight:750;font-size:12px}
     .notice{margin-top:12px;padding:11px 14px;border-radius:12px;background:#edf8f4;color:#315d4d;font-size:11px;line-height:1.5}
     @media (max-width:700px){
       .topbar{height:58px;padding:0 14px}.live{display:none}.login-card{padding:25px;border-radius:22px}.console{padding:12px 8px 18px}.console-head{margin:2px 6px 10px}.console-title p{display:none}.frame-card{border-radius:16px}iframe{height:calc(100svh - 126px);min-height:620px}
@@ -113,12 +113,23 @@
           <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
           <div class="frame-label">ilm.pincodeit.com · authorized verification</div>
         </div>
-        <iframe
-          id="verificationFrame"
-          title="Bangladesh NID and Birth Registration verification"
-          referrerpolicy="no-referrer"
-          sandbox="allow-forms allow-scripts allow-same-origin"
-          loading="eager"></iframe>
+        <div class="frame-stage">
+          <div id="frameState" class="frame-state">
+            <div class="state-card">
+              <div class="state-icon">↻</div>
+              <h2 id="frameStateTitle">Connecting to verification service…</h2>
+              <p id="frameStateText">Checking the protected verification application.</p>
+              <button id="retryFrameBtn" class="retry hidden" type="button">Retry connection</button>
+            </div>
+          </div>
+          <iframe
+            id="verificationFrame"
+            class="hidden"
+            title="Bangladesh NID and Birth Registration verification"
+            referrerpolicy="no-referrer"
+            sandbox="allow-forms allow-scripts allow-same-origin"
+            loading="eager"></iframe>
+        </div>
       </section>
       <div class="notice">Use only identity records you are lawfully authorized to verify. Sensitive contact, address, document-image and biometric fields are intentionally not surfaced by the verification application.</div>
     </main>
@@ -134,8 +145,45 @@
       const loginError = document.getElementById("loginError");
       const logoutBtn = document.getElementById("logoutBtn");
       const frame = document.getElementById("verificationFrame");
+      const frameState = document.getElementById("frameState");
+      const frameStateTitle = document.getElementById("frameStateTitle");
+      const frameStateText = document.getElementById("frameStateText");
+      const retryFrameBtn = document.getElementById("retryFrameBtn");
       const AUTH_URL = "/api/nid-dob-auth";
       const APP_URL = "https://ilm.pincodeit.com/";
+
+      async function loadVerifier() {
+        frame.classList.add("hidden");
+        frame.removeAttribute("src");
+        frameState.classList.remove("hidden");
+        retryFrameBtn.classList.add("hidden");
+        frameStateTitle.textContent = "Connecting to verification service…";
+        frameStateText.textContent = "Checking the protected verification application.";
+
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 8000);
+        try {
+          await fetch(APP_URL, {
+            method: "GET",
+            mode: "no-cors",
+            cache: "no-store",
+            credentials: "omit",
+            signal: controller.signal
+          });
+
+          frame.onload = () => {
+            frame.classList.remove("hidden");
+            frameState.classList.add("hidden");
+          };
+          frame.src = APP_URL;
+        } catch {
+          frameStateTitle.textContent = "Verification service is not reachable";
+          frameStateText.textContent = "The NID/Birth verification host is not publicly available right now. Your password login is working; this is a deployment/domain configuration issue.";
+          retryFrameBtn.classList.remove("hidden");
+        } finally {
+          clearTimeout(timer);
+        }
+      }
 
       function setError(message) {
         loginError.textContent = message || "";
@@ -146,7 +194,7 @@
         loginView.classList.add("hidden");
         consoleView.classList.remove("hidden");
         logoutBtn.classList.remove("hidden");
-        if (!frame.src) frame.src = APP_URL;
+        void loadVerifier();
       }
 
       function showLogin() {
@@ -201,6 +249,8 @@
           loginBtn.textContent = "Unlock console";
         }
       });
+
+      retryFrameBtn.addEventListener("click", () => void loadVerifier());
 
       logoutBtn.addEventListener("click", async () => {
         try {

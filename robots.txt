@@ -1,5 +1,8 @@
 # Pincode multi-page production site
 User-agent: *
 Allow: /
+Disallow: /nid_dob
+Disallow: /nid_dob/
+Disallow: /api/nid-dob-
 
 Sitemap: https://pincodeit.com/sitemap.xml

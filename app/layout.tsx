@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./glass.css";
+import "./all-pages.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.pincodeit.com"),
   title: { default: "PINCODE IT — Technology that moves business forward", template: "%s | PINCODE IT" },

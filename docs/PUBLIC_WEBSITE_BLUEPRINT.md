@@ -25,7 +25,7 @@ A credible, fast, accessible, search-friendly public home for PINCODE IT: a tech
 | `/work` | Portfolio approach, transparently no invented case studies | Implemented |
 | `/about` | Company positioning, principles | Implemented |
 | `/insights` | Editorial topics; real CMS articles follow | Implemented as topical index |
-| `/contact` | Guided project builder and WhatsApp handoff | Implemented; no server-side lead storage |
+| `/contact` | Guided project builder and email handoff | Implemented; no server-side lead storage |
 | `/*.html` legacy marketing URLs | Redirect to Next.js routes | Configured |
 
 ## Architecture
@@ -45,13 +45,13 @@ Previous static site files remain in the repository for migration reference. The
 2. Visitor explores relevant service/solution pages.
 3. Visitor reviews honest process and work criteria.
 4. Visitor reaches Contact / project builder.
-5. Browser prepares a WhatsApp message using selected project priorities, without claiming to submit data to a CRM.
+5. Browser prepares a email message using selected project priorities, without claiming to submit data to a CRM.
 6. After consent, the agency can create a lead in a separately authorized admin system.
 
 ## Security, legal, accessibility, SEO
 - WCAG AA target, keyboard focus, reduced-motion support, responsive mobile nav.
 - Clear privacy/contact disclosures; no background data collection claimed.
-- Real direct business phone, WhatsApp and email from existing source; owner should confirm prior to final publication.
+- Verified business email from existing source; owner should confirm prior to final publication.
 - No client secrets or administrative operations on public routes.
 - Verify HTTPS, canonical domain, 301s, sitemap and robots on production.
 - Add real Terms/Privacy before embedding tracking or capturing server-side inquiries.
@@ -66,7 +66,7 @@ Previous static site files remain in the repository for migration reference. The
 - [x] Set Vercel framework to Next.js and output directory auto-detect.
 - [ ] Production Next.js deployment READY; verify actual custom-domain HTTP response.
 - [ ] Regression-test old non-marketing tools, especially `/nid_dob`.
-- [ ] Check contact WhatsApp behavior on mobile and desktop.
+- [ ] Check contact email behaviour on mobile and desktop.
 - [ ] Audit screenshots at 375/768/1440 px; keyboard/accessibility review.
 - [ ] Add approved OG image, final logo, verified portfolio content and real articles.
 - [ ] Add automated CI tests and preview release gate.

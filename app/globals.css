@@ -1,0 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+:root{--ink:#101714;--green:#32885d;--mint:#e6f7ee;--paper:#f8faf8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif}
+a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #22b573;outline-offset:3px}

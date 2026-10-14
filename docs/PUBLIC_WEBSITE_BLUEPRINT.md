@@ -8,10 +8,12 @@
 ## Objective
 A credible, fast, accessible, search-friendly public home for PINCODE IT: a technology partner that designs, builds, improves and supports useful digital systems. The website is a marketing and intake channel, **not an admin dashboard**.
 
-## Approved website-inspired brand direction
-- Primary ink: `#101714`; deep green: `#0D4033`
-- CTA / forest green: `#32885D`; bright green accent: `#22B573`
-- Mint: `#E6F7EE`; paper: `#F8FAF8`
+## Original homepage identity and updated glass surfaces
+- Restored homepage ink: `#111312` and deep charcoal: `#0D1110`.
+- Restored original greens: `#008F64` and `#00B980`; soft mint: `#DFF8EF`.
+- Original paper: `#F5F5F7`. Do not silently swap the homepage font, palette, orbit or reveal animations.
+- Glass components use semi-transparent tinted backgrounds, backdrop blur, rim highlights and soft shadows. Text remains sharp and legible.
+- The original CSS is scoped to `#pincode-legacy-home` so it cannot accidentally restyle the other Next.js routes.
 - Typography: Inter with Arial fallback; bold headlines, clean type scale, generous whitespace.
 - Brand voice: outcome-led, practical, concise, transparent. Do not invent client logos, case studies, statistics or testimonials.
 - Brand assets should be approved by the business owner before being called final or official.
@@ -45,7 +47,7 @@ Previous static site files remain in the repository for migration reference. The
 2. Visitor explores relevant service/solution pages.
 3. Visitor reviews honest process and work criteria.
 4. Visitor reaches Contact / project builder.
-5. Browser prepares a email message using selected project priorities, without claiming to submit data to a CRM.
+5. Browser prepares an email message using selected project priorities, without claiming to submit data to a CRM.
 6. After consent, the agency can create a lead in a separately authorized admin system.
 
 ## Security, legal, accessibility, SEO
@@ -70,3 +72,11 @@ Previous static site files remain in the repository for migration reference. The
 - [ ] Audit screenshots at 375/768/1440 px; keyboard/accessibility review.
 - [ ] Add approved OG image, final logo, verified portfolio content and real articles.
 - [ ] Add automated CI tests and preview release gate.
+
+## Glass restoration and privacy regression coverage
+- `public/legacy-home.css`: original font sizes, palette, orbit and reveal animations, scoped to the homepage.
+- `public/legacy-glass.css`: frosted navbar, buttons, cards, process/navigation items, modal and footer.
+- `app/glass.css`: glass surfaces on native Next.js routes.
+- `components/LegacyHomepage.tsx`: Next.js-managed observers and event listeners with unmount cleanup.
+- `tests/public-site.test.mjs`: asserts styles, animations, and absence of published phone links or numbers in tracked public source.
+- All business enquiries are handled through the displayed email address; no business telephone number is advertised in source files.

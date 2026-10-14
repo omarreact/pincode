@@ -1,8 +1,13 @@
 import type { NextConfig } from "next";
-
+const legacy = ["services","solutions","work","about","insights","contact"];
 const nextConfig: NextConfig = {
-  // The legacy HTML URLs remain public during the App Router migration.
-  // Never rewrite /nid_dob or its API endpoints into marketing pages.
   reactStrictMode: true,
+  async redirects() {
+    return legacy.map((page) => ({
+      source: "/"+page+".html",
+      destination: "/"+page,
+      permanent: true,
+    }));
+  },
 };
 export default nextConfig;

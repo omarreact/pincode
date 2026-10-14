@@ -64,3 +64,57 @@ test("legacy marketing URLs redirect to Next.js pages", () => {
   assert.match(config, /permanent:\s*true/);
   assert.match(config, /\.html/);
 });
+
+
+test("all public Next.js pages use the shared glass design system", () => {
+  const layout = read("app/layout.tsx");
+  assert.match(layout, /import "\.\/all-pages\.css"/);
+  const css = read("app/all-pages.css");
+  for (const selector of [
+    ".agency-page-hero", ".agency-hero-panel", ".agency-glass-button",
+    ".agency-index-link", ".agency-detail-card", ".agency-card-link",
+    ".agency-contact-shell", ".agency-contact-option",
+    ".agency-form-progress", ".agency-site-header", ".agency-foot-grid",
+  ]) {
+    assert.ok(css.includes(selector), "Missing shared glass style: " + selector);
+  }
+
+  const marketing = read("components/MarketingPage.tsx");
+  for (const className of [
+    "agency-page-hero", "agency-hero-panel", "agency-index",
+    "agency-detail-card", "agency-glass-button", "agency-footer-cta",
+  ]) {
+    assert.ok(marketing.includes(className), "Missing shared page component: " + className);
+  }
+  for (const page of ["services", "solutions", "work", "about", "insights"]) {
+    assert.match(read("app/" + page + "/page.tsx"), /<MarketingPage/);
+  }
+  const contact = read("app/contact/page.tsx");
+  assert.match(contact, /agency-subpage/);
+  assert.match(contact, /agency-contact-shell/);
+  assert.match(contact, /agency-contact-option/);
+  assert.match(contact, /<ContactBuilder/);
+
+  const home = read("app/page.tsx");
+  assert.match(home, /LegacyHomepage/);
+  assert.match(home, /legacy-glass\.css/);
+});
+
+test("navigation, enquiry and accessibility fallback work across screen sizes", () => {
+  const header = read("components/SiteShell.tsx");
+  assert.match(header, /usePathname/);
+  assert.match(header, /aria-current/);
+  assert.match(header, /aria-expanded/);
+  assert.match(header, /agency-main-nav/);
+  assert.match(header, /agency-skip/);
+  const styles = read("app/all-pages.css");
+  assert.match(styles, /@media\(max-width:890px\)/);
+  assert.match(styles, /prefers-reduced-motion/);
+  assert.match(styles, /prefers-reduced-transparency/);
+  assert.match(styles, /@supports not/);
+  const builder = read("components/ContactBuilder.tsx");
+  assert.match(builder, /agency-form-progress/);
+  assert.match(builder, /aria-pressed/);
+  assert.match(builder, /mailto:pincodeit\.com\.bd@gmail\.com/);
+  assert.match(builder, /Start again/);
+});

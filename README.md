@@ -24,7 +24,7 @@ npm run build
 `/`, `/services`, `/solutions`, `/work`, `/about`, `/insights`, `/contact`.
 Legacy URLs like `/services.html` redirect to clean App Router routes.
 
-Contact uses a browser-only project brief that prepares a WhatsApp message; **it does not send or persist records to the administration system**. Only publish genuine testimonials, client references and portfolio metrics.
+Contact uses a browser-only project brief that prepares a email message; **it does not send or persist records to the administration system**. Only publish genuine testimonials, client references and portfolio metrics.
 
 ## Deployment
 The Vercel project uses the **Next.js framework preset** and automatic output detection, not the old static `public` output override. GitHub pushes to `main` trigger builds. Review deployment status before claiming a production release.

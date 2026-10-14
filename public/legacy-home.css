@@ -2,3 +2,21 @@
 /* PINCODE IT unified agency identity — preserves existing layout and interactions */ 
 :root{--brand:#32885d;--brand-2:#0d4033;--brand-soft:#e6f7ee;--surface-2:#101714;--ink:#101714;--bg:#f8faf8} 
 :focus-visible{outline:3px solid #22b573;outline-offset:3px}\n
+
+/* PINCODE IT translucent glass design — original animations and typography preserved */
+.site-header{background:rgba(248,250,248,.65)!important;backdrop-filter:blur(22px) saturate(175%);-webkit-backdrop-filter:blur(22px) saturate(175%);border-bottom:1px solid rgba(255,255,255,.55);box-shadow:0 8px 28px rgba(16,23,20,.045)}
+.announcement{background:rgba(16,23,20,.91);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.mega-menu{background:rgba(248,252,249,.82)!important;backdrop-filter:blur(30px) saturate(170%);-webkit-backdrop-filter:blur(30px) saturate(170%);border-bottom:1px solid rgba(255,255,255,.7);box-shadow:0 24px 70px rgba(10,44,27,.12)}
+.button,.paddle,.floating-contact,.menu-button{backdrop-filter:blur(16px) saturate(155%);-webkit-backdrop-filter:blur(16px) saturate(155%);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 24px rgba(16,23,20,.08)}
+.button-light,.paddle{background:rgba(255,255,255,.68)!important;border:1px solid rgba(255,255,255,.72)!important}
+.button-primary{background:rgba(13,90,57,.84)!important;border:1px solid rgba(188,250,210,.26)!important;color:#fff}
+.button-ghost{background:rgba(255,255,255,.11)!important;border:1px solid rgba(255,255,255,.25)!important}
+.service-tile,.story-card,.case-card,.process-step{backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 16px 42px rgba(16,23,20,.07)}
+.service-tile:not(:nth-child(even)),.story-card:not(.green):not(.dark),.process-step{background-color:rgba(255,255,255,.78)}
+.case-card{border:1px solid rgba(255,255,255,.19)}
+.cta-band{background:rgba(35,131,85,.89);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.23)}
+.modal{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.modal-card{background:rgba(255,255,255,.92);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.8)}
+.button:hover,.paddle:hover,.floating-contact:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 12px 28px rgba(16,23,20,.13)}
+@supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){.site-header,.mega-menu{background:#f8faf8!important}.button-light,.paddle,.modal-card{background:#fff!important}}
+@media(prefers-reduced-transparency:reduce){.site-header,.mega-menu,.service-tile,.story-card,.process-step,.modal-card{backdrop-filter:none;-webkit-backdrop-filter:none;background:#f8faf8!important}}

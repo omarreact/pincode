@@ -1,0 +1,171 @@
+/* PINCODE IT glass system for the native Next.js marketing pages.
+   Light is diffused behind translucent surfaces, never across text glyphs. */
+:root{
+  --glass-green:#00b980;
+  --glass-forest:#007b55;
+  --glass-mist:rgba(255,255,255,.67);
+  --glass-outline:rgba(255,255,255,.78);
+  --glass-shadow:0 18px 54px rgba(12,56,35,.10),inset 0 1px 0 rgba(255,255,255,.55);
+}
+.head{
+  background:rgba(247,253,249,.64);
+  border-bottom:1px solid var(--glass-outline);
+  -webkit-backdrop-filter:blur(24px) saturate(165%);
+  backdrop-filter:blur(24px) saturate(165%);
+  box-shadow:0 9px 32px rgba(10,59,33,.07);
+}
+.navigation a{
+  padding:10px 12px;
+  margin:-10px -12px;
+  border-radius:999px;
+  transition:background .22s,color .22s,box-shadow .22s;
+}
+.navigation a:hover,.navigation a:focus-visible{
+  color:#006a4a;
+  background:rgba(255,255,255,.57);
+  box-shadow:0 4px 14px rgba(0,95,62,.07);
+}
+.mobile-toggle,
+.pill,
+.builder-back,
+.builder-options button{
+  -webkit-backdrop-filter:blur(18px) saturate(145%);
+  backdrop-filter:blur(18px) saturate(145%);
+  border:1px solid rgba(255,255,255,.46);
+  box-shadow:0 8px 26px rgba(11,59,35,.11),inset 0 1px 0 rgba(255,255,255,.38);
+  transition:transform .22s,background .22s,border-color .22s,box-shadow .22s;
+}
+.pill:hover,.builder-options button:hover{transform:translateY(-2px)}
+.pill.green{
+  background:linear-gradient(125deg,rgba(0,139,94,.95),rgba(0,111,76,.91));
+  border-color:rgba(153,255,203,.46);
+  color:white;
+}
+.pill.green:hover{
+  background:linear-gradient(125deg,#008860,#005d42);
+}
+.pill.light,.pill.white,.mobile-toggle{
+  background:linear-gradient(130deg,rgba(255,255,255,.89),rgba(241,253,247,.60));
+  border-color:var(--glass-outline);
+  color:#163025;
+}
+.hero{
+  background:
+    radial-gradient(ellipse at 73% 23%,rgba(0,185,128,.19),transparent 47%),
+    radial-gradient(ellipse at 17% 82%,rgba(80,212,155,.15),transparent 51%),
+    linear-gradient(145deg,#fff,#f4f9f6);
+}
+.hero h1 em{color:#008f64}
+.eyebrow{color:#008760}
+.section.neutral{
+  background:
+    radial-gradient(ellipse at 4% 16%,rgba(61,192,130,.10),transparent 43%),
+    radial-gradient(ellipse at 95% 84%,rgba(40,183,132,.11),transparent 48%),
+    #f4f6f4;
+}
+.section:not(.neutral):not(.dark-section){
+  background-image:radial-gradient(ellipse at 86% 19%,rgba(63,183,127,.07),transparent 45%);
+}
+.service,.principles article,.process article,.proof article,
+.marketing-card,.contact-builder,.dark-banner,.cta{
+  -webkit-backdrop-filter:blur(23px) saturate(155%);
+  backdrop-filter:blur(23px) saturate(155%);
+  border:1px solid var(--glass-outline);
+  box-shadow:var(--glass-shadow);
+}
+.service:not(.dark),
+.principles article:not(.forest):not(.charcoal),
+.process article,.marketing-card{
+  background:linear-gradient(135deg,rgba(255,255,255,.74),rgba(246,255,249,.51));
+}
+.service.dark,.principles article.charcoal{
+  background:linear-gradient(140deg,rgba(12,31,22,.94),rgba(13,66,43,.87));
+  border-color:rgba(176,239,197,.25);
+}
+.principles article.forest{
+  background:linear-gradient(140deg,rgba(0,126,84,.95),rgba(47,173,112,.89));
+  border-color:rgba(197,255,217,.30);
+}
+.service:hover,.marketing-card:hover{
+  border-color:rgba(0,165,103,.55);
+  box-shadow:0 24px 62px rgba(8,95,54,.15),inset 0 1px 0 rgba(255,255,255,.45);
+}
+.process article:hover{border-color:rgba(0,165,103,.43)}
+.dark-banner{
+  background:radial-gradient(ellipse at 74% 38%,rgba(10,95,57,.72),transparent 55%),
+    linear-gradient(120deg,rgba(12,26,20,.96),rgba(11,43,28,.93));
+  border-color:rgba(130,213,163,.30);
+}
+.dark-section{
+  background:
+    radial-gradient(ellipse at 83% 23%,rgba(17,112,72,.21),transparent 49%),#101714;
+}
+.proof article:first-child{
+  background:linear-gradient(142deg,rgba(255,255,255,.88),rgba(209,248,224,.74));
+}
+.proof article:last-child{
+  background:linear-gradient(142deg,rgba(13,29,20,.94),rgba(12,86,50,.89));
+  border-color:rgba(132,232,164,.27);
+}
+.cta{
+  background:linear-gradient(118deg,rgba(0,150,99,.89),rgba(0,100,67,.88));
+  border-color:rgba(255,255,255,.35);
+}
+.contact-builder{
+  background:radial-gradient(ellipse at 90% 12%,rgba(18,99,59,.56),transparent 50%),
+    rgba(13,37,24,.91);
+  border-color:rgba(140,225,178,.31);
+}
+.builder-options button{
+  background:rgba(251,255,252,.11);
+  border-color:rgba(210,248,224,.28);
+}
+.builder-options button:hover,.builder-options button.selected{
+  background:rgba(33,128,78,.62);
+  border-color:rgba(133,250,177,.65);
+}
+.builder-back{
+  color:#d3eddf;
+  border-radius:999px;
+  padding:9px 16px;
+  background:rgba(255,255,255,.07);
+}
+.builder-finish input,.builder-finish textarea{
+  background:rgba(252,255,253,.96);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.75);
+}
+.foot{
+  background:rgba(243,248,244,.94);
+  border-top:1px solid rgba(255,255,255,.77);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+}
+:is(.head,.contact-builder,.marketing-card) :is(a,button,input,textarea):focus-visible{
+  outline:3px solid #00b980;
+  outline-offset:3px;
+}
+@media(max-width:790px){
+  .navigation.open{
+    background:rgba(247,253,249,.87);
+    -webkit-backdrop-filter:blur(22px);
+    backdrop-filter:blur(22px);
+    border-top:1px solid rgba(255,255,255,.84);
+  }
+  .navigation a{margin:0;border-radius:12px}
+  .head{-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+}
+@supports not ((-webkit-backdrop-filter:blur(2px)) or (backdrop-filter:blur(2px))){
+  .head,.navigation.open{background:#f7faf8}
+  .service:not(.dark),.process article,.marketing-card{background:#f7faf8}
+}
+@media(prefers-reduced-transparency:reduce){
+  .head,.navigation.open{background:#f7faf8;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .service:not(.dark),.marketing-card,.process article{
+    background:#f8fcf9;-webkit-backdrop-filter:none;backdrop-filter:none
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .pill,.builder-options button{transition:none}
+}

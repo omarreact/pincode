@@ -129,9 +129,9 @@
       }
     }));
     q('[data-builder-back]', builder)?.addEventListener('click', () => { if (current > 0) { current--; render(); } });
-    q('[data-builder-whatsapp]', builder)?.addEventListener('click', () => {
+    q('[data-builder-email]', builder)?.addEventListener('click', () => {
       const text = encodeURIComponent(`Hello Pincode, I'd like to discuss a project.\nProject: ${state.project || 'Not specified'}\nPriority: ${state.priority || 'Not specified'}\nSupport: ${state.support || 'Not specified'}`);
-      window.open(`https://wa.me/8801575412056?text=${text}`, '_blank', 'noopener');
+      window.location.href = `mailto:pincodeit.com.bd@gmail.com?subject=PINCODE%20IT%20enquiry&body=${text}`;
     });
     render();
   }
@@ -147,7 +147,7 @@
       `Contact: ${data.get('contact') || ''}`,
       `Details: ${data.get('message') || ''}`
     ];
-    window.open(`https://wa.me/8801575412056?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
+    window.location.href = `mailto:pincodeit.com.bd@gmail.com?subject=PINCODE%20IT%20enquiry&body=${encodeURIComponent(lines.join('\n'))}`;
   }));
 
   const processLinks = qa('[data-process-link]');

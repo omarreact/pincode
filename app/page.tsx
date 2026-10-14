@@ -1,4 +1,4 @@
 import type { Metadata } from "next";
-import { PublicWebsite } from "@/components/PublicWebsite";
+import { LegacyHomepage } from "@/components/LegacyHomepage";
 export const metadata: Metadata = { title: "PINCODE IT — Technology that moves business forward", alternates: { canonical: "/" } };
-export default function HomePage(){return <PublicWebsite/>}
+export default function HomePage(){return <LegacyHomepage/>}

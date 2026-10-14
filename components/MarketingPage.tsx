@@ -1,4 +1,104 @@
 import Link from "next/link";
-import {SiteHeader,SiteFooter} from "./SiteShell";
-export type PageContent={eyebrow:string;title:string;intro:string;cards:{id?:string;title:string;body:string;tag?:string}[];cta?:string};
-export function MarketingPage({data}:{data:PageContent}){return <><SiteHeader/><main><section className="hero" style={{minHeight:440}}><span className="eyebrow">{data.eyebrow}</span><h1 style={{maxWidth:1000,fontSize:"clamp(43px,6vw,79px)"}}>{data.title}</h1><p>{data.intro}</p><div className="buttons"><Link href="/contact" className="pill green">Start a conversation ↗</Link><Link href="/" className="pill light">Back to home</Link></div></section><section className="section neutral"><div className="intro"><div><span className="eyebrow">EXPLORE PINCODE IT</span><h2>{data.cta??"Build useful technology together."}</h2></div><p>Our focus is practical delivery, accessibility, reliability and continuous improvement.</p></div><div className="marketing-grid">{data.cards.map((c,i)=><article key={c.title} id={c.id} className="marketing-card"><small>{c.tag??String(i+1).padStart(2,"0")+" / FOCUS"}</small><h3>{c.title}</h3><p>{c.body}</p><Link href="/contact">Discuss this →</Link></article>)}</div></section><section className="section"><div className="cta"><h2>Have something to build?</h2><Link href="/contact" className="pill white">Tell us about it ↗</Link></div></section></main><SiteFooter/></>}
+import { SiteHeader, SiteFooter } from "./SiteShell";
+
+export type PageContent = {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  cta?: string;
+  cards: { id?: string; title: string; body: string; tag?: string }[];
+};
+
+/**
+ * Shared server-rendered design for Services, Solutions, Work, About and Insights.
+ * Page-specific copy comes from each route; the glass design stays consistent.
+ */
+export function MarketingPage({ data }: { data: PageContent }) {
+  return (
+    <>
+      <SiteHeader />
+      <main className="agency-subpage" id="main">
+        <section className="agency-page-hero" aria-labelledby="agency-page-title">
+          <div className="agency-hero-ambient agency-ambient-one" aria-hidden="true" />
+          <div className="agency-hero-ambient agency-ambient-two" aria-hidden="true" />
+          <div className="agency-hero-panel">
+            <div className="agency-hero-topline">
+              <span className="agency-eyebrow">{data.eyebrow}</span>
+              <span className="agency-hero-signature">PINCODE IT <span aria-hidden="true">↗</span></span>
+            </div>
+            <div className="agency-hero-content">
+              <h1 id="agency-page-title">{data.title}</h1>
+              <p>{data.intro}</p>
+              <div className="agency-page-actions">
+                <Link href="/contact" className="agency-glass-button agency-glass-button-primary">
+                  Start a conversation <span aria-hidden="true">↗</span>
+                </Link>
+                <a href="#explore" className="agency-glass-button agency-glass-button-outline">
+                  Explore below <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+            </div>
+            <div className="agency-hero-bottomline">
+              <span>BUILD <span className="agency-dot">·</span> IMPROVE <span className="agency-dot">·</span> SUPPORT</span>
+              <span>SCROLL TO EXPLORE ↓</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="agency-explore" id="explore" aria-labelledby="agency-explore-title">
+          <div className="agency-explore-intro">
+            <div>
+              <span className="agency-eyebrow">EXPLORE / PINCODE IT</span>
+              <h2 id="agency-explore-title">{data.cta ?? "Build useful technology together."}</h2>
+            </div>
+            <p>Explore the ideas and capabilities behind what we do, then start a conversation about what your business actually needs.</p>
+          </div>
+          <nav className="agency-index" aria-label="Jump to a topic">
+            {data.cards.map((card, index) => (
+              <a href={`#${card.id ?? "topic-" + (index + 1)}`} key={card.id ?? card.title} className="agency-index-link">
+                <span className="agency-index-number">{String(index + 1).padStart(2, "0")}</span>
+                <span>{card.title}</span>
+                <span className="agency-index-arrow" aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </nav>
+          <div className="agency-card-grid">
+            {data.cards.map((card, index) => (
+              <article
+                key={card.id ?? card.title}
+                id={card.id ?? "topic-" + (index + 1)}
+                className="agency-detail-card"
+              >
+                <div className="agency-card-top">
+                  <span className="agency-card-number">{String(index + 1).padStart(2, "0")} / {String(data.cards.length).padStart(2, "0")}</span>
+                  <span className="agency-card-tag">{card.tag ?? "FOCUS"}</span>
+                </div>
+                <div className="agency-card-symbol" aria-hidden="true"><span>↗</span></div>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+                <Link href="/contact" className="agency-card-link">
+                  Discuss this <span aria-hidden="true">↗</span>
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="agency-footer-section" aria-label="Work with PINCODE IT">
+          <div className="agency-footer-cta">
+            <div className="agency-footer-ambient" aria-hidden="true" />
+            <div>
+              <span className="agency-eyebrow">LET'S MOVE FORWARD</span>
+              <h2>Have something to build?</h2>
+              <p>Tell us what you're trying to achieve. We'll start with the problem and work toward the right solution.</p>
+            </div>
+            <Link href="/contact" className="agency-glass-button agency-glass-button-light">
+              Tell us about it <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}

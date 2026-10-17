@@ -51,7 +51,7 @@ test("legacy pages do not expose unauthorized phone or WhatsApp contacts", () =>
     const body = file.startsWith("/") ? readFileSync(file, "utf8") : read(file);
     // The owner explicitly approved the business phone in the new contact section.
     // Keep the older marketing pages free of phone numbers and WhatsApp links.
-    if (file.endsWith("/components/BusinessIdentity.tsx")) continue;
+    if (file.endsWith("components/BusinessIdentity.tsx")) continue;
     assert.doesNotMatch(body, /(?:\+?880[\s-]*1[\d\s-]{8,}|\b01[3-9]\d{8}\b|wa\.me\/\d+|href=["']tel:\+?\d+)/i, "Unapproved phone number: " + file);
   }
   const business = read("components/BusinessIdentity.tsx");

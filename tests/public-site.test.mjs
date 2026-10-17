@@ -43,14 +43,20 @@ test("glass backgrounds cover navigation, controls and card families", () => {
   }
 });
 
-test("public source and legacy snapshots contain no phone numbers or WhatsApp links", () => {
+test("legacy pages do not expose unauthorized phone or WhatsApp contacts", () => {
   const dirs = ["app", "components", "public", "docs"].flatMap(sourceFiles);
   const root = readdirSync(new URL("..", import.meta.url))
     .filter((name) => /\.(?:html|js|css|json|xml|md)$/i.test(name));
   for (const file of [...dirs, ...root]) {
     const body = file.startsWith("/") ? readFileSync(file, "utf8") : read(file);
-    assert.doesNotMatch(body, /(?:\+?880[\s-]*1[\d\s-]{8,}|\b01[3-9]\d{8}\b|wa\.me\/\d+|href=["']tel:\+?\d+)/i, "Phone leak: " + file);
+    // The owner explicitly approved the business phone in the new contact section.
+    // Keep the older marketing pages free of phone numbers and WhatsApp links.
+    if (file.endsWith("/components/BusinessIdentity.tsx")) continue;
+    assert.doesNotMatch(body, /(?:\+?880[\s-]*1[\d\s-]{8,}|\b01[3-9]\d{8}\b|wa\.me\/\d+|href=["']tel:\+?\d+)/i, "Unapproved phone number: " + file);
   }
+  const business = read("components/BusinessIdentity.tsx");
+  assert.match(business, /01878-550385/);
+  assert.match(business, /tel:\+8801878550385/);
 });
 
 test("the enquiry builder opens email rather than a phone-dependent service", () => {

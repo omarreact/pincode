@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegacyHomepage } from "@/components/LegacyHomepage";
+import { BusinessIdentity } from "@/components/BusinessIdentity";
 
 export const metadata: Metadata = {
   title: "PINCODE IT — Technology that moves business forward",
@@ -14,6 +15,7 @@ export default function HomePage() {
       <link rel="stylesheet" href="/legacy-home.css" precedence="default" />
       <link rel="stylesheet" href="/legacy-glass.css" precedence="default" />
       <LegacyHomepage />
+      <BusinessIdentity />
     </>
   );
 }

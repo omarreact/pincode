@@ -3,7 +3,7 @@ import { LegacyHomepage } from "@/components/LegacyHomepage";
 import { BusinessIdentity } from "@/components/BusinessIdentity";
 
 export const metadata: Metadata = {
-  title: "PINCODE IT — Technology that moves business forward",
+  title: "PINCODE IT — Coding Made Simple",
   alternates: { canonical: "/" },
 };
 

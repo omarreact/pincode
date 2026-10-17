@@ -1,0 +1,7 @@
+# Cloudflare Pages preview: preserve legacy marketing URLs.
+/services.html /services 301
+/solutions.html /solutions 301
+/work.html /work 301
+/about.html /about 301
+/insights.html /insights 301
+/contact.html /contact 301

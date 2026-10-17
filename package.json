@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test:site": "node --test tests/public-site.test.mjs"
+    "test:site": "node --test tests/public-site.test.mjs",
+    "build:cloudflare-preview": "node scripts/cloudflare-static-prepare.mjs && next build",
+    "test:cloudflare-preview": "node --test tests/cloudflare-preview.test.mjs"
   },
   "dependencies": {
     "next": "16.3.7",

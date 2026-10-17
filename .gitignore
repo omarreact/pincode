@@ -4,3 +4,5 @@ node_modules/
 !.env.example
 *.tsbuildinfo
 *.zip
+# Generated Cloudflare Pages static export
+out/

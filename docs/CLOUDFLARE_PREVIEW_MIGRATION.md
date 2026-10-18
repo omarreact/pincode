@@ -2,7 +2,7 @@
 
 **Current production remains on Vercel:** https://www.pincodeit.com
 **GitHub source remains authoritative:** https://github.com/omarreact/pincode
-**Target staging host (not provisioned):** a distinct Cloudflare Pages `*.pages.dev` preview.
+**Staging Pages project (created, not deployed):** https://pincode-website-preview.pages.dev (direct-upload mode).
 **No DNS, custom-domain, SSL, billing, or production hosting changes are performed by this branch.**
 
 ## Architecture decision
@@ -30,8 +30,8 @@ CI workflow: `.github/workflows/cloudflare-static-preview.yml`. It runs on pull 
 ## Cloudflare Pages setup after the preview build passes
 
 1. On Android open https://dash.cloudflare.com and use the connected PINCODE IT Cloudflare account. Locate the existing `pincode` Worker and `pinflix` Pages project. **Do not overwrite either.**
-2. Create a *new* Pages project with an unmistakable staging name, e.g. `pincode-website-preview`. This project must not attach `www.pincodeit.com` or any other production hostname.
-3. Download the GitHub Actions artifact, or configure an authorized CI deployment. Upload **contents of** `out/` as the Pages site. Keep staging-only `X-Robots-Tag: noindex, nofollow` and verify no public indexing occurs.
+2. Open the **existing** direct-upload Pages project `pincode-website-preview` (created during the read-only-to-staging setup). Do **not** attach `www.pincodeit.com` or any production hostname. The attempt to connect the GitHub repo via Cloudflare API was rejected; a separate user-authorized Cloudflare GitHub installation would be required for automatic source builds.
+3. On Android, open the successful GitHub Actions run for this PR, download the artifact `pincode-cloudflare-preview-static.zip`, and in Cloudflare Pages select **Create deployment / Upload assets** for the existing `pincode-website-preview` project. Upload the archive of the `out/` directory (or its extracted contents, according to the Pages dashboard upload control). This artifact contains a staging-only `X-Robots-Tag: noindex, nofollow` header. Verify the deployment is READY, the preview URL resolves, and indexing is blocked. Never upload it to the Vercel production site.
 4. Test `/`, `/services/`, `/solutions/`, `/work/`, `/about/`, `/insights/`, and `/contact/`. Check `*.html` redirects, SVG logo, CSS animations, touch navigation, contact mailto flow, JS hydration, dark/light device settings, mobile layout and keyboard accessibility.
 5. Review links under `/nid_dob` and other non-marketing paths, if any. The repository's README explicitly notes that old/root-level HTML snapshots may be separate from Next.js pages. Do not claim non-marketing paths are migrated if absent.
 6. Confirm page metadata, canonical links, `sitemap.xml`, `robots.txt`, HTTP headers, cache behavior, regional loading, and Cloudflare deployment logs.

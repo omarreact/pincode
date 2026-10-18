@@ -1,0 +1,52 @@
+name: PINCODE IT - Cloudflare Pages Preview Readiness
+
+on:
+  pull_request:
+    paths:
+      - "app/**"
+      - "components/**"
+      - "public/**"
+      - "next.config.ts"
+      - "package.json"
+      - "scripts/cloudflare-static-prepare.mjs"
+      - "tests/**"
+      - ".github/workflows/cloudflare-static-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: TypeScript verification
+        run: npm run typecheck
+      - name: Test original website functionality and approved brand contact
+        run: npm run test:site
+      - name: Build isolated Cloudflare Pages static export
+        env:
+          PINCODE_CF_STATIC_EXPORT: "1"
+        run: npm run build:cloudflare-preview
+      - name: Verify all static pages, links and SEO files
+        run: npm run test:cloudflare-preview
+      - name: Make only this staging artifact non-indexable
+        run: |
+          printf '/*\n  X-Robots-Tag: noindex, nofollow\n' > out/_headers
+          echo 'Cloudflare Pages staging artifact prepared; production builds do NOT include this _headers file.'
+      - name: Upload preview artifact; deployment requires separate authorization
+        uses: actions/upload-artifact@v4
+        with:
+          name: pincode-cloudflare-preview-static
+          path: out/
+          if-no-files-found: error
+          retention-days: 7

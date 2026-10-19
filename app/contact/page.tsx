@@ -23,7 +23,7 @@ export default function ContactPage() {
             </div>
             <div className="agency-hero-content">
               <h1 id="agency-page-title">Tell us what needs to change.</h1>
-              <p>Start with a guided project brief or contact us directly. You do not need an account, and this site does not store your brief.</p>
+              <p>Choose a service and tell us how to reach you. Your enquiry goes directly to our support team. No account needed.</p>
               <div className="agency-page-actions">
                 <a href="#project-brief" className="agency-glass-button agency-glass-button-primary">
                   Build a project brief <span aria-hidden="true">↓</span>
@@ -44,7 +44,7 @@ export default function ContactPage() {
           <div className="agency-contact-intro">
             <span className="agency-eyebrow">01 / GUIDED ENQUIRY</span>
             <h2 id="project-brief-heading">Turn an idea into a useful first brief.</h2>
-            <p>Answer three short questions, then prepare an email in your own mail application. Nothing is automatically sent, saved or submitted to a CRM.</p>
+            <p>Choose your service, project goal and timeline, then add your contact details. We save your request in our private support inbox so our team can follow up.</p>
           </div>
           <div className="agency-contact-shell">
             <ContactBuilder />
@@ -76,3 +76,4 @@ export default function ContactPage() {
     </>
   );
 }
+

@@ -550,7 +550,7 @@
   -webkit-backdrop-filter:blur(15px);
   backdrop-filter:blur(15px);
 }
-.agency-brand-mark svg{width:31px;height:31px}
+.agency-brand-mark img{display:block;width:31px;height:31px;object-fit:contain}
 .agency-main-nav{gap:18px}
 .agency-main-nav a{
   margin:0;

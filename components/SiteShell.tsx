@@ -20,10 +20,7 @@ function Brand() {
   return (
     <Link href="/" className="agency-brand" aria-label="PINCODE IT, home">
       <span className="agency-brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" role="presentation">
-          <path d="M24 3 42 13.5v21L24 45 6 34.5v-21L24 3Z" stroke="currentColor" strokeWidth="3.5" />
-          <path d="M18 31V16h7.2c4.8 0 7.8 2.6 7.8 6.7 0 4-3 6.7-7.8 6.7H22V31h-4Zm4-5.2h3c2.5 0 4-1 4-3.1 0-2.1-1.5-3.1-4-3.1h-3v6.2Z" fill="currentColor" />
-        </svg>
+        <img src="/brand/pincode-mark.svg" alt="" width={31} height={31} decoding="async" />
       </span>
       <span>PINCODE <strong>IT</strong></span>
     </Link>

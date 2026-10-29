@@ -161,3 +161,20 @@ test("marketplace feed is restricted and transparently cached", () => {
   assert.ok(read("components/LegacyHomepage.tsx").includes("/hosting"));
   assert.ok(read("app/domains/marketplace.css").includes("@media(max-width:760px)"));
 });
+
+test("refined PINCODE IT logo is consistent across header, footer, legacy homepage and metadata", () => {
+  const symbol = read("public/brand/pincode-mark.svg");
+  assert.match(symbol, /pincode-v2-grad/);
+  assert.match(symbol, /fill-rule="evenodd"/);
+  const header = read("components/SiteShell.tsx");
+  assert.match(header, /img src="\/brand\/pincode-mark\.svg"/);
+  assert.doesNotMatch(header, /<svg viewBox="0 0 48 48"/);
+  const legacy = read("components/LegacyHomepage.tsx");
+  assert.ok(legacy.includes("/brand/pincode-mark.svg"));
+  assert.doesNotMatch(legacy, /M24 3 42 13.5/);
+  const layout = read("app/layout.tsx");
+  assert.ok(layout.includes("/brand/pincode-horizontal-light.svg"));
+  assert.ok(layout.includes("/favicon.svg"));
+  assert.match(read("public/favicon.svg"), /pincode-v2-grad/);
+  assert.match(read("app/icon.svg"), /pincode-v2-grad/);
+});

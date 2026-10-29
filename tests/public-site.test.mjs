@@ -118,3 +118,20 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
   assert.match(builder, /mailto:pincodeit\.com\.bd@gmail\.com/);
   assert.match(builder, /Start again/);
 });
+
+test("domain search is reachable from public navigation", () => {
+  assert.ok(read("components/LegacyHomepage.tsx").includes("/domains"));
+  assert.ok(read("components/SiteShell.tsx").includes('href: "/domains"'));
+  assert.ok(read("app/domains/page.tsx").includes("<DomainSearch"));
+  assert.ok(read("app/domains/page.tsx").includes("<SiteHeader"));
+});
+
+test("domain lookup uses validated RDAP and cautious availability wording", () => {
+  const api = read("app/api/domains/check/route.ts");
+  const ui = read("components/DomainSearch.tsx");
+  for (const phrase of ["rdap.verisign.com", "rdap.publicinterestregistry.org", "pubapi.registry.google", "rateLimited", "possibly-available"]) {
+    assert.ok(api.includes(phrase), "Missing domain lookup feature: " + phrase);
+  }
+  assert.ok(ui.includes("Confirm final availability and pricing"));
+  assert.ok(ui.includes('aria-live="polite"'));
+});

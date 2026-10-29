@@ -76,6 +76,16 @@ function extractNamecheapDomain(text:string,tld:string,old:number|null):number|n
   const val=Number(match[1]);
   return val>0&&val<=old*2&&val>=old*.5?val:null;
 }
+function extractPorkbunDomain(text:string,tld:string,old:number|null):number|null{
+  if(old===null)return null;
+  const marker=text.indexOf("All prices are in USD");
+  if(marker<0)return null;
+  const match=text.slice(marker).match(new RegExp("\\."+tld+"\\s+(.{0,130})","i"));
+  if(!match)return null;
+  const prices=[...match[1].matchAll(/\$(\d{1,3}(?:\.\d{1,2})?)/g)].map(x=>Number(x[1]));
+  const candidate=/1st Yr Sale/i.test(match[1])?prices[1]:prices[0];
+  return candidate!==undefined&&candidate>0&&candidate>=old*.55&&candidate<=old*1.8?candidate:null;
+}
 function couponFromOfficial(text:string,checked:string):Coupon|null{
   const dates=text.match(/Valid\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}\s*[-–]\s*(?:[A-Za-z]+\s+)?(\d{1,2}),?\s+(20\d{2})/i);
   const code=text.match(/Discounted registration and transfer[\s\S]{0,220}?\b([A-Z][A-Z0-9]{4,15})\s+Copied\b/);
@@ -95,6 +105,8 @@ export async function loadMarketplace(kind:Kind):Promise<{offers:Offer[];coupons
     const source=sources.get(item.source);
     let current:number|null=null;
     if(source&&kind==="hosting")current=extractHosting(source.text,item.plan,item.first);
+    if(source&&kind==="domain"&&item.provider==="Porkbun"&&item.tld)
+      current=extractPorkbunDomain(source.text,item.tld,item.first);
     if(source&&kind==="domain"&&item.provider==="Namecheap"&&item.tld)
       current=extractNamecheapDomain(source.text,item.tld,item.first);
     return {...item,first:current??item.first,basis:current!==null?"refreshed":item.first!==null?"reference":"provider",

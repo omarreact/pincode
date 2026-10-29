@@ -1,0 +1,33 @@
+name: Cloudflare Workers compatibility audit (non-deploying)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - "next.config.*"
+      - "src/**"
+      - "app/**"
+      - "pages/**"
+      - ".github/workflows/cloudflare-compatibility.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  vinext-check:
+    name: Next.js compatibility with vinext
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Baseline TypeScript validation
+        run: npm run typecheck
+      - name: Assess Cloudflare Workers compatibility
+        run: npx --yes vinext check

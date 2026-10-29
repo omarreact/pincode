@@ -87,7 +87,7 @@ function couponFromOfficial(text:string,checked:string):Coupon|null{
   return {provider:"Namecheap",code:code[1],details:"Official monthly domain-registration/transfer offer. TLD eligibility, limits and final discount must be verified at checkout.",url:URLs.coupons,asOf:checked,expires};
 }
 export async function loadMarketplace(kind:Kind):Promise<{offers:Offer[];coupons:Coupon[];generatedAt:string}>{
-  const urls=kind==="hosting"?[URLs.hostinger,URLs.namecheapHost,URLs.siteground]:
+  const urls:string[]=kind==="hosting"?[URLs.hostinger,URLs.namecheapHost,URLs.siteground]:
     [URLs.porkbun,URLs.namecheapDomain,URLs.coupons,URLs.godaddy];
   const scanned=await Promise.all(urls.map(async url=>({url,data:await fetchOfficial(url)})));
   const sources=new Map(scanned.map(x=>[x.url,x.data]));

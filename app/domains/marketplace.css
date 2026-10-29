@@ -1,0 +1,49 @@
+.marketplace{width:min(1180px,calc(100% - 44px));margin:0 auto 95px;color:#173325}
+.marketplace-top{display:flex;align-items:flex-end;justify-content:space-between;gap:35px;margin:30px 0 24px}
+.marketplace-eyebrow{display:block;font-size:10px!important;letter-spacing:.15em;font-weight:850;color:#018e63}
+.marketplace-top h2{font-size:clamp(32px,4.4vw,56px);line-height:1;letter-spacing:-.06em;margin:15px 0}
+.marketplace-top p{font-size:15px;color:#587263;line-height:1.6;max-width:720px}
+.marketplace-stat{flex-shrink:0;text-align:right;padding:16px;border:1px solid #cae9d9;background:#ffffffa8;border-radius:15px}
+.marketplace-stat strong{display:block;font-size:19px}.marketplace-stat span{font-size:11px;color:#648071}
+.marketplace-controls{display:flex;flex-wrap:wrap;align-items:end;gap:15px;border:1px solid #d6eee0;padding:17px;border-radius:18px;background:#fff9;margin-bottom:20px}
+.marketplace-filter{display:flex;flex-direction:column;gap:7px}.marketplace-filter label{font-size:11px;font-weight:760;color:#476c55}
+.marketplace-filter select{appearance:auto;max-width:100%;padding:12px 37px 12px 15px;background:#fff;border:1px solid #c0ddc9;border-radius:11px;color:#153e2b;font-size:13px;font-weight:650}
+.marketplace-count{font-size:12px;color:#63806d;margin-left:auto;padding:0 7px 12px}
+.marketplace-loading,.marketplace-error{background:#fff;border:1px solid #d4e9dc;border-radius:12px;padding:19px;margin:15px 0;color:#506a59}
+.marketplace-error{color:#9e4742}
+.marketplace-recommendation{display:flex;justify-content:space-between;align-items:center;gap:25px;padding:20px 24px;margin-bottom:20px;background:linear-gradient(115deg,#103f2f,#006c50);color:#fff;border-radius:20px;box-shadow:0 15px 35px #04492b19}
+.marketplace-recommendation>div{display:flex;flex-direction:column;gap:4px}
+.marketplace-reco-label{color:#96e5b8;font-weight:800;font-size:10px;letter-spacing:.13em}
+.marketplace-recommendation strong{font-size:21px}.marketplace-recommendation small{font-size:11px;line-height:1.5;color:#bce1d0}
+.marketplace-recommendation a{display:inline-flex;justify-content:center;background:#fff;color:#0a573d;padding:12px 18px;font-size:12px;font-weight:760;border-radius:999px;white-space:nowrap}
+.marketplace-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.marketplace-card{display:flex;flex-direction:column;min-height:410px;padding:27px;border:1px solid #d5e9de;border-radius:20px;background:linear-gradient(135deg,#fffefdf2,#eafff2d4);box-shadow:0 15px 35px #15472b0a}
+.marketplace-card-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.marketplace-provider{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:850;color:#10734f}
+.marketplace-freshness{font-size:10px;color:#977b43;border:1px solid #e8e0c9;border-radius:50px;padding:4px 7px;white-space:nowrap}
+.marketplace-freshness.fresh{color:#0b865a;border-color:#bde9cc;background:#ecfff2}
+.marketplace-card h3{font-size:25px;letter-spacing:-.05em;margin:25px 0 12px;line-height:1.1}
+.marketplace-price{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;margin:0 0 14px}
+.marketplace-price strong{font-size:clamp(25px,2.9vw,39px);font-weight:850;letter-spacing:-.06em}
+.marketplace-price span{font-size:12px;color:#647869}
+.marketplace-terms{display:flex;flex-direction:column;gap:8px;border-bottom:1px solid #dcece1;padding:0 0 15px;font-size:11px;line-height:1.5;color:#5f7566}
+.marketplace-terms b{color:#143f29;font-weight:790}
+.marketplace-features{list-style:none;padding:15px 0 4px!important;margin:0!important;display:flex;flex-direction:column;gap:8px}
+.marketplace-features li{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:#314d3b}
+.marketplace-features li span{color:#07a872;font-weight:900}
+.marketplace-plan-note{font-size:11px;line-height:1.6;color:#728377;margin:auto 0 19px;padding-top:15px}
+.marketplace-order{display:flex;justify-content:space-between;align-items:center;gap:9px;padding:13px 14px;border-radius:11px;background:#007c55;color:white!important;font-size:12px;font-weight:790;text-decoration:none!important}
+.marketplace-order:hover{background:#005d42}
+.marketplace-source{display:block;text-align:center;padding:12px 0 0;font-weight:700;color:#086c4b!important;font-size:11px;text-decoration:underline!important}
+.marketplace-coupons{display:grid;grid-template-columns:1.15fr repeat(2,1fr);align-items:stretch;gap:16px;border-top:1px solid #d1e3d6;margin-top:32px;padding-top:34px}
+.marketplace-coupons h3{font-size:25px;letter-spacing:-.045em;margin:8px 0}
+.marketplace-coupons p{font-size:12px;color:#617966;line-height:1.6}
+.marketplace-coupon{border:1px dashed #72c29d;border-radius:15px;background:#fff;padding:19px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.marketplace-coupon strong{font-size:13px}.marketplace-coupon code{font-weight:900;font-size:21px;color:#0b6e4c;background:#dff9e8;border-radius:8px;padding:8px 13px}
+.marketplace-coupon span,.marketplace-coupon small{font-size:11px;color:#617969;line-height:1.5}
+.marketplace-coupon a,.marketplace-no-coupon a{font-size:12px;font-weight:800;color:#006c47}
+.marketplace-autodeal{border:1px solid #cce6d5;border-radius:12px;background:#eafff1;padding:15px;margin-top:25px;color:#286349;font-size:13px}
+.marketplace-disclosure{margin:30px 0 0;border-top:1px solid #cbe0cf;padding-top:20px;color:#6c7d70;font-size:11px;line-height:1.8}
+@media(max-width:1100px){.marketplace-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.marketplace-top{display:block}.marketplace-stat{display:none}.marketplace-grid{grid-template-columns:1fr}.marketplace-recommendation{flex-direction:column;align-items:stretch}.marketplace-recommendation a{width:100%}.marketplace-coupons{grid-template-columns:1fr}.marketplace{width:min(100% - 30px,1180px)}.marketplace-count{margin-left:0;padding-bottom:0}.marketplace-filter{flex:1;min-width:140px}}
+@media(prefers-reduced-motion:reduce){.marketplace *{scroll-behavior:auto}}

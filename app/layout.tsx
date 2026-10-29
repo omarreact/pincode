@@ -21,10 +21,10 @@ export const metadata: Metadata = {
     type: "website", siteName: "PINCODE IT",
     title: "PINCODE IT — Coding Made Simple", description,
     url: "https://pincodeit.com/", locale: "en_BD",
-    images: [{ url: "/brand/pincode-mark.svg", width: 512, height: 512, alt: "PINCODE IT logo" }],
+    images: [{ url: "/brand/pincode-horizontal-light.svg", width: 1190, height: 300, alt: "PINCODE IT official logo" }],
   },
   twitter: { card: "summary", title: "PINCODE IT — Coding Made Simple", description },
-  icons: { icon: "/brand/pincode-mark.svg" },
+  icons: { icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/icon.svg", type: "image/svg+xml", sizes: "any" }], shortcut: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

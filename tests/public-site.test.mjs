@@ -135,3 +135,29 @@ test("domain lookup uses validated RDAP and cautious availability wording", () =
   assert.ok(ui.includes("Confirm final availability and pricing"));
   assert.ok(ui.includes('aria-live="polite"'));
 });
+
+test("provider comparisons show source, renewal and external provider checkout", () => {
+  const market=read("components/ProviderMarketplace.tsx");
+  const domainPage=read("app/domains/page.tsx");
+  const hosting=read("app/hosting/page.tsx");
+  const shell=read("components/SiteShell.tsx");
+  const catalog=read("lib/provider-marketplace.ts");
+  assert.match(domainPage, /kind="domain"/);
+  assert.match(hosting, /kind="hosting"/);
+  assert.ok(shell.includes('href: "/hosting"'));
+  assert.ok(market.includes('rel="noopener noreferrer"'));
+  assert.ok(market.includes("Published renewal equivalent"));
+  assert.ok(market.includes('basis==="refreshed"'));
+  assert.ok(catalog.includes("https://www.hostinger.com/web-hosting"));
+  assert.ok(catalog.includes("https://porkbun.com/products/domains"));
+  assert.ok(catalog.includes("couponFromOfficial"));
+  assert.ok(catalog.includes("Date.now()>=Date.parse(expires)"));
+});
+
+test("marketplace feed is restricted and transparently cached", () => {
+  const api=read("app/api/marketplace/offers/route.ts");
+  assert.ok(api.includes('kind!=="hosting"&&kind!=="domain"'));
+  assert.ok(api.includes("s-maxage=900"));
+  assert.ok(read("components/LegacyHomepage.tsx").includes("/hosting"));
+  assert.ok(read("app/domains/marketplace.css").includes("@media(max-width:760px)"));
+});

@@ -8,6 +8,7 @@ const navigation = [
   { title: "Home", href: "/" },
   { title: "Services", href: "/services" },
   { title: "Domain Search", href: "/domains" },
+  { title: "Hosting Deals", href: "/hosting" },
   { title: "Solutions", href: "/solutions" },
   { title: "Work", href: "/work" },
   { title: "About", href: "/about" },
@@ -99,6 +100,7 @@ export function SiteFooter() {
           <b>Explore</b>
           <Link href="/services">Services</Link>
           <Link href="/domains">Domain Search</Link>
+          <Link href="/hosting">Hosting Deals</Link>
           <Link href="/solutions">Solutions</Link>
           <Link href="/work">Work</Link>
         </div>

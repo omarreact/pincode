@@ -1,0 +1,40 @@
+name: PINCODE IT clean Cloudflare Workers rebuild
+on:
+  push:
+    branches:
+      - chore/cloudflare-clean-rebuild-pincode-20261030
+    paths:
+      - .github/workflows/cloudflare-clean-stage.yml
+  pull_request:
+    branches:
+      - chore/nextjs-only-remove-legacy-html-topbar
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install application dependencies
+        run: npm install --no-audit --no-fund
+      - name: Cloudflare Vinext compatibility check
+        run: npx --yes vinext@1.4.0 check
+      - name: Build actual isolated Cloudflare Worker bundle
+        run: npm run build:vinext
+      - name: Dry-run Wrangler deployment of built Worker
+        run: |
+          mv .cloudflare/output .cf-vinext-output
+          npx wrangler deploy --config wrangler.staging.jsonc --dry-run
+      - name: Check existing Next.js design and TypeScript
+        run: |
+          npm run typecheck
+          npm run test:site
+      - name: Verify original Next.js build remains valid
+        run: npm run build

@@ -21,11 +21,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
       - name: Install application dependencies
         run: npm install --no-audit --no-fund
       - name: Cloudflare Vinext compatibility check
         run: npx --yes vinext@1.4.0 check
+      - name: Build actual isolated Cloudflare Worker bundle
+        run: npm run build:vinext
       - name: Check existing Next.js design and TypeScript
         run: |
           npm run typecheck

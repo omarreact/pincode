@@ -29,7 +29,14 @@ Contact uses a browser-only project brief that prepares a email message; **it do
 ## Deployment
 The Vercel project uses the **Next.js framework preset** and automatic output detection, not the old static `public` output override. GitHub pushes to `main` trigger builds. Review deployment status before claiming a production release.
 
-### Migration warning
-Root-level static HTML, CSS and JS are retained as migration references. Next.js does not automatically serve them or any legacy application stored elsewhere in the repository. Inventory and test all non-marketing paths such as `/nid_dob`; migrate those deliberately before calling this a complete replacement.
+### Next.js-only marketing website
+The public marketing website is implemented in Next.js App Router. The obsolete root-level
+static HTML website, its `styles.css` / `script.js`, and duplicate static metadata assets
+have been removed; the original designs remain implemented in the React components and
+their scoped stylesheets under `public/`. Existing `/*.html` marketing-page bookmarks
+redirect to their Next.js routes.
+
+The independent `/nid_dob` utility and its API are not part of the marketing website;
+preserve and separately audit their hosting behavior before migrating or removing them.
 
 Administration remains a separate secured application in [Admin_Pincode_Projects](https://github.com/omarreact/Admin_Pincode_Projects). Do not move admin code or credentials into this public repository.

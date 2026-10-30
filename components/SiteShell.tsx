@@ -47,7 +47,6 @@ export function SiteHeader() {
   return (
     <>
       <a className="agency-skip" href="#main">Skip to content</a>
-      <div className="noticebar">Technology that moves business forward <span aria-hidden="true">↗</span></div>
       <header className="head agency-site-header">
         <Brand />
         <button

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, extname } from "node:path";
 
 const read = (file) => readFileSync(new URL("../" + file, import.meta.url), "utf8");
@@ -177,4 +177,34 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
   assert.ok(layout.includes("/favicon.svg"));
   assert.match(read("public/favicon.svg"), /pincode-v2-grad/);
   assert.match(read("app/icon.svg"), /pincode-v2-grad/);
+});
+
+test("the standalone root HTML website is retired in favor of Next.js routes", () => {
+  for (const file of ["index.html","about.html","services.html","solutions.html","work.html","insights.html","contact.html","styles.css","script.js","favicon.svg","robots.txt","sitemap.xml"]) {
+    assert.equal(existsSync(new URL("../" + file, import.meta.url)), false, "Legacy root asset remains: " + file);
+  }
+  for (const route of ["page.tsx", "services/page.tsx", "solutions/page.tsx", "work/page.tsx",
+    "about/page.tsx", "insights/page.tsx", "contact/page.tsx", "domains/page.tsx", "hosting/page.tsx"]) {
+    assert.equal(existsSync(new URL("../app/" + route, import.meta.url)), true, "Missing Next.js page: " + route);
+  }
+});
+
+test("pre-navigation dark bars are removed without altering the visual sections", () => {
+  const homepage = read("components/LegacyHomepage.tsx");
+  const sharedHeader = read("components/SiteShell.tsx");
+  const unusedPublicWebsite = read("components/PublicWebsite.tsx");
+  const css = read("public/legacy-home.css");
+
+  assert.ok(!homepage.includes("announcement"));
+  assert.ok(!sharedHeader.includes("noticebar"));
+  assert.ok(!unusedPublicWebsite.includes("noticebar"));
+  assert.ok(!read("app/all-pages.css").includes(".noticebar{"));
+  assert.ok(!read("app/globals.css").includes(".noticebar{"));
+  assert.ok(!css.includes(".announcement{"));
+  assert.ok(!read("public/legacy-glass.css").includes(".announcement{"));
+  assert.ok(css.includes(".mega-menu{position:fixed;top:var(--nav)"));
+  assert.ok(!css.includes("38px + var(--nav)"));
+  assert.ok(homepage.includes("hero-orbit"));
+  assert.ok(homepage.includes("data-scroller"));
+  assert.ok(sharedHeader.includes("agency-site-header"));
 });

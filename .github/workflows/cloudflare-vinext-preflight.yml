@@ -28,6 +28,8 @@ jobs:
         run: npx --yes vinext@1.4.0 check
       - name: Build actual isolated Cloudflare Worker bundle
         run: npm run build:vinext
+      - name: Dry-run Wrangler deployment of built Worker
+        run: npx wrangler deploy --config wrangler.staging.jsonc --dry-run
       - name: Check existing Next.js design and TypeScript
         run: |
           npm run typecheck

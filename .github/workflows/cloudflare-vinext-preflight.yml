@@ -1,0 +1,31 @@
+name: PINCODE IT Cloudflare Vinext compatibility preflight
+on:
+  push:
+    branches:
+      - chore/cloudflare-vinext-preflight-20261030
+    paths:
+      - .github/workflows/cloudflare-vinext-preflight.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install application dependencies
+        run: npm install --no-audit --no-fund
+      - name: Check existing Next.js design and TypeScript
+        run: |
+          npm run typecheck
+          npm run test:site
+      - name: Cloudflare Vinext compatibility check
+        run: npx --yes vinext@1.4.0 check
+      - name: Verify original Next.js build remains valid
+        run: npm run build

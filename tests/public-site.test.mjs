@@ -192,17 +192,19 @@ test("the standalone root HTML website is retired in favor of Next.js routes", (
 test("pre-navigation dark bars are removed without altering the visual sections", () => {
   const homepage = read("components/LegacyHomepage.tsx");
   const sharedHeader = read("components/SiteShell.tsx");
-  assert.doesNotMatch(homepage, /class=\\\"announcement\\\"/);
-  assert.doesNotMatch(sharedHeader, /className="noticebar"/);
-  assert.doesNotMatch(read("components/PublicWebsite.tsx"), /className="noticebar"/);
-  assert.doesNotMatch(read("app/all-pages.css"), /\\.noticebar\\{/);
-  assert.doesNotMatch(read("app/globals.css"), /\\.noticebar\\{/);
-  assert.doesNotMatch(read("public/legacy-home.css"), /\\.announcement\\{/);
-  assert.doesNotMatch(read("public/legacy-glass.css"), /\\.announcement\\{/);
+  const unusedPublicWebsite = read("components/PublicWebsite.tsx");
   const css = read("public/legacy-home.css");
-  assert.match(css, /\\.mega-menu\\{position:fixed;top:var\\(--nav\\)/);
-  assert.doesNotMatch(css, /top:calc\\(38px \\+ var\\(--nav\\)\\)/);
-  assert.match(homepage, /hero-orbit/);
-  assert.match(homepage, /data-scroller/);
-  assert.match(sharedHeader, /agency-site-header/);
+
+  assert.ok(!homepage.includes("announcement"));
+  assert.ok(!sharedHeader.includes("noticebar"));
+  assert.ok(!unusedPublicWebsite.includes("noticebar"));
+  assert.ok(!read("app/all-pages.css").includes(".noticebar{"));
+  assert.ok(!read("app/globals.css").includes(".noticebar{"));
+  assert.ok(!css.includes(".announcement{"));
+  assert.ok(!read("public/legacy-glass.css").includes(".announcement{"));
+  assert.ok(css.includes(".mega-menu{position:fixed;top:var(--nav)"));
+  assert.ok(!css.includes("38px + var(--nav)"));
+  assert.ok(homepage.includes("hero-orbit"));
+  assert.ok(homepage.includes("data-scroller"));
+  assert.ok(sharedHeader.includes("agency-site-header"));
 });

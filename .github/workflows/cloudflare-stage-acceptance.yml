@@ -1,0 +1,27 @@
+name: PINCODE Workers isolated-stage HTTP acceptance
+on:
+  push:
+    branches:
+      - chore/cloudflare-vinext-preflight-20261030
+    paths:
+      - scripts/cloudflare-site-smoke.mjs
+      - .github/workflows/cloudflare-stage-acceptance.yml
+  pull_request:
+    branches:
+      - chore/nextjs-only-remove-legacy-html-topbar
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate real isolated Cloudflare stage
+        run: node scripts/cloudflare-site-smoke.mjs

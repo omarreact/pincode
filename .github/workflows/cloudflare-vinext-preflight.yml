@@ -5,6 +5,9 @@ on:
       - chore/cloudflare-vinext-preflight-20261030
     paths:
       - .github/workflows/cloudflare-vinext-preflight.yml
+  pull_request:
+    branches:
+      - chore/nextjs-only-remove-legacy-html-topbar
   workflow_dispatch:
 
 permissions:

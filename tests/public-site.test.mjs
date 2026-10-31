@@ -102,12 +102,13 @@ test("all public Next.js pages use the shared glass design system", () => {
 
 test("navigation, enquiry and accessibility fallback work across screen sizes", () => {
   const header = read("components/SiteShell.tsx");
-  assert.match(header, /usePathname/);
-  assert.match(header, /aria-current/);
-  assert.match(header, /aria-expanded/);
+  const nav = read("components/LegacyNavigation.tsx");
+  assert.match(nav, /usePathname/);
+  assert.match(nav, /aria-current/);
+  assert.match(nav, /aria-expanded/);
   assert.match(header, /pincode-shared-nav/);
   assert.match(header, /skip-link/);
-  assert.match(header, /legacySiteHeaderHTML/);
+  assert.match(header, /LegacyNavigation/);
   const styles = read("app/all-pages.css");
   assert.match(styles, /@media\(max-width:890px\)/);
   assert.match(styles, /prefers-reduced-motion/);

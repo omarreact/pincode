@@ -178,3 +178,13 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
   assert.match(read("public/favicon.svg"), /pincode-v2-grad/);
   assert.match(read("app/icon.svg"), /pincode-v2-grad/);
 });
+
+
+test("legacy root-level marketing HTML is removed without affecting non-marketing templates", () => {
+  const root = readdirSync(new URL("..", import.meta.url));
+  for (const file of ["index.html","about.html","contact.html","services.html","solutions.html","work.html","insights.html"]) {
+    assert.ok(!root.includes(file), "Obsolete root HTML remains: " + file);
+  }
+  assert.match(read("nid_dob/index.html"), /<html/i);
+  assert.match(read("public/email/pincode-business-template.html"), /<html/i);
+});

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteHeader, SiteFooter } from "@/components/SiteShell";
 import { ProviderMarketplace } from "@/components/ProviderMarketplace";
+import { getReferenceMarketplace } from "@/lib/provider-marketplace";
 import "../domains/domains.css";
 import "../domains/marketplace.css";
 
@@ -15,13 +16,13 @@ export default function HostingComparison(){
     <>
       <SiteHeader/>
       <main className="domain-page" id="main">
-        <section className="domain-page-hero">
+        <section className="domain-page-hero" data-site-motion="hero">
           <span className="domain-eyebrow">PINCODE IT / HOSTING MARKETPLACE</span>
           <h1>Compare hosting providers.<br/><span>Choose with confidence.</span></h1>
           <p>Understand first-term prices, renewal costs and plan features before you buy.
             Choose a provider and continue directly to its official order page.</p>
         </section>
-        <ProviderMarketplace kind="hosting"/>
+        <ProviderMarketplace kind="hosting" initialFeed={getReferenceMarketplace("hosting")}/>
       </main>
       <SiteFooter/>
     </>

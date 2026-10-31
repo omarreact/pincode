@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { legacySiteHeaderHTML } from "./LegacyHomepage";
+import { legacySiteHeaderHTML } from "./LegacyNavMarkup";
+import { SiteMotion } from "./SiteMotion";
 
 function Brand() {
   return (
@@ -108,6 +109,7 @@ export function SiteHeader() {
     <>
       <link rel="stylesheet" href="/legacy-home.css" precedence="default" />
       <link rel="stylesheet" href="/legacy-glass.css" precedence="default" />
+      <SiteMotion />
       <div id="pincode-legacy-home" className="pincode-shared-nav" ref={rootRef}>
         <a className="skip-link" href="#main">Skip to content</a>
         <div dangerouslySetInnerHTML={{ __html: legacySiteHeaderHTML }} />

@@ -13,9 +13,9 @@ function freshness(offer:Offer):string{
   return offer.basis==="refreshed"?"Updated from official page":offer.basis==="reference"?"Reference · 29 Oct 2026":"Price at provider";
 }
 
-export function ProviderMarketplace({kind}:{kind:Kind}){
-  const [feed,setFeed]=useState<Feed|null>(null);
-  const [loading,setLoading]=useState(true);
+export function ProviderMarketplace({kind,initialFeed}:{kind:Kind;initialFeed?:Feed}){
+  const [feed,setFeed]=useState<Feed|null>(initialFeed??null);
+  const [loading,setLoading]=useState(!initialFeed);
   const [error,setError]=useState("");
   const [tld,setTld]=useState("com");
   const [category,setCategory]=useState("all");
@@ -23,14 +23,14 @@ export function ProviderMarketplace({kind}:{kind:Kind}){
 
   useEffect(()=>{
     const abort=new AbortController();
-    setLoading(true);
+    if (!initialFeed) setLoading(true);
     fetch("/api/marketplace/offers?kind="+kind,{signal:abort.signal})
       .then(async res=>{if(!res.ok)throw new Error("Price feed unavailable");return res.json() as Promise<Feed>;})
       .then(data=>{if(!abort.signal.aborted){setFeed(data);setError("");}})
-      .catch(()=>{if(!abort.signal.aborted)setError("Pricing feed is temporarily unavailable. Open an official provider page for current offers.");})
+      .catch(()=>{if(!abort.signal.aborted && !initialFeed)setError("Pricing feed is temporarily unavailable. Open an official provider page for current offers.");})
       .finally(()=>{if(!abort.signal.aborted)setLoading(false);});
     return ()=>abort.abort();
-  },[kind]);
+  },[kind,initialFeed]);
 
   const visible=useMemo(()=>{
     const selected=(feed?.offers??[]).filter(item=>kind==="domain"?item.tld===tld:category==="all"||item.category===category);
@@ -44,7 +44,7 @@ export function ProviderMarketplace({kind}:{kind:Kind}){
 
   return (
     <section id={kind==="domain"?"domain-provider-comparison":"hosting-provider-comparison"} className="marketplace" aria-labelledby={kind+"-marketplace-heading"}>
-      <div className="marketplace-top">
+      <div className="marketplace-top" data-site-motion="section">
         <div>
           <span className="marketplace-eyebrow">PINCODE IT / INDEPENDENT PROVIDER COMPARISON</span>
           <h2 id={kind+"-marketplace-heading"}>{kind==="domain"?"Compare domain registrars":"Find a hosting plan that fits"}</h2>
@@ -85,7 +85,7 @@ export function ProviderMarketplace({kind}:{kind:Kind}){
 
       <div className="marketplace-grid" aria-live="polite">
         {visible.map(offer=>(
-          <article key={offer.id} className="marketplace-card">
+          <article key={offer.id} className="marketplace-card" data-site-motion="card">
             <div className="marketplace-card-head">
               <span className="marketplace-provider">{offer.provider}</span>
               <span className={"marketplace-freshness "+(offer.basis==="refreshed"?"fresh":"")}>{freshness(offer)}</span>
@@ -111,7 +111,7 @@ export function ProviderMarketplace({kind}:{kind:Kind}){
       </div>
 
       {!loading&&feed&&kind==="domain"&&(
-        <div className="marketplace-coupons">
+        <div className="marketplace-coupons" data-site-motion="section">
           <div><span className="marketplace-eyebrow">VERIFIED OFFICIAL PROMOTIONS</span>
             <h3>Available coupons and deals</h3>
             <p>Only codes detected on official provider pages are displayed. Offers can expire or be restricted at checkout.</p>

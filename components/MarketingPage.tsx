@@ -21,7 +21,7 @@ export function MarketingPage({ data }: { data: PageContent }) {
         <section className="agency-page-hero" aria-labelledby="agency-page-title">
           <div className="agency-hero-ambient agency-ambient-one" aria-hidden="true" />
           <div className="agency-hero-ambient agency-ambient-two" aria-hidden="true" />
-          <div className="agency-hero-panel">
+          <div className="agency-hero-panel" data-site-motion="hero">
             <div className="agency-hero-topline">
               <span className="agency-eyebrow">{data.eyebrow}</span>
               <span className="agency-hero-signature">PINCODE IT <span aria-hidden="true">↗</span></span>
@@ -46,7 +46,7 @@ export function MarketingPage({ data }: { data: PageContent }) {
         </section>
 
         <section className="agency-explore" id="explore" aria-labelledby="agency-explore-title">
-          <div className="agency-explore-intro">
+          <div className="agency-explore-intro" data-site-motion="section">
             <div>
               <span className="agency-eyebrow">EXPLORE / PINCODE IT</span>
               <h2 id="agency-explore-title">{data.cta ?? "Build useful technology together."}</h2>
@@ -55,7 +55,7 @@ export function MarketingPage({ data }: { data: PageContent }) {
           </div>
           <nav className="agency-index" aria-label="Jump to a topic">
             {data.cards.map((card, index) => (
-              <a href={`#${card.id ?? "topic-" + (index + 1)}`} key={card.id ?? card.title} className="agency-index-link">
+              <a href={`#${card.id ?? "topic-" + (index + 1)}`} key={card.id ?? card.title} className="agency-index-link" data-site-motion="card">
                 <span className="agency-index-number">{String(index + 1).padStart(2, "0")}</span>
                 <span>{card.title}</span>
                 <span className="agency-index-arrow" aria-hidden="true">↗</span>
@@ -67,7 +67,7 @@ export function MarketingPage({ data }: { data: PageContent }) {
               <article
                 key={card.id ?? card.title}
                 id={card.id ?? "topic-" + (index + 1)}
-                className="agency-detail-card"
+                className="agency-detail-card" data-site-motion="card"
               >
                 <div className="agency-card-top">
                   <span className="agency-card-number">{String(index + 1).padStart(2, "0")} / {String(data.cards.length).padStart(2, "0")}</span>
@@ -85,7 +85,7 @@ export function MarketingPage({ data }: { data: PageContent }) {
         </section>
 
         <section className="agency-footer-section" aria-label="Work with PINCODE IT">
-          <div className="agency-footer-cta">
+          <div className="agency-footer-cta" data-site-motion="section">
             <div className="agency-footer-ambient" aria-hidden="true" />
             <div>
               <span className="agency-eyebrow">LET'S MOVE FORWARD</span>

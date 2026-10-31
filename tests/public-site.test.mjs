@@ -123,7 +123,7 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
 test("domain search is reachable from public navigation", () => {
   assert.ok(read("components/LegacyHomepage.tsx").includes("/domains"));
   assert.ok(read("components/SiteShell.tsx").includes("legacySiteHeaderHTML"));
-  assert.ok(read("components/LegacyHomepage.tsx").includes(">Domain Search</a>"));
+  assert.ok(read("components/LegacyNavMarkup.ts").includes(">Domain Search</a>"));
   assert.ok(read("app/domains/page.tsx").includes("<DomainSearch"));
   assert.ok(read("app/domains/page.tsx").includes("<SiteHeader"));
 });
@@ -147,7 +147,7 @@ test("provider comparisons show source, renewal and external provider checkout",
   assert.match(domainPage, /kind="domain"/);
   assert.match(hosting, /kind="hosting"/);
   assert.ok(shell.includes("legacySiteHeaderHTML"));
-  assert.ok(read("components/LegacyHomepage.tsx").includes(">Hosting Deals</a>"));
+  assert.ok(read("components/LegacyNavMarkup.ts").includes(">Hosting Deals</a>"));
   assert.ok(market.includes('rel="noopener noreferrer"'));
   assert.ok(market.includes("Published renewal equivalent"));
   assert.ok(market.includes('basis==="refreshed"'));
@@ -187,9 +187,10 @@ test("all Next.js pages reuse the exact legacy homepage header", () => {
   const home = read("components/LegacyHomepage.tsx");
   const shell = read("components/SiteShell.tsx");
   const css = read("app/globals.css");
-  assert.ok(home.includes("export const legacySiteHeaderHTML"));
-  assert.ok(home.includes("site-header"));
-  assert.ok(home.includes("mega-menu"));
+  assert.ok(home.includes('import { legacySiteHeaderHTML } from "./LegacyNavMarkup"'));
+  assert.ok(read("components/LegacyNavMarkup.ts").includes("export const legacySiteHeaderHTML"));
+  assert.ok(read("components/LegacyNavMarkup.ts").includes("site-header"));
+  assert.ok(read("components/LegacyNavMarkup.ts").includes("mega-menu"));
   assert.ok(shell.includes("legacySiteHeaderHTML"));
   assert.ok(shell.includes("/legacy-home.css"));
   assert.ok(shell.includes("/legacy-glass.css"));
@@ -199,4 +200,31 @@ test("all Next.js pages reuse the exact legacy homepage header", () => {
   for (const file of ["components/MarketingPage.tsx", "app/contact/page.tsx", "app/domains/page.tsx", "app/hosting/page.tsx"]) {
     assert.ok(read(file).includes("<SiteHeader"), file + " should use the shared header");
   }
+});
+
+test("speed and motion features do not hide server content or delay provider comparison", () => {
+  const motion = read("components/SiteMotion.tsx");
+  const shell = read("components/SiteShell.tsx");
+  const style = read("app/globals.css");
+  const layout = read("app/layout.tsx");
+  const homepage = read("components/LegacyHomepage.tsx");
+  const nav = read("components/LegacyNavMarkup.ts");
+  assert.ok(motion.includes("IntersectionObserver"));
+  assert.ok(motion.includes("prefers-reduced-motion"));
+  assert.ok(motion.includes("site-motion-pending"));
+  assert.ok(shell.includes("<SiteMotion"));
+  assert.ok(read("components/MarketingPage.tsx").includes('data-site-motion="card"'));
+  assert.ok(read("app/contact/page.tsx").includes('data-site-motion="section"'));
+  assert.ok(read("app/domains/page.tsx").includes('data-site-motion="hero"'));
+  assert.ok(read("app/hosting/page.tsx").includes('data-site-motion="hero"'));
+  assert.ok(!style.includes("@import url("));
+  assert.ok(layout.includes('from "next/font/google"'));
+  assert.ok(home.includes('from "./LegacyNavMarkup"'));
+  assert.ok(!shell.includes('from "./LegacyHomepage"'));
+  assert.ok(nav.length < homepage.length);
+  const market = read("components/ProviderMarketplace.tsx");
+  assert.ok(market.includes("initialFeed"));
+  assert.ok(read("app/domains/page.tsx").includes('getReferenceMarketplace("domain")'));
+  assert.ok(read("app/hosting/page.tsx").includes('getReferenceMarketplace("hosting")'));
+  assert.ok(read("app/api/marketplace/offers/route.ts").includes("unstable_cache"));
 });

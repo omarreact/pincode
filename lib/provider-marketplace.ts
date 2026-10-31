@@ -96,6 +96,16 @@ function couponFromOfficial(text:string,checked:string):Coupon|null{
   if(Date.now()>=Date.parse(expires))return null;
   return {provider:"Namecheap",code:code[1],details:"Official monthly domain-registration/transfer offer. TLD eligibility, limits and final discount must be verified at checkout.",url:URLs.coupons,asOf:checked,expires};
 }
+export function getReferenceMarketplace(kind:Kind):{offers:Offer[];coupons:Coupon[];generatedAt:string}{
+  return {
+    offers: (kind==="hosting"?hosting:domains).map(item=>({
+      ...item, basis: item.first===null?"provider" as const:"reference" as const, asOf:snapshot
+    })),
+    coupons:[],
+    generatedAt:snapshot+"T00:00:00Z"
+  };
+}
+
 export async function loadMarketplace(kind:Kind):Promise<{offers:Offer[];coupons:Coupon[];generatedAt:string}>{
   const urls:string[]=kind==="hosting"?[URLs.hostinger,URLs.namecheapHost,URLs.siteground]:
     [URLs.porkbun,URLs.namecheapDomain,URLs.coupons,URLs.godaddy];

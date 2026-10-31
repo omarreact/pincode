@@ -60,3 +60,17 @@ button:focus-visible,a:focus-visible{outline:3px solid #22b573;outline-offset:3p
 @media (prefers-reduced-motion: reduce) {
   [data-site-motion] { opacity: 1 !important; translate: none !important; animation: none !important; transition: none !important; }
 }
+
+/* The header remains sticky after the original static homepage markup became JSX. */
+#pincode-legacy-home:not(.pincode-shared-nav) > .pincode-navigation {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+#pincode-legacy-home:not(.pincode-shared-nav) > .pincode-navigation .site-header {
+  position: relative;
+}
+#pincode-legacy-home .mobile-primary { display: none; }
+@media (max-width: 900px) {
+  #pincode-legacy-home .mobile-primary { display: block; }
+}

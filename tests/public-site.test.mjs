@@ -102,12 +102,13 @@ test("all public Next.js pages use the shared glass design system", () => {
 
 test("navigation, enquiry and accessibility fallback work across screen sizes", () => {
   const header = read("components/SiteShell.tsx");
-  assert.match(header, /usePathname/);
-  assert.match(header, /aria-current/);
-  assert.match(header, /aria-expanded/);
+  const nav = read("components/LegacyNavigation.tsx");
+  assert.match(nav, /usePathname/);
+  assert.match(nav, /aria-current/);
+  assert.match(nav, /aria-expanded/);
   assert.match(header, /pincode-shared-nav/);
   assert.match(header, /skip-link/);
-  assert.match(header, /legacySiteHeaderHTML/);
+  assert.match(header, /LegacyNavigation/);
   const styles = read("app/all-pages.css");
   assert.match(styles, /@media\(max-width:890px\)/);
   assert.match(styles, /prefers-reduced-motion/);
@@ -122,8 +123,8 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
 
 test("domain search is reachable from public navigation", () => {
   assert.ok(read("components/LegacyHomepage.tsx").includes("/domains"));
-  assert.ok(read("components/SiteShell.tsx").includes("legacySiteHeaderHTML"));
-  assert.ok(read("components/LegacyNavMarkup.ts").includes(">Domain Search</a>"));
+  assert.ok(read("components/SiteShell.tsx").includes("<LegacyNavigation"));
+  assert.ok(read("components/LegacyNavigation.tsx").includes('label: "Domain Search"'));
   assert.ok(read("app/domains/page.tsx").includes("<DomainSearch"));
   assert.ok(read("app/domains/page.tsx").includes("<SiteHeader"));
 });
@@ -146,8 +147,8 @@ test("provider comparisons show source, renewal and external provider checkout",
   const catalog=read("lib/provider-marketplace.ts");
   assert.match(domainPage, /kind="domain"/);
   assert.match(hosting, /kind="hosting"/);
-  assert.ok(shell.includes("legacySiteHeaderHTML"));
-  assert.ok(read("components/LegacyNavMarkup.ts").includes(">Hosting Deals</a>"));
+  assert.ok(shell.includes("<LegacyNavigation"));
+  assert.ok(read("components/LegacyNavigation.tsx").includes('label: "Hosting Deals"'));
   assert.ok(market.includes('rel="noopener noreferrer"'));
   assert.ok(market.includes("Published renewal equivalent"));
   assert.ok(market.includes('basis==="refreshed"'));
@@ -183,19 +184,21 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
 });
 
 
-test("all Next.js pages reuse the exact legacy homepage header", () => {
+test("all Next.js pages use the original navigation design through native React and Next Link", () => {
   const home = read("components/LegacyHomepage.tsx");
   const shell = read("components/SiteShell.tsx");
+  const nav = read("components/LegacyNavigation.tsx");
   const css = read("app/globals.css");
-  assert.ok(home.includes('import { legacySiteHeaderHTML } from "./LegacyNavMarkup"'));
-  assert.ok(read("components/LegacyNavMarkup.ts").includes("export const legacySiteHeaderHTML"));
-  assert.ok(read("components/LegacyNavMarkup.ts").includes("site-header"));
-  assert.ok(read("components/LegacyNavMarkup.ts").includes("mega-menu"));
-  assert.ok(shell.includes("legacySiteHeaderHTML"));
+  assert.ok(home.includes('import { LegacyNavigation } from "./LegacyNavigation"'));
+  assert.ok(home.includes("<LegacyNavigation />"));
+  assert.ok(shell.includes("<LegacyNavigation />"));
   assert.ok(shell.includes("/legacy-home.css"));
   assert.ok(shell.includes("/legacy-glass.css"));
-  assert.ok(shell.includes('menu?.classList.add("open")'));
-  assert.ok(shell.includes("aria-current"));
+  assert.ok(nav.includes('from "next/link"'));
+  assert.ok(nav.includes("usePathname"));
+  assert.ok(nav.includes("aria-current"));
+  assert.ok(nav.includes("setOpen"));
+  assert.ok(nav.includes("mega-menu"));
   assert.ok(css.includes("pincode-legacy-home.pincode-shared-nav"));
   for (const file of ["components/MarketingPage.tsx", "app/contact/page.tsx", "app/domains/page.tsx", "app/hosting/page.tsx"]) {
     assert.ok(read(file).includes("<SiteHeader"), file + " should use the shared header");
@@ -209,7 +212,7 @@ test("speed and motion features do not hide server content or delay provider com
   const style = read("app/globals.css");
   const layout = read("app/layout.tsx");
   const homepage = read("components/LegacyHomepage.tsx");
-  const nav = read("components/LegacyNavMarkup.ts");
+  const nav = read("components/LegacyNavigation.tsx");
   assert.ok(motion.includes("IntersectionObserver"));
   assert.ok(motion.includes("prefers-reduced-motion"));
   assert.ok(motion.includes("site-motion-pending"));
@@ -220,7 +223,7 @@ test("speed and motion features do not hide server content or delay provider com
   assert.ok(read("app/hosting/page.tsx").includes('data-site-motion="hero"'));
   assert.ok(!style.includes("@import url("));
   assert.ok(layout.includes('from "next/font/google"'));
-  assert.ok(home.includes('from "./LegacyNavMarkup"'));
+  assert.ok(home.includes('from "./LegacyNavigation"'));
   assert.ok(!shell.includes('from "./LegacyHomepage"'));
   assert.ok(nav.length < homepage.length);
   const market = read("components/ProviderMarketplace.tsx");
@@ -228,4 +231,26 @@ test("speed and motion features do not hide server content or delay provider com
   assert.ok(read("app/domains/page.tsx").includes('getReferenceMarketplace("domain")'));
   assert.ok(read("app/hosting/page.tsx").includes('getReferenceMarketplace("hosting")'));
   assert.ok(read("app/api/marketplace/offers/route.ts").includes("unstable_cache"));
+});
+
+test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {
+  const bridge = read("components/LegacyLinkBridge.tsx");
+  const nav = read("components/LegacyNavigation.tsx");
+  const layout = read("app/layout.tsx");
+  const home = read("components/LegacyHomepage.tsx");
+  const root = readdirSync(new URL("..", import.meta.url));
+  assert.ok(layout.includes("<LegacyLinkBridge />"));
+  assert.ok(bridge.includes("router.push(route)"));
+  assert.ok(bridge.includes("event.defaultPrevented"));
+  assert.ok(bridge.includes("event.metaKey"));
+  assert.ok(bridge.includes("router.prefetch"));
+  assert.ok(nav.includes('from "next/link"'));
+  assert.ok(nav.includes("href={item.href}"));
+  assert.ok(home.includes("<LegacyNavigation />"));
+  for (const file of ["index.html","about.html","contact.html","insights.html","services.html","solutions.html","work.html","script.js","styles.css"]) {
+    assert.ok(!root.includes(file), "Obsolete static website file remains: " + file);
+  }
+  assert.ok(read("next.config.ts").includes("/index.html"));
+  assert.ok(read("nid_dob/index.html").includes("<html"));
+  assert.ok(read("public/email/pincode-business-template.html").includes("<html"));
 });

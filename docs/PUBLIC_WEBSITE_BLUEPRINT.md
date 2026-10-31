@@ -39,8 +39,10 @@ A credible, fast, accessible, search-friendly public home for PINCODE IT: a tech
 - Vercel Git-connected project `pincode`; framework preset must be Next.js, output directory auto-detected.
 - All credentials must stay server side. Production content updates should be reviewed in pull requests and tested before release.
 
-## Historical site preservation and migration
-Previous static site files remain in the repository for migration reference. They are not guaranteed to be served under Next.js merely because files sit at repository root. Keep legacy public paths working only by explicitly migrating them to `public/`, implementing an App Router page/route, or configuring verified redirects. **Audit `/nid_dob` and any non-marketing tool before switching traffic**; the existing privacy headers remain in `vercel.json`, but those headers alone do not preserve the old application's assets or functionality.
+## Next.js App Router SPA navigation and legacy cleanup
+The public website uses Next.js App Router pages and client-side transitions (without a full document reload). The homepage and all internal pages render the same native React navigation component using Next.js `Link` with prefetching, active-page state, keyboard Escape handling, and mobile mega-menu navigation. The preserved homepage content continues to render inside React and its ordinary internal links use a small client-side App Router bridge.
+
+The former root-level HTML/CSS/JS marketing site has been removed; original snapshots remain available in Git history. Legacy `/*.html` marketing URLs redirect to their modern Next.js routes. `nid_dob/index.html` is a separate security-sensitive tool, not a marketing page, and the public HTML email template is not a standalone website. **Audit `/nid_dob` independently before enabling it:** existing headers in `vercel.json` do not implement its functionality.
 
 ## Visitor journey
 1. Visitor arrives on mobile or desktop and understands the agency's value proposition.

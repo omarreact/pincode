@@ -203,6 +203,7 @@ test("all Next.js pages reuse the exact legacy homepage header", () => {
 });
 
 test("speed and motion features do not hide server content or delay provider comparison", () => {
+  const home = read("components/LegacyHomepage.tsx");
   const motion = read("components/SiteMotion.tsx");
   const shell = read("components/SiteShell.tsx");
   const style = read("app/globals.css");

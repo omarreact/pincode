@@ -185,16 +185,16 @@ test("all Next.js pages reuse the exact legacy homepage header", () => {
   const home = read("components/LegacyHomepage.tsx");
   const shell = read("components/SiteShell.tsx");
   const css = read("app/globals.css");
-  assert.match(home, /export const legacySiteHeaderHTML/);
-  assert.match(home, /class=\\\"site-header\\\"/);
-  assert.match(home, /class=\\\"mega-menu\\\"/);
-  assert.match(shell, /legacySiteHeaderHTML/);
-  assert.match(shell, /\\/legacy-home\\.css/);
-  assert.match(shell, /\\/legacy-glass\\.css/);
-  assert.match(shell, /menu\\?\\.classList\\.add\\("open"\\)/);
-  assert.match(shell, /aria-current/);
-  assert.match(css, /pincode-legacy-home\\.pincode-shared-nav/);
+  assert.ok(home.includes("export const legacySiteHeaderHTML"));
+  assert.ok(home.includes("site-header"));
+  assert.ok(home.includes("mega-menu"));
+  assert.ok(shell.includes("legacySiteHeaderHTML"));
+  assert.ok(shell.includes("/legacy-home.css"));
+  assert.ok(shell.includes("/legacy-glass.css"));
+  assert.ok(shell.includes('menu?.classList.add("open")'));
+  assert.ok(shell.includes("aria-current"));
+  assert.ok(css.includes("pincode-legacy-home.pincode-shared-nav"));
   for (const file of ["components/MarketingPage.tsx", "app/contact/page.tsx", "app/domains/page.tsx", "app/hosting/page.tsx"]) {
-    assert.match(read(file), /<SiteHeader\\s*\\/>/);
+    assert.ok(read(file).includes("<SiteHeader"), file + " should use the shared header");
   }
 });

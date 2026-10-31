@@ -122,7 +122,8 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
 
 test("domain search is reachable from public navigation", () => {
   assert.ok(read("components/LegacyHomepage.tsx").includes("/domains"));
-  assert.ok(read("components/SiteShell.tsx").includes('href: "/domains"'));
+  assert.ok(read("components/SiteShell.tsx").includes("legacySiteHeaderHTML"));
+  assert.ok(read("components/LegacyHomepage.tsx").includes(">Domain Search</a>"));
   assert.ok(read("app/domains/page.tsx").includes("<DomainSearch"));
   assert.ok(read("app/domains/page.tsx").includes("<SiteHeader"));
 });
@@ -145,7 +146,8 @@ test("provider comparisons show source, renewal and external provider checkout",
   const catalog=read("lib/provider-marketplace.ts");
   assert.match(domainPage, /kind="domain"/);
   assert.match(hosting, /kind="hosting"/);
-  assert.ok(shell.includes('href: "/hosting"'));
+  assert.ok(shell.includes("legacySiteHeaderHTML"));
+  assert.ok(read("components/LegacyHomepage.tsx").includes(">Hosting Deals</a>"));
   assert.ok(market.includes('rel="noopener noreferrer"'));
   assert.ok(market.includes("Published renewal equivalent"));
   assert.ok(market.includes('basis==="refreshed"'));

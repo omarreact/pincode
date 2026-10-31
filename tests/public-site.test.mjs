@@ -105,8 +105,9 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
   assert.match(header, /usePathname/);
   assert.match(header, /aria-current/);
   assert.match(header, /aria-expanded/);
-  assert.match(header, /agency-main-nav/);
-  assert.match(header, /agency-skip/);
+  assert.match(header, /pincode-shared-nav/);
+  assert.match(header, /skip-link/);
+  assert.match(header, /legacySiteHeaderHTML/);
   const styles = read("app/all-pages.css");
   assert.match(styles, /@media\(max-width:890px\)/);
   assert.match(styles, /prefers-reduced-motion/);
@@ -177,4 +178,23 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
   assert.ok(layout.includes("/favicon.svg"));
   assert.match(read("public/favicon.svg"), /pincode-v2-grad/);
   assert.match(read("app/icon.svg"), /pincode-v2-grad/);
+});
+
+
+test("all Next.js pages reuse the exact legacy homepage header", () => {
+  const home = read("components/LegacyHomepage.tsx");
+  const shell = read("components/SiteShell.tsx");
+  const css = read("app/globals.css");
+  assert.match(home, /export const legacySiteHeaderHTML/);
+  assert.match(home, /class=\\\"site-header\\\"/);
+  assert.match(home, /class=\\\"mega-menu\\\"/);
+  assert.match(shell, /legacySiteHeaderHTML/);
+  assert.match(shell, /\\/legacy-home\\.css/);
+  assert.match(shell, /\\/legacy-glass\\.css/);
+  assert.match(shell, /menu\\?\\.classList\\.add\\("open"\\)/);
+  assert.match(shell, /aria-current/);
+  assert.match(css, /pincode-legacy-home\\.pincode-shared-nav/);
+  for (const file of ["components/MarketingPage.tsx", "app/contact/page.tsx", "app/domains/page.tsx", "app/hosting/page.tsx"]) {
+    assert.match(read(file), /<SiteHeader\\s*\\/>/);
+  }
 });

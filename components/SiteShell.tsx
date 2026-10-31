@@ -1,20 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const navigation = [
-  { title: "Home", href: "/" },
-  { title: "Services", href: "/services" },
-  { title: "Domain Search", href: "/domains" },
-  { title: "Hosting Deals", href: "/hosting" },
-  { title: "Solutions", href: "/solutions" },
-  { title: "Work", href: "/work" },
-  { title: "About", href: "/about" },
-  { title: "Insights", href: "/insights" },
-  { title: "Contact", href: "/contact" },
-];
+import { legacySiteHeaderHTML } from "./LegacyHomepage";
 
 function Brand() {
   return (
@@ -27,59 +16,102 @@ function Brand() {
   );
 }
 
+/** Render the homepage's *actual* header HTML on every non-home route.
+ * Scoping the same two CSS files to the wrapper preserves the original look
+ * without changing the content/page styles or the homepage implementation.
+ */
 export function SiteHeader() {
-  const [open, setOpen] = useState(false);
-  const path = usePathname();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
-    setOpen(false);
-  }, [path]);
+    const root = rootRef.current;
+    if (!root) return;
 
-  useEffect(() => {
-    if (!open) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+    const controller = new AbortController();
+    const on = (element: EventTarget | null, type: string, listener: EventListener) => {
+      element?.addEventListener(type, listener, { signal: controller.signal });
     };
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [open]);
+    const menu = root.querySelector<HTMLElement>("[data-mega]");
+    const button = root.querySelector<HTMLElement>("[data-menu-button]");
+    const triggers = Array.from(root.querySelectorAll<HTMLElement>("[data-mega-trigger]"));
+    const mobile = () => window.matchMedia("(max-width: 900px)").matches;
+
+    // Unlike the homepage's hardcoded Home state, inner routes get the proper
+    // active link and aria-current state, including on client navigation.
+    root.querySelectorAll<HTMLAnchorElement>(".nav-links a").forEach(link => {
+      const href = link.getAttribute("href");
+      const selected = href === pathname;
+      link.classList.toggle("active", selected);
+      if (selected) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+
+    const ensureMobileNav = () => {
+      if (!menu || !mobile() || menu.querySelector(".mobile-primary")) return;
+      const source = root.querySelector(".nav-links");
+      const inner = menu.querySelector(".mega-inner");
+      if (!source || !inner) return;
+      const block = document.createElement("div");
+      block.className = "mega-primary mobile-primary";
+      const title = document.createElement("div");
+      title.className = "mega-label";
+      title.textContent = "Navigate";
+      block.append(title);
+      source.querySelectorAll("a").forEach(link => {
+        const clone = document.createElement("a");
+        clone.href = link.getAttribute("href") ?? "/";
+        clone.textContent = link.textContent;
+        block.append(clone);
+      });
+      inner.prepend(block);
+    };
+    const closeMenu = () => {
+      menu?.classList.remove("open");
+      button?.setAttribute("aria-expanded", "false");
+      triggers.forEach(link => link.setAttribute("aria-expanded", "false"));
+    };
+    const openMenu = () => {
+      ensureMobileNav();
+      menu?.classList.add("open");
+      button?.setAttribute("aria-expanded", "true");
+      triggers.forEach(link => link.setAttribute("aria-expanded", "true"));
+    };
+
+    closeMenu();
+    on(button, "click", () => menu?.classList.contains("open") ? closeMenu() : openMenu());
+    triggers.forEach(trigger => {
+      on(trigger, "mouseenter", openMenu);
+      on(trigger, "focus", openMenu);
+      on(trigger, "click", event => {
+        if (mobile()) {
+          event.preventDefault();
+          menu?.classList.contains("open") ? closeMenu() : openMenu();
+        }
+      });
+    });
+    on(menu, "mouseleave", () => { if (!mobile()) closeMenu(); });
+    on(menu, "click", event => {
+      if (event.target instanceof Element && event.target.closest("a")) closeMenu();
+    });
+    on(document, "click", event => {
+      if (event.target instanceof Element && !root.contains(event.target)) closeMenu();
+    });
+    on(document, "keydown", event => {
+      if ((event as KeyboardEvent).key === "Escape") closeMenu();
+    });
+
+    return () => controller.abort();
+  }, [pathname]);
 
   return (
     <>
-      <a className="agency-skip" href="#main">Skip to content</a>
-      <div className="noticebar">Technology that moves business forward <span aria-hidden="true">↗</span></div>
-      <header className="head agency-site-header">
-        <Brand />
-        <button
-          type="button"
-          className="mobile-toggle agency-menu-toggle"
-          aria-label={open ? "Close navigation" : "Open navigation"}
-          aria-expanded={open}
-          aria-controls="agency-primary-nav"
-          onClick={() => setOpen(previous => !previous)}
-        >
-          <span aria-hidden="true">{open ? "✕" : "☰"}</span>
-        </button>
-        <nav
-          id="agency-primary-nav"
-          className={open ? "navigation open agency-main-nav" : "navigation agency-main-nav"}
-          aria-label="Main navigation"
-        >
-          {navigation.map(({ title, href }) => (
-            <Link
-              key={href}
-              href={href}
-              aria-current={path === href ? "page" : undefined}
-              onClick={() => setOpen(false)}
-            >
-              {title}
-            </Link>
-          ))}
-        </nav>
-        <Link className="pill green head-cta agency-site-cta" href="/contact">
-          Start a project <span aria-hidden="true">↗</span>
-        </Link>
-      </header>
+      <link rel="stylesheet" href="/legacy-home.css" precedence="default" />
+      <link rel="stylesheet" href="/legacy-glass.css" precedence="default" />
+      <div id="pincode-legacy-home" className="pincode-shared-nav" ref={rootRef}>
+        <a className="skip-link" href="#main">Skip to content</a>
+        <div dangerouslySetInnerHTML={{ __html: legacySiteHeaderHTML }} />
+      </div>
     </>
   );
 }

@@ -1,6 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 :root{--ink:#101714;--green:#32885d;--mint:#e6f7ee;--paper:#f8faf8}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-inter),Inter,Arial,sans-serif}
 a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}
 button:focus-visible,a:focus-visible{outline:3px solid #22b573;outline-offset:3px}
 
@@ -35,4 +34,29 @@ button:focus-visible,a:focus-visible{outline:3px solid #22b573;outline-offset:3p
 #pincode-legacy-home.pincode-shared-nav .mega-menu {
   position: absolute;
   top: var(--nav);
+}
+
+/* Shared motion: cosmetic only, so slow devices and JS-disabled users still see all content. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-site-motion].site-motion-pending {
+    opacity: 0;
+    translate: 0 18px;
+  }
+  [data-site-motion].site-motion-visible {
+    opacity: 1;
+    translate: 0 0;
+    transition: opacity 520ms cubic-bezier(.22, 1, .36, 1), translate 520ms cubic-bezier(.22, 1, .36, 1);
+    transition-delay: var(--site-motion-delay, 0ms);
+  }
+  [data-site-motion].site-motion-enter {
+    animation: pincode-page-enter 480ms cubic-bezier(.22, 1, .36, 1) both;
+    animation-delay: var(--site-motion-delay, 0ms);
+  }
+  @keyframes pincode-page-enter {
+    from { opacity: .76; translate: 0 10px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-site-motion] { opacity: 1 !important; translate: none !important; animation: none !important; transition: none !important; }
 }

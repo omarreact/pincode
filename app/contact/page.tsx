@@ -16,7 +16,7 @@ export default function ContactPage() {
         <section className="agency-page-hero" aria-labelledby="agency-page-title">
           <div className="agency-hero-ambient agency-ambient-one" aria-hidden="true" />
           <div className="agency-hero-ambient agency-ambient-two" aria-hidden="true" />
-          <div className="agency-hero-panel">
+          <div className="agency-hero-panel" data-site-motion="hero">
             <div className="agency-hero-topline">
               <span className="agency-eyebrow">PINCODE IT / CONTACT</span>
               <span className="agency-hero-signature">A CLEAR START <span aria-hidden="true">↗</span></span>
@@ -41,30 +41,30 @@ export default function ContactPage() {
         </section>
 
         <section id="project-brief" className="agency-contact-section" aria-labelledby="project-brief-heading">
-          <div className="agency-contact-intro">
+          <div className="agency-contact-intro" data-site-motion="section">
             <span className="agency-eyebrow">01 / GUIDED ENQUIRY</span>
             <h2 id="project-brief-heading">Turn an idea into a useful first brief.</h2>
             <p>Answer three short questions, then prepare an email in your own mail application. Nothing is automatically sent, saved or submitted to a CRM.</p>
           </div>
-          <div className="agency-contact-shell">
+          <div className="agency-contact-shell" data-site-motion="section">
             <ContactBuilder />
           </div>
         </section>
 
         <section className="agency-contact-section" aria-labelledby="direct-contact-heading">
-          <div className="agency-contact-intro">
+          <div className="agency-contact-intro" data-site-motion="section">
             <span className="agency-eyebrow">02 / DIRECT CONTACT</span>
             <h2 id="direct-contact-heading">Prefer a direct message?</h2>
             <p>Choose the simplest way to start a conversation. There is no account requirement and no phone number on this website.</p>
           </div>
           <div className="agency-contact-options">
-            <article className="agency-contact-option">
+            <article className="agency-contact-option" data-site-motion="card">
               <small>BUSINESS EMAIL</small>
               <h3>pincodeit.com.bd@gmail.com</h3>
               <p>Share your challenge, an idea or the next step you'd like to discuss.</p>
               <a href="mailto:pincodeit.com.bd@gmail.com">Compose an email ↗</a>
             </article>
-            <article className="agency-contact-option">
+            <article className="agency-contact-option" data-site-motion="card">
               <small>BASED IN</small>
               <h3>Dhaka, Bangladesh</h3>
               <p>PINCODE IT collaborates on digital projects and ongoing technical support. We don't publish an unverified street address.</p>

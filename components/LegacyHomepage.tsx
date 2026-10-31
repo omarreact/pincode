@@ -82,7 +82,7 @@ export function LegacyHomepage() {
     bind(query("[data-modal-close]"), "click", hideModal);
     bind(modal, "click", event => { if (event.target === modal) hideModal(); });
     bind(document, "keydown", event => {
-      if ((event as KeyboardEvent).key === "Escape") { closeMenu(); hideModal(); }
+      if ((event as KeyboardEvent).key === "Escape") { hideModal(); }
     });
     all("[data-year]").forEach(element => { element.textContent = String(new Date().getFullYear()); });
 

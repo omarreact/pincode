@@ -20,3 +20,19 @@ button:focus-visible,a:focus-visible{outline:3px solid #22b573;outline-offset:3p
 .contact-builder{background:rgba(16,31,23,.94)}
 @supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){.head,.navigation.open{background:#f8faf8}.marketing-card,.process article{background:#fff}}
 @media(prefers-reduced-transparency:reduce){.head,.navigation.open,.marketing-card,.service,.process article{backdrop-filter:none;-webkit-backdrop-filter:none;background:#f8faf8}}
+
+/* Reuse the original homepage header on native Next.js pages.
+   Sticky is applied to the short wrapper rather than the embedded header,
+   so the navigation remains visible while the rest of the page scrolls. */
+#pincode-legacy-home.pincode-shared-nav {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  background: transparent;
+  overflow: visible;
+}
+#pincode-legacy-home.pincode-shared-nav .site-header { position: relative; }
+#pincode-legacy-home.pincode-shared-nav .mega-menu {
+  position: absolute;
+  top: var(--nav);
+}

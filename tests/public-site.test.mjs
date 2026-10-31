@@ -105,8 +105,9 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
   assert.match(header, /usePathname/);
   assert.match(header, /aria-current/);
   assert.match(header, /aria-expanded/);
-  assert.match(header, /agency-main-nav/);
-  assert.match(header, /agency-skip/);
+  assert.match(header, /pincode-shared-nav/);
+  assert.match(header, /skip-link/);
+  assert.match(header, /legacySiteHeaderHTML/);
   const styles = read("app/all-pages.css");
   assert.match(styles, /@media\(max-width:890px\)/);
   assert.match(styles, /prefers-reduced-motion/);
@@ -121,7 +122,8 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
 
 test("domain search is reachable from public navigation", () => {
   assert.ok(read("components/LegacyHomepage.tsx").includes("/domains"));
-  assert.ok(read("components/SiteShell.tsx").includes('href: "/domains"'));
+  assert.ok(read("components/SiteShell.tsx").includes("legacySiteHeaderHTML"));
+  assert.ok(read("components/LegacyHomepage.tsx").includes(">Domain Search</a>"));
   assert.ok(read("app/domains/page.tsx").includes("<DomainSearch"));
   assert.ok(read("app/domains/page.tsx").includes("<SiteHeader"));
 });
@@ -144,7 +146,8 @@ test("provider comparisons show source, renewal and external provider checkout",
   const catalog=read("lib/provider-marketplace.ts");
   assert.match(domainPage, /kind="domain"/);
   assert.match(hosting, /kind="hosting"/);
-  assert.ok(shell.includes('href: "/hosting"'));
+  assert.ok(shell.includes("legacySiteHeaderHTML"));
+  assert.ok(read("components/LegacyHomepage.tsx").includes(">Hosting Deals</a>"));
   assert.ok(market.includes('rel="noopener noreferrer"'));
   assert.ok(market.includes("Published renewal equivalent"));
   assert.ok(market.includes('basis==="refreshed"'));
@@ -177,4 +180,23 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
   assert.ok(layout.includes("/favicon.svg"));
   assert.match(read("public/favicon.svg"), /pincode-v2-grad/);
   assert.match(read("app/icon.svg"), /pincode-v2-grad/);
+});
+
+
+test("all Next.js pages reuse the exact legacy homepage header", () => {
+  const home = read("components/LegacyHomepage.tsx");
+  const shell = read("components/SiteShell.tsx");
+  const css = read("app/globals.css");
+  assert.ok(home.includes("export const legacySiteHeaderHTML"));
+  assert.ok(home.includes("site-header"));
+  assert.ok(home.includes("mega-menu"));
+  assert.ok(shell.includes("legacySiteHeaderHTML"));
+  assert.ok(shell.includes("/legacy-home.css"));
+  assert.ok(shell.includes("/legacy-glass.css"));
+  assert.ok(shell.includes('menu?.classList.add("open")'));
+  assert.ok(shell.includes("aria-current"));
+  assert.ok(css.includes("pincode-legacy-home.pincode-shared-nav"));
+  for (const file of ["components/MarketingPage.tsx", "app/contact/page.tsx", "app/domains/page.tsx", "app/hosting/page.tsx"]) {
+    assert.ok(read(file).includes("<SiteHeader"), file + " should use the shared header");
+  }
 });

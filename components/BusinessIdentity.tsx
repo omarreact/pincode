@@ -3,7 +3,6 @@ const details = {
   tagline: "Coding Made Simple",
   description: "PINCODE is one of the newest famous IT firms. Our tag 'Coding Made Simple' defines who we are. We provide the best IT solution in a very short time with a professional team of skilled workers.",
   address: "Patira Bazar, Opposite of Purbachal Sector #1, Tolna, Khilkhet, Dhaka 1229, Bangladesh",
-  phone: "01878-550385",
   website: "https://pincodeit.com/",
   hours: "Monday–Thursday, 9:00 AM–5:00 PM",
   services: ["Website Design", "Application Development", "Mobile App Development",
@@ -20,7 +19,6 @@ const structuredData = {
   description: details.description,
   url: details.website,
   logo: "https://pincodeit.com/brand/pincode-mark.svg",
-  telephone: "+8801878550385",
   address: {
     "@type": "PostalAddress", streetAddress: "Patira Bazar, Opposite of Purbachal Sector #1, Tolna, Khilkhet",
     addressLocality: "Dhaka", postalCode: "1229", addressCountry: "BD",
@@ -68,7 +66,6 @@ export function BusinessIdentity() {
           </address>
           <p style={{ color: "#59695e", lineHeight: 1.8, fontSize: 14 }}>
             <strong>Hours:</strong> {details.hours}<br/>
-            <strong>Phone:</strong> <a href="tel:+8801878550385" style={{ color: "#32885d", textDecoration: "underline" }}>{details.phone}</a>
           </p>
           <a href="https://share.google/TPwIHMdnBS5GtG8ul" target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-block", borderRadius: 40, background: "#32885d", padding: "12px 18px", color: "white", fontSize: 13, fontWeight: 700 }}>

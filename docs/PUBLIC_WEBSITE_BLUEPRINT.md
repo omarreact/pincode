@@ -40,7 +40,7 @@ A credible, fast, accessible, search-friendly public home for PINCODE IT: a tech
 - All credentials must stay server side. Production content updates should be reviewed in pull requests and tested before release.
 
 ## Historical site preservation and migration
-Previous static site files remain in the repository for migration reference. They are not guaranteed to be served under Next.js merely because files sit at repository root. Keep legacy public paths working only by explicitly migrating them to `public/`, implementing an App Router page/route, or configuring verified redirects. **Audit `/nid_dob` and any non-marketing tool before switching traffic**; the existing privacy headers remain in `vercel.json`, but those headers alone do not preserve the old application's assets or functionality.
+The seven old root-level marketing `.html` pages have been removed in favor of their existing Next.js App Router routes. Git history preserves the old snapshots, and `next.config.ts` continues to redirect the old `.html` URLs. Standalone root `styles.css` and `script.js` are left untouched by this HTML-only cleanup and are not loaded by the Next.js marketing pages. Preserve the separate `nid_dob/index.html` utility and `public/email/pincode-business-template.html` (the latter is an email asset, not a website page). **Audit `/nid_dob` and any non-marketing tool before switching traffic**; the existing privacy headers in `vercel.json` alone do not guarantee its functionality.
 
 ## Visitor journey
 1. Visitor arrives on mobile or desktop and understands the agency's value proposition.

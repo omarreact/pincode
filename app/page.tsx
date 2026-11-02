@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { LegacyHomepage } from "@/components/LegacyHomepage";
-import { LegacyLinkBridge } from "@/components/LegacyLinkBridge";
-import { BusinessIdentity } from "@/components/BusinessIdentity";
+import { LegacyHomepage } from "@/components/home/LegacyHomepage";
+import { LegacyLinkBridge } from "@/components/home/LegacyLinkBridge";
+import { BusinessIdentity } from "@/components/home/BusinessIdentity";
 
 export const metadata: Metadata = {
   title: { absolute: "PINCODE IT — Coding Made Simple" },

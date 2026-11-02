@@ -1,5 +1,5 @@
-import { SiteHeader, SiteFooter } from "@/components/SiteShell";
-import { AgencyPageHero } from "@/components/AgencyPageHero";
+import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
+import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
 
 export default function NotFound() {
   return (

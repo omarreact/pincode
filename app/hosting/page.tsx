@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { SiteHeader, SiteFooter } from "@/components/SiteShell";
-import { AgencyPageHero } from "@/components/AgencyPageHero";
-import { ProviderMarketplace } from "@/components/ProviderMarketplace";
+import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
+import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
+import { ProviderMarketplace } from "@/components/marketplace/ProviderMarketplace";
 import { getReferenceMarketplace } from "@/lib/provider-marketplace";
 import "../domains/domains.css";
 import "../domains/marketplace.css";

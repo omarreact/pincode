@@ -5,6 +5,10 @@ import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
 import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
 import { insightArticles, getInsightArticle } from "@/lib/insight-articles";
 import "@/components/marketing/legal.css";
+import Image from "next/image";
+import { pagePhotography, photo } from "@/lib/stock-photos";
+import { PhotoMosaic } from "@/components/marketing/PhotoMosaic";
+import "@/components/marketing/article-photo.css";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -49,6 +53,16 @@ export default async function InsightArticlePage({
           secondary={{ label: "All insights", href: "/insights", arrow: "↗" }}
           stages={["LEARN", "APPLY", "IMPROVE"]}
         />
+        <div className="agency-article-image">
+          <Image
+            src={photo(pagePhotography.insights.cards[insightArticles.findIndex(item => item.slug === slug) % pagePhotography.insights.cards.length]).src}
+            alt={photo(pagePhotography.insights.cards[insightArticles.findIndex(item => item.slug === slug) % pagePhotography.insights.cards.length]).alt}
+            fill
+            sizes="(max-width: 760px) 92vw, 75vw"
+            loading="lazy"
+            quality={68}
+          />
+        </div>
         <article id="article-content" className="agency-legal" aria-labelledby="agency-page-title">
           <p className="agency-legal-updated">{article.category} · {article.readingTime}</p>
           {article.sections.map((section, index) => (
@@ -59,6 +73,7 @@ export default async function InsightArticlePage({
           ))}
           <p><Link href="/insights">← View all insights</Link></p>
         </article>
+        <PhotoMosaic page="insights" compact />
       </main>
       <SiteFooter />
     </>

@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/webp"],
+    minimumCacheTTL: 604800,
   },
   async redirects() {
     return [{ source: "/index.html", destination: "/", permanent: true }, ...legacy.map((page) => ({

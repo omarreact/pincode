@@ -57,5 +57,5 @@ The separate `/nid_dob` identity-verification HTML and authentication files are 
 
 No AI-generated folders are required for production.
 
-## Project imagery
-The image-rich pages combine repository-backed PinCMS/PinAI screenshots and credited, illustrative Unsplash photography. Screenshots are copied into `public/images/projects`, while editorial photographs use responsive Next.js Image optimization; see `docs/IMAGE-SOURCES.md` for provenance. They are not represented as staff photos, client work or verified production results.
+## Photography
+PINCODE IT uses commercially usable, illustrative Unsplash editorial photography instead of repository screenshots or simulated client portfolios. See `docs/IMAGE-SOURCES.md` for photographic provenance and optimization rules. Main content uses Next.js Image with server-side responsive output and lazy loading; the legacy homepage markup uses responsive Unsplash image sizes.

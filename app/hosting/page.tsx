@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
 import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
 import { MarketplaceVisualLead } from "@/components/marketing/MarketplaceVisualLead";
+import { PhotoMosaic } from "@/components/marketing/PhotoMosaic";
 import { ProviderMarketplace } from "@/components/marketplace/ProviderMarketplace";
 import { getReferenceMarketplace } from "@/lib/provider-marketplace";
 import "../domains/domains.css";
@@ -29,6 +30,7 @@ export default function HostingComparison(){
         />
         <MarketplaceVisualLead kind="hosting" />
         <ProviderMarketplace kind="hosting" initialFeed={getReferenceMarketplace("hosting")}/>
+        <PhotoMosaic page="hosting" compact />
       </main>
       <SiteFooter/>
     </>

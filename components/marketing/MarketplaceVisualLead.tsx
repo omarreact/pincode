@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import "./marketplace-visual-lead.css";
+import { photo } from "@/lib/stock-photos";
 
 /** Small, relevant visual explanation ahead of transactional tools. */
 export function MarketplaceVisualLead({ kind }: { kind: "domain" | "hosting" }) {
@@ -9,14 +10,12 @@ export function MarketplaceVisualLead({ kind }: { kind: "domain" | "hosting" }) 
     <section className="agency-market-visual" aria-labelledby="agency-market-title">
       <div className="agency-market-picture">
         <Image
-          src={domain
-            ? "https://images.unsplash.com/photo-1451187580459-43490279c0fa"
-            : "https://images.unsplash.com/photo-1558494949-ef010cbdcc31"}
+          src={photo(domain ? "connected" : "infrastructure").src}
           fill
           sizes="(max-width: 820px) 100vw, 48vw"
           alt={domain ? "Earth viewed from space illustrating an internet-wide presence" : "Server hardware illustrating web-hosting infrastructure"}
           loading="lazy"
-          quality={75}
+          quality={65}
         />
         <span className="agency-market-photo-note">Illustrative photography · Unsplash</span>
       </div>

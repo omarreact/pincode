@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MarketingPage } from "@/components/marketing/MarketingPage";
+import { ProjectShowcase } from "@/components/marketing/ProjectShowcase";
 
 export const metadata: Metadata = {
   title: "Selected Engineering Work & Public Projects",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
-  return <MarketingPage data={{
+  return <MarketingPage feature={<ProjectShowcase />} data={{
     eyebrow: "PINCODE IT / OUR WORK",
     title: "Proof belongs in the product.",
     intro: "Explore public engineering work, architecture and practical delivery approaches. Client references are shared only with permission.",
@@ -26,6 +27,8 @@ export default function WorkPage() {
       {
         id: "pincms",
         title: "PinCMS — Next.js content studio",
+        image: "/images/projects/pincms-themes.webp",
+        imageAlt: "PinCMS theme-management interface preview from the public repository",
         body: "Content editing and page-building interfaces from an open development project. Explore the public source and repository screenshots to understand its current scope.",
         tag: "PUBLIC PROJECT",
         href: "https://github.com/omarreact/PinCMS",

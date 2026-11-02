@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LegacyNavigation } from "./LegacyNavigation";
 import { SiteMotion } from "./SiteMotion";
 import { FooterLinkGroup } from "./FooterLinkGroup";
+import { MarketingCallToAction, type MarketingCtaVariant } from "@/components/marketing/MarketingCallToAction";
 import { site } from "@/lib/site-config";
 
 function Brand() {
@@ -30,9 +31,11 @@ export function SiteHeader() {
   );
 }
 
-export function SiteFooter() {
+export function SiteFooter({ ctaVariant = "default" }: { ctaVariant?: MarketingCtaVariant } = {}) {
   return (
-    <footer className="foot agency-site-footer">
+    <>
+      <MarketingCallToAction variant={ctaVariant} />
+      <footer className="foot agency-site-footer">
       <div className="foot-grid agency-foot-grid">
         <div className="agency-foot-intro">
           <Brand />
@@ -71,6 +74,7 @@ export function SiteFooter() {
         <span>© {new Date().getFullYear()} PINCODE IT. All rights reserved.</span>
         <span>Built for what comes next.</span>
       </div>
-    </footer>
+      </footer>
+    </>
   );
 }

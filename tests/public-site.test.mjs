@@ -27,6 +27,41 @@ test("Next.js source tree is organized without unused root snapshots", () => {
   assert.match(read("app/robots.ts"), /site.url/);
 });
 
+test("one branded footer and conversion CTA on every public page", () => {
+  const shell = read("components/layout/SiteShell.tsx");
+  const homepage = read("components/home/LegacyHomepage.tsx");
+  const home = read("app/page.tsx");
+  const marketing = read("components/marketing/MarketingPage.tsx");
+  const cta = read("components/marketing/MarketingCallToAction.tsx");
+  const css = read("app/all-pages.css");
+  const legal = read("components/marketing/LegalPage.tsx");
+  const article = read("app/insights/[slug]/page.tsx");
+  assert.ok(home.includes("<SiteFooter />"));
+  assert.ok(home.includes("<LegacyHomepage />"));
+  assert.ok(!homepage.includes('class=\\\"site-footer'));
+  assert.ok(!homepage.includes('class=\\\"cta-band'));
+  assert.ok(!homepage.includes("data-year"));
+  assert.ok(shell.includes("<MarketingCallToAction variant={ctaVariant} />"));
+  assert.ok(shell.includes('className="foot agency-site-footer"'));
+  assert.ok(!marketing.includes("<MarketingCallToAction"));
+  assert.ok(marketing.includes("<SiteFooter />"));
+  assert.ok(legal.includes("<SiteFooter />"));
+  assert.ok(article.includes("<SiteFooter />"));
+  for (const page of ["domains", "hosting", "contact", "not-found"]) {
+    assert.ok(read("app/" + page + (page === "not-found" ? ".tsx" : "/page.tsx")).includes("<SiteFooter"), "Missing common footer on " + page);
+  }
+  assert.ok(read("app/contact/page.tsx").includes('ctaVariant="contact"'));
+  assert.ok(cta.includes("mailto:"));
+  assert.ok(cta.includes('href="/services"'));
+  assert.ok(cta.includes("agency-cta-visual"));
+  assert.ok(css.includes(".agency-footer-cta{"));
+  assert.ok(css.includes(".agency-cta-actions"));
+  assert.ok(css.includes("@media(max-width:420px)"));
+  assert.ok(css.includes("prefers-reduced-motion:reduce"));
+  assert.ok(!read("public/legacy-home.css").includes(".cta-band"));
+  assert.ok(!read("public/legacy-glass.css").includes(".cta-band"));
+});
+
 test("Process section uses four compact cards without redundant stage pills", () => {
   const home = read("components/home/LegacyHomepage.tsx");
   const css = read("public/legacy-home.css");
@@ -141,7 +176,7 @@ test("both restored styling and glass styling are shipped as page resources", ()
 
 test("glass backgrounds cover navigation, controls and card families", () => {
   const css = read("public/legacy-glass.css");
-  for (const name of [".site-header", ".mega-menu", ".nav-link", ".button", ".service-tile", ".story-card", ".process-step", ".case-card", ".cta-band", ".modal-card"]) {
+  for (const name of [".site-header", ".mega-menu", ".nav-link", ".button", ".service-tile", ".story-card", ".process-step", ".case-card", ".modal-card"]) {
     assert.ok(css.includes(name), "Missing glass style for " + name);
   }
   assert.match(css, /backdrop-filter/);
@@ -388,7 +423,7 @@ test("shared design is server-rendered and homepage-only JS stays on Home", () =
   assert.match(shell, /<LegacyNavigation \/>/);
   const marketing = read("components/marketing/MarketingPage.tsx");
   assert.match(marketing, /<AgencySectionIntro/);
-  assert.match(marketing, /<MarketingCallToAction/);
+  assert.doesNotMatch(marketing, /<MarketingCallToAction/);
   assert.match(marketing, /<MarketingTopicLink/);
   assert.match(marketing, /<MarketingTopicCard/);
   const contact = read("app/contact/page.tsx");

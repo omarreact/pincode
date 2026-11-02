@@ -2,7 +2,6 @@ import { SiteHeader, SiteFooter } from "../layout/SiteShell";
 import { AgencyPageHero } from "./AgencyPageHero";
 import { AgencySectionIntro } from "./AgencySectionIntro";
 import { MarketingTopicLink, MarketingTopicCard, type MarketingTopicData } from "./MarketingTopic";
-import { MarketingCallToAction } from "./MarketingCallToAction";
 import { MarketingVisualStage, type MarketingStory } from "./MarketingVisualStage";
 import type { ReactNode } from "react";
 import { PhotoMosaic } from "./PhotoMosaic";
@@ -67,7 +66,6 @@ export function MarketingPage({ data, feature }: { data: PageContent; feature?: 
         </section>
 
         <PhotoMosaic page={data.story} />
-        <MarketingCallToAction />
       </main>
       <SiteFooter />
     </>

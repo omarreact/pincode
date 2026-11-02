@@ -12,7 +12,7 @@ export function SiteMotion() {
   useEffect(() => {
     const main = document.querySelector<HTMLElement>("main#main");
     if (!main || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const nodes = Array.from(main.querySelectorAll<HTMLElement>("[data-site-motion]"));
+    const nodes = Array.from(main.querySelectorAll<HTMLElement>('[data-site-motion="section"], [data-site-motion="card"]'));
     if (!nodes.length) return;
 
     const animate = (node: HTMLElement) => {
@@ -37,9 +37,10 @@ export function SiteMotion() {
       if (node.dataset.siteMotion === "card") {
         node.style.setProperty("--site-motion-delay", String(Math.min(index % 3, 2) * 65) + "ms");
       }
-      // Above-the-fold content is never hidden awaiting hydration.
+      // Never reset already painted above-the-fold content after hydration.
+      // The hero entrance is CSS-only and starts on the first rendered frame.
       if (node.getBoundingClientRect().top < window.innerHeight * 0.9) {
-        node.classList.add("site-motion-enter");
+        node.classList.add("site-motion-visible");
       } else {
         node.classList.add("site-motion-pending");
         observer.observe(node);
@@ -49,7 +50,7 @@ export function SiteMotion() {
     return () => {
       observer.disconnect();
       nodes.forEach(node => {
-        node.classList.remove("site-motion-pending", "site-motion-visible", "site-motion-enter");
+        node.classList.remove("site-motion-pending", "site-motion-visible");
         node.style.removeProperty("--site-motion-delay");
       });
     };

@@ -376,20 +376,18 @@ test("professional site essentials: canonical SEO, policies, errors and domain e
   assert.equal(domainEmail, "admin@pincodeit.com");
 });
 
-test("public work samples and insight articles link to verifiable source", () => {
+test("work page uses honest editorial photography, and insight routes remain intact", () => {
   const work = read("app/work/page.tsx");
   const insights = read("app/insights/page.tsx");
-  const cards = read("components/marketing/MarketingTopic.tsx");
   const articles = read("lib/insight-articles.ts");
   const articlePage = read("app/insights/[slug]/page.tsx");
-  assert.match(work, /omarreact\/shohoz-jomir-hishab/);
-  assert.match(work, /omarreact\/PinAI/);
-  assert.match(work, /Public engineering projects/i);
-  assert.match(cards, /noopener noreferrer/);
-  assert.match(cards, /topic.href/);
+  assert.match(work, /<WorkPhotoEditorial/);
+  assert.match(work, /Illustrative editorial images/i);
+  assert.doesNotMatch(work, /PinCMS|PinAI|public project|github.com\/omarreact/i);
   assert.match(insights, /\/insights\/life-after-launch/);
   assert.match(articlePage, /generateStaticParams/);
   assert.match(articlePage, /generateMetadata/);
+  assert.match(articlePage, /PhotoMosaic page="insights"/);
   assert.match(articles, /performance-is-part-of-design/);
   assert.match(read("components/domains/DomainSearch.tsx"), /www.namecheap.com\/domains\/domain-name-search/);
 });
@@ -415,40 +413,40 @@ test("marketing pages include distinctive lightweight visual storytelling", () =
   assert.match(read("components/marketing/MarketingTopic.tsx"), /index % 6/);
 });
 
-test("visual-first design uses verified project assets and accessible responsive imagery", () => {
-  const screenshots = [
-    "pincms-dashboard.webp", "pincms-editor.webp", "pincms-themes.webp",
-    "pinai-builder.png", "pinai-scan.png",
-  ];
-  for (const filename of screenshots) {
-    const path = new URL("../public/images/projects/" + filename, import.meta.url);
-    assert.ok(statSync(path).size > 8000, "Missing or truncated project screenshot: " + filename);
-  }
+test("professional stock photography is shared, responsive and not a fake portfolio", () => {
   const home = read("components/home/LegacyHomepage.tsx");
-  assert.match(home, /pincode-visual-proof/);
-  assert.match(home, /pincms-dashboard.webp/);
-  assert.match(home, /pinai-builder.png/);
-  assert.ok(home.includes('loading=\\\"lazy\\\"'));
-  const gallery = read("components/marketing/ProjectShowcase.tsx");
-  assert.ok(gallery.includes('from "next/image"'));
-  assert.match(gallery, /pincms-editor.webp/);
-  assert.match(gallery, /pinai-scan.png/);
-  assert.match(gallery, /noopener noreferrer/);
+  const stock = read("lib/stock-photos.ts");
+  const marketing = read("components/marketing/MarketingPage.tsx");
+  const mosaic = read("components/marketing/PhotoMosaic.tsx");
   const stage = read("components/marketing/MarketingVisualStage.tsx");
-  assert.ok(stage.includes("Image src={story.photo}"));
-  assert.match(stage, /sizes=/);
-  assert.match(stage, /loading="lazy"/);
-  assert.match(stage, /Illustrative photography/);
-  assert.ok(read("components/marketing/MarketingPage.tsx").includes("{feature}"));
-  assert.ok(read("app/work/page.tsx").includes('feature={<ProjectShowcase />}'));
-  assert.match(read("app/work/page.tsx"), /pincms-themes.webp/);
-  assert.match(read("components/marketing/MarketingTopic.tsx"), /topic.image/);
-  assert.ok(read("components/marketing/MarketplaceVisualLead.tsx").includes('from "next/image"'));
-  assert.match(read("app/domains/page.tsx"), /MarketplaceVisualLead kind="domain"/);
-  assert.match(read("app/hosting/page.tsx"), /MarketplaceVisualLead kind="hosting"/);
-  assert.match(read("app/insights/page.tsx"), /imageAlt:/);
-  assert.match(read("next.config.ts"), /images.unsplash.com/);
-  assert.match(read("docs/IMAGE-SOURCES.md"), /Unsplash/);
+  const portfolio = read("components/marketing/WorkPhotoEditorial.tsx");
+  const doc = read("docs/IMAGE-SOURCES.md");
+  const root = readdirSync(new URL("../public/images", import.meta.url));
+  assert.ok(!root.includes("projects"), "Repository screenshots must not ship");
+  assert.doesNotMatch(home, /PinCMS|PinAI|images\/projects/i);
+  assert.doesNotMatch(read("app/work/page.tsx"), /PinCMS|PinAI|images\/projects/i);
+  assert.ok(home.includes("pincode-visual-proof"));
+  assert.ok(home.includes("pincode-service-photo"));
+  assert.ok(home.includes("images.unsplash.com"));
+  assert.ok(home.includes('loading=\\\"lazy\\\"'));
+  assert.match(marketing, /<PhotoMosaic page=\{data.story\}/);
+  assert.match(marketing, /editorialImages/);
+  assert.match(stage, /heroPhoto.src/);
+  assert.match(mosaic, /pagePhotography\[page\]/);
+  assert.match(mosaic, /sizes=/);
+  assert.match(mosaic, /loading="lazy"/);
+  assert.match(portfolio, /next\/image/);
+  assert.match(portfolio, /illustrative editorial photographs/);
+  assert.match(stock, /Unsplash/);
+  for (const page of ["services","solutions","work","about","insights","contact","domains","hosting"]) {
+    assert.ok(stock.includes(page + ": {"), "Missing photo collection: " + page);
+  }
+  for (const path of ["app/contact/page.tsx","app/domains/page.tsx","app/hosting/page.tsx"]) {
+    assert.match(read(path), /<PhotoMosaic/);
+  }
+  assert.match(read("app/insights/[slug]/page.tsx"), /agency-article-image/);
+  assert.match(read("next.config.ts"), /minimumCacheTTL: 604800/);
+  assert.match(doc, /unsplash.com\/license/);
 });
 
 test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {

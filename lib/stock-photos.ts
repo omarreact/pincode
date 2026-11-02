@@ -5,7 +5,7 @@
  * represent PINCODE IT employees, clients or completed customer projects.
  * All sources are documented in docs/IMAGE-SOURCES.md.
  */
-const unsplash = (id: string) => `https://images.unsplash.com/${id}`;
+const unsplash = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=76`;
 
 export const photos = {
   programming: { src: unsplash("photo-1498050108023-c5249f4df085"), alt: "Laptop showing software code in a bright workspace" },

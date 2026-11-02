@@ -27,6 +27,37 @@ test("Next.js source tree is organized without unused root snapshots", () => {
   assert.match(read("app/robots.ts"), /site.url/);
 });
 
+test("mobile UI stays visible, compact and free of overlapping duplicate CTAs", () => {
+  const homepage = read("components/home/LegacyHomepage.tsx");
+  const base = read("public/legacy-home.css");
+  const site = read("app/globals.css");
+  const identity = read("components/home/BusinessIdentity.tsx");
+
+  // The old full-page screenshot bug came from opacity:0 until an
+  // IntersectionObserver callback fired for every below-the-fold section.
+  assert.doesNotMatch(homepage, /revealObserver/);
+  assert.match(base, /#pincode-legacy-home \\.reveal,\\s*#pincode-legacy-home \\.reveal\\.visible\\s*\\{\\s*opacity:1/);
+  assert.match(base, /@keyframes pincode-hero-enter/);
+  assert.match(base, /prefers-reduced-motion:reduce/);
+  assert.match(site, /\\[data-site-motion\\]\\.site-motion-pending\\s*\\{\\s*opacity: 1/);
+
+  // A second floating project button obscured the mobile heading.
+  assert.doesNotMatch(homepage, /class=\\\\\"floating-contact/);
+  // The homepage's footer is the only visible footer; the organization
+  // metadata is still emitted as a JSON-LD script.
+  assert.match(identity, /application\\/ld\\+json/);
+  assert.doesNotMatch(identity, /<section|<h2|<address/);
+
+  // Responsive treatment: no huge fixed mobile hero height, and the
+  // gallery, process and service cards are reasonably dense.
+  assert.match(base, /max-width:760px/);
+  assert.match(base, /\\.hero\\{min-height:0;padding:28px 0 45px\\}/);
+  assert.match(base, /\\.pincode-visual-proof-grid\\{grid-template-columns:repeat\\(2,minmax\\(0,1fr\\)\\)/);
+  assert.match(base, /\\.process-step\\{min-height:165px/);
+  assert.match(base, /\\.service-tile\\{/);
+  assert.match(base, /\\.pincode-visual-proof\\{[\\s\\S]*background-color:#0d3021/);
+});
+
 test("homepage has no announcement top bar and dropdown stays aligned", () => {
   const home = read("components/home/LegacyHomepage.tsx");
   const css = read("public/legacy-home.css");

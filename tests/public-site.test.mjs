@@ -27,6 +27,32 @@ test("Next.js source tree is organized without unused root snapshots", () => {
   assert.match(read("app/robots.ts"), /site.url/);
 });
 
+test("Windows 150% scaling and browser zoom keep the homepage proportional", () => {
+  const css = read("public/legacy-home.css");
+  const nav = read("components/layout/LegacyNavigation.tsx");
+  const home = read("components/home/LegacyHomepage.tsx");
+
+  // A 1920px monitor at 150% presents ~1280 CSS pixels, not 1920.
+  assert.ok(css.includes("@media(min-width:1181px) and (max-width:1500px)"));
+  assert.ok(css.includes("@media(max-width:1180px)"));
+  assert.ok(nav.includes("(max-width: 1180px)"), "Menu logic and CSS need identical breakpoints");
+  assert.ok(css.includes(".nav-links{display:none}"));
+  assert.ok(css.includes(".mobile-primary{display:block}"));
+
+  // Photo regions must be bounded; they used to occupy most of each card.
+  assert.ok(css.includes(".pincode-preview-window{"));
+  assert.ok(css.includes("height:clamp(160px,17vw,232px)"));
+  assert.ok(css.includes("object-position:center 70%"));
+  assert.ok(css.includes(".case-screen,"));
+  assert.ok(css.includes("order:-1;"));
+  assert.ok(css.includes("height:clamp(180px,19vw,245px)"));
+  assert.ok(css.includes(".service-tile .button{"));
+  assert.ok(css.includes("margin-bottom:120px"));
+  assert.ok(css.includes("@media(max-width:620px)"));
+  assert.ok(home.includes("pincode-visual-proof-grid"));
+  assert.ok(home.includes("case-grid"));
+});
+
 test("mobile UI stays visible, compact and free of overlapping duplicate CTAs", () => {
   const homepage = read("components/home/LegacyHomepage.tsx");
   const base = read("public/legacy-home.css");

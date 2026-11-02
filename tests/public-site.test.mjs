@@ -318,7 +318,7 @@ test("marketplace feed is restricted and transparently cached", () => {
   assert.ok(read("app/domains/marketplace.css").includes("@media(max-width:760px)"));
 });
 
-test("refined PINCODE IT logo is consistent across header, footer, legacy homepage and metadata", () => {
+test("refined PINCODE IT logo is consistent across shared footer, CTA, navigation and metadata", () => {
   const symbol = read("public/brand/pincode-mark.svg");
   assert.match(symbol, /pincode-v2-grad/);
   assert.match(symbol, /fill-rule="evenodd"/);
@@ -326,7 +326,10 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
   assert.match(header, /img src="\/brand\/pincode-mark\.svg"/);
   assert.doesNotMatch(header, /<svg viewBox="0 0 48 48"/);
   const legacy = read("components/home/LegacyHomepage.tsx");
-  assert.ok(legacy.includes("/brand/pincode-mark.svg"));
+  const cta = read("components/marketing/MarketingCallToAction.tsx");
+  const home = read("app/page.tsx");
+  assert.ok(home.includes("<SiteFooter />"));
+  assert.ok(cta.includes("/brand/pincode-mark.svg"));
   assert.doesNotMatch(legacy, /M24 3 42 13.5/);
   const layout = read("app/layout.tsx");
   assert.ok(layout.includes("/opengraph-image"));

@@ -415,6 +415,40 @@ test("marketing pages include distinctive lightweight visual storytelling", () =
   assert.match(read("components/marketing/MarketingTopic.tsx"), /index % 6/);
 });
 
+test("visual-first design uses verified project assets and accessible responsive imagery", () => {
+  const screenshots = [
+    "pincms-dashboard.webp", "pincms-editor.webp", "pincms-themes.webp",
+    "pinai-builder.png", "pinai-scan.png",
+  ];
+  for (const filename of screenshots) {
+    const path = new URL("../public/images/projects/" + filename, import.meta.url);
+    assert.ok(statSync(path).size > 8000, "Missing or truncated project screenshot: " + filename);
+  }
+  const home = read("components/home/LegacyHomepage.tsx");
+  assert.match(home, /pincode-visual-proof/);
+  assert.match(home, /pincms-dashboard.webp/);
+  assert.match(home, /pinai-builder.png/);
+  assert.match(home, /loading=\\\"lazy/);
+  const gallery = read("components/marketing/ProjectShowcase.tsx");
+  assert.match(gallery, /next\\/image/);
+  assert.match(gallery, /pincms-editor.webp/);
+  assert.match(gallery, /pinai-scan.png/);
+  assert.match(gallery, /noopener noreferrer/);
+  const stage = read("components/marketing/MarketingVisualStage.tsx");
+  assert.match(stage, /Image src=\\{story.photo\\}/);
+  assert.match(stage, /sizes=/);
+  assert.match(stage, /loading="lazy"/);
+  assert.match(stage, /Illustrative photography/);
+  assert.match(read("components/marketing/MarketingPage.tsx"), /<ProjectShowcase/);
+  assert.match(read("components/marketing/MarketingTopic.tsx"), /topic.image/);
+  assert.match(read("components/marketing/MarketplaceVisualLead.tsx"), /next\\/image/);
+  assert.match(read("app/domains/page.tsx"), /MarketplaceVisualLead kind="domain"/);
+  assert.match(read("app/hosting/page.tsx"), /MarketplaceVisualLead kind="hosting"/);
+  assert.match(read("app/insights/page.tsx"), /imageAlt:/);
+  assert.match(read("next.config.ts"), /images.unsplash.com/);
+  assert.match(read("docs/IMAGE-SOURCES.md"), /Unsplash/);
+});
+
 test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {
   const bridge = read("components/home/LegacyLinkBridge.tsx");
   const nav = read("components/layout/LegacyNavigation.tsx");

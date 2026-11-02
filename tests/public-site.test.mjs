@@ -38,8 +38,8 @@ test("Process section uses four compact cards without redundant stage pills", ()
     assert.ok(home.includes(stage), "Missing process stage: " + stage);
   }
   assert.doesNotMatch(home, /process-nav|data-process-link|processObserver|data-process-section/);
-  assert.doesNotMatch(css, /\\.process-nav/);
-  assert.doesNotMatch(glass, /\\.process-nav/);
+  assert.ok(!css.includes(".process-nav"));
+  assert.ok(!glass.includes(".process-nav"));
   assert.ok(css.includes(".process-section .process-list{"));
   assert.ok(css.includes("grid-template-columns:repeat(2,minmax(0,1fr))"));
   assert.ok(css.includes("min-height:190px"));

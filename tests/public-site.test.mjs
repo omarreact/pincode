@@ -439,8 +439,8 @@ test("visual-first design uses verified project assets and accessible responsive
   assert.match(stage, /sizes=/);
   assert.match(stage, /loading="lazy"/);
   assert.match(stage, /Illustrative photography/);
-  assert.match(read("components/marketing/MarketingPage.tsx"), /\\{feature\\}/);
-  assert.match(read("app/work/page.tsx"), /feature=\\{<ProjectShowcase \\/>\\}/);
+  assert.ok(read("components/marketing/MarketingPage.tsx").includes("{feature}"));
+  assert.ok(read("app/work/page.tsx").includes('feature={<ProjectShowcase />}'));
   assert.match(read("app/work/page.tsx"), /pincms-themes.webp/);
   assert.match(read("components/marketing/MarketingTopic.tsx"), /topic.image/);
   assert.ok(read("components/marketing/MarketplaceVisualLead.tsx").includes('from "next/image"'));

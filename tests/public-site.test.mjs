@@ -328,6 +328,33 @@ test("speed and motion features do not hide server content or delay provider com
   assert.ok(read("app/api/marketplace/offers/route.ts").includes("unstable_cache"));
 });
 
+test("professional site essentials: canonical SEO, policies, errors and domain email", () => {
+  const sitemap = read("app/sitemap.ts");
+  const robots = read("app/robots.ts");
+  const layout = read("app/layout.tsx");
+  const footer = read("components/SiteShell.tsx");
+  const contact = read("app/contact/page.tsx");
+  const domainEmail = "admin@pincodeit.com";
+  assert.match(sitemap, /"domains", "hosting", "privacy", "terms"/);
+  assert.match(sitemap, /site.url/);
+  assert.match(robots, /site.url/);
+  assert.match(robots, /"\/api\/"/);
+  assert.match(layout, /opengraph-image/);
+  assert.match(layout, /summary_large_image/);
+  assert.match(read("app/opengraph-image.tsx"), /ImageResponse/);
+  assert.match(footer, /Privacy Policy/);
+  assert.match(footer, /Terms of Use/);
+  assert.match(footer, /site.email/);
+  assert.match(read("lib/site-config.ts"), /admin@pincodeit.com/);
+  assert.match(contact, /admin@pincodeit.com/);
+  assert.match(read("app/privacy/page.tsx"), /<LegalPage/);
+  assert.match(read("app/terms/page.tsx"), /<LegalPage/);
+  assert.match(read("app/not-found.tsx"), /404/);
+  assert.match(read("app/error.tsx"), /reset/);
+  assert.match(read("components/ContactBuilder.tsx"), /mailto:admin@pincodeit.com/);
+  assert.equal(domainEmail, "admin@pincodeit.com");
+});
+
 test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {
   const bridge = read("components/LegacyLinkBridge.tsx");
   const nav = read("components/LegacyNavigation.tsx");

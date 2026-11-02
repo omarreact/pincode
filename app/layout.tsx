@@ -6,7 +6,7 @@ import "./all-pages.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
 
-const description = "PINCODE is one of the newest famous IT firms. Our tag 'Coding Made Simple' defines who we are. We provide the best IT solution in a very short time with a professional team of skilled workers.";
+const description = "PINCODE IT designs, builds and supports websites, digital platforms and business technology. Explore practical development, optimization and support services in Bangladesh.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://pincodeit.com"),
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     type: "website", siteName: "PINCODE IT",
     title: "PINCODE IT — Coding Made Simple", description,
     url: "https://pincodeit.com/", locale: "en_BD",
-    images: [{ url: "/brand/pincode-horizontal-light.svg", width: 1190, height: 300, alt: "PINCODE IT official logo" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PINCODE IT — Technology that moves business forward" }],
   },
-  twitter: { card: "summary", title: "PINCODE IT — Coding Made Simple", description },
+  twitter: { card: "summary_large_image", title: "PINCODE IT — Coding Made Simple", description },
   icons: { icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/icon.svg", type: "image/svg+xml", sizes: "any" }], shortcut: "/favicon.svg" },
 };
 

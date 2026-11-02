@@ -1,7 +1,7 @@
 const details = {
   name: "PINCODE IT",
   tagline: "Coding Made Simple",
-  description: "PINCODE is one of the newest famous IT firms. Our tag 'Coding Made Simple' defines who we are. We provide the best IT solution in a very short time with a professional team of skilled workers.",
+  description: "PINCODE IT designs, builds and supports websites, applications and reliable digital systems for businesses. Our approach prioritizes practical solutions, clear communication and long-term support.",
   address: "Patira Bazar, Opposite of Purbachal Sector #1, Tolna, Khilkhet, Dhaka 1229, Bangladesh",
   website: "https://pincodeit.com/",
   hours: "Monday–Thursday, 9:00 AM–5:00 PM",
@@ -65,7 +65,7 @@ export function BusinessIdentity() {
             {details.address}
           </address>
           <p style={{ color: "#59695e", lineHeight: 1.8, fontSize: 14 }}>
-            <strong>Hours:</strong> {details.hours}<br/>
+            <strong>Published hours:</strong> {details.hours}<br/>Please confirm availability before visiting.
           </p>
           <a href="https://share.google/TPwIHMdnBS5GtG8ul" target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-block", borderRadius: 40, background: "#32885d", padding: "12px 18px", color: "white", fontSize: 13, fontWeight: 700 }}>

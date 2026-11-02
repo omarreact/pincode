@@ -1,0 +1,7 @@
+.agency-legal{width:min(920px,calc(100% - 36px));margin:0 auto;padding:64px 0 100px;color:#24382c}
+.agency-legal-updated{font-size:12px!important;color:#47785d!important;font-weight:800;letter-spacing:.04em}
+.agency-legal>section{padding:28px 0;border-bottom:1px solid #d5e8dd}
+.agency-legal h2{font-size:clamp(24px,3vw,36px);line-height:1.18;letter-spacing:-.045em;margin:0 0 17px;color:#102d1e}
+.agency-legal p{font-size:clamp(14px,1.3vw,17px);line-height:1.78;color:#4b6557;max-width:780px;margin:12px 0}
+.agency-legal a{text-decoration:underline;text-underline-offset:3px;color:#006d4b}
+@media(max-width:650px){.agency-legal{padding:32px 0 64px}}

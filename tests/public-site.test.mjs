@@ -13,6 +13,18 @@ function sourceFiles(dir) {
   });
 }
 
+test("homepage has no announcement top bar and dropdown stays aligned", () => {
+  const home = read("components/LegacyHomepage.tsx");
+  const css = read("public/legacy-home.css");
+  const glass = read("public/legacy-glass.css");
+  assert.match(home, /<LegacyNavigation \/>/);
+  assert.doesNotMatch(home, /Building something new\?/);
+  assert.doesNotMatch(css, /\.announcement\b/);
+  assert.doesNotMatch(glass, /\.announcement\b/);
+  assert.match(css, /\.mega-menu\{position:fixed;top:var\(--nav\);/);
+  assert.doesNotMatch(css, /top:calc\(38px \+ var\(--nav\)\)/);
+});
+
 test("original homepage orbit, typography and scroll transitions are retained", () => {
   const css = read("public/legacy-home.css");
   const component = read("components/LegacyHomepage.tsx");

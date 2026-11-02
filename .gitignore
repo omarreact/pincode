@@ -4,3 +4,11 @@ node_modules/
 !.env.example
 *.tsbuildinfo
 *.zip
+
+# Hosting and local development artifacts
+.vercel/
+coverage/
+*.log
+.DS_Store
+.idea/
+.vscode/

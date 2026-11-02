@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { SiteHeader, SiteFooter } from "@/components/SiteShell";
-import { AgencyPageHero } from "@/components/AgencyPageHero";
-import { AgencySectionIntro } from "@/components/AgencySectionIntro";
-import { ContactOptionCard } from "@/components/ContactOptionCard";
-import { ContactBuilder } from "@/components/ContactBuilder";
+import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
+import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
+import { AgencySectionIntro } from "@/components/marketing/AgencySectionIntro";
+import { ContactOptionCard } from "@/components/contact/ContactOptionCard";
+import { ContactBuilder } from "@/components/contact/ContactBuilder";
 
 export const metadata: Metadata = {
   title: "Contact",

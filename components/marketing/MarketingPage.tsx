@@ -1,4 +1,4 @@
-import { SiteHeader, SiteFooter } from "./SiteShell";
+import { SiteHeader, SiteFooter } from "../layout/SiteShell";
 import { AgencyPageHero } from "./AgencyPageHero";
 import { AgencySectionIntro } from "./AgencySectionIntro";
 import { MarketingTopicLink, MarketingTopicCard, type MarketingTopicData } from "./MarketingTopic";

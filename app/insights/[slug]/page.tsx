@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SiteHeader, SiteFooter } from "@/components/SiteShell";
-import { AgencyPageHero } from "@/components/AgencyPageHero";
+import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
+import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
 import { insightArticles, getInsightArticle } from "@/lib/insight-articles";
-import "@/components/legal.css";
+import "@/components/marketing/legal.css";
 
 export const dynamicParams = false;
 export function generateStaticParams() {

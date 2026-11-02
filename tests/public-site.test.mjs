@@ -80,7 +80,9 @@ test("legacy marketing URLs redirect to Next.js pages", () => {
 
 test("all public Next.js pages use the shared glass design system", () => {
   const layout = read("app/layout.tsx");
-  assert.match(layout, /import "\.\/all-pages\.css"/);
+  assert.doesNotMatch(layout, /import "\.\/all-pages\.css"/);
+  assert.match(read("components/SiteShell.tsx"), /import "@\/app\/all-pages\.css"/);
+  assert.match(read("app/error.tsx"), /import "\.\/all-pages\.css"/);
   const css = read("app/all-pages.css");
   for (const selector of [
     ".agency-page-hero", ".agency-hero-panel", ".agency-glass-button",

@@ -91,12 +91,18 @@ test("all public Next.js pages use the shared glass design system", () => {
     assert.ok(css.includes(selector), "Missing shared glass style: " + selector);
   }
 
-  const marketing = read("components/MarketingPage.tsx");
-  for (const className of [
-    "agency-page-hero", "agency-hero-panel", "agency-index",
-    "agency-detail-card", "agency-glass-button", "agency-footer-cta",
-  ]) {
-    assert.ok(marketing.includes(className), "Missing shared page component: " + className);
+  const shared = [
+    ["components/AgencyPageHero.tsx", ["agency-page-hero", "agency-hero-panel"]],
+    ["components/AgencyActionLink.tsx", ["agency-glass-button"]],
+    ["components/MarketingPage.tsx", ["agency-index", "agency-card-grid"]],
+    ["components/MarketingTopic.tsx", ["agency-index-link", "agency-detail-card"]],
+    ["components/MarketingCallToAction.tsx", ["agency-footer-cta"]],
+  ];
+  for (const [file, classNames] of shared) {
+    const source = read(file);
+    for (const className of classNames) {
+      assert.ok(source.includes(className), "Missing shared component: " + file + " / " + className);
+    }
   }
   for (const page of ["services", "solutions", "work", "about", "insights"]) {
     assert.match(read("app/" + page + "/page.tsx"), /<MarketingPage/);
@@ -229,12 +235,13 @@ test("all subpages share the Insights hero and Home opening reveal", () => {
     assert.match(page, /<AgencyPageHero/);
     assert.doesNotMatch(page, /domain-page-hero/);
   }
-  for (const source of [hero, original, contact]) {
-    assert.match(source, /agency-page-hero/);
-    assert.match(source, /agency-hero-panel/);
-    assert.match(source, /agency-hero-content/);
-    assert.match(source, /data-site-motion="hero"/);
+  for (const selector of ["agency-page-hero", "agency-hero-panel", "agency-hero-content", 'data-site-motion="hero"']) {
+    assert.ok(hero.includes(selector), "Missing shared hero selector: " + selector);
   }
+  assert.match(original, /<AgencyPageHero/);
+  assert.match(contact, /<AgencyPageHero/);
+  assert.match(original, /<MarketingTopicCard/);
+  assert.match(contact, /<ContactOptionCard/);
   assert.match(read("app/domains/page.tsx"), /#domain-search-title/);
   assert.match(read("app/hosting/page.tsx"), /#hosting-provider-comparison/);
   assert.match(style, /pincode-home-reveal 700ms ease both/);
@@ -258,6 +265,40 @@ test("hero entrance starts with CSS and never restarts after hydration", () => {
   assert.match(home, /hero-copy reveal/);
 });
 
+test("shared design is server-rendered and homepage-only JS stays on Home", () => {
+  const files = [
+    "components/AgencyPageHero.tsx",
+    "components/AgencyActionLink.tsx",
+    "components/AgencySectionIntro.tsx",
+    "components/MarketingTopic.tsx",
+    "components/MarketingCallToAction.tsx",
+    "components/ContactOptionCard.tsx",
+    "components/FooterLinkGroup.tsx",
+    "components/MarketingPage.tsx",
+    "components/SiteShell.tsx",
+  ];
+  for (const file of files) {
+    assert.doesNotMatch(read(file), /^["']use client["'];/m, "Unexpected client bundle: " + file);
+  }
+  const home = read("app/page.tsx");
+  const layout = read("app/layout.tsx");
+  assert.match(home, /<LegacyLinkBridge \/>/);
+  assert.doesNotMatch(layout, /LegacyLinkBridge/);
+  const shell = read("components/SiteShell.tsx");
+  assert.match(shell, /<FooterLinkGroup/);
+  assert.match(shell, /<LegacyNavigation \/>/);
+  const marketing = read("components/MarketingPage.tsx");
+  assert.match(marketing, /<AgencySectionIntro/);
+  assert.match(marketing, /<MarketingCallToAction/);
+  assert.match(marketing, /<MarketingTopicLink/);
+  assert.match(marketing, /<MarketingTopicCard/);
+  const contact = read("app/contact/page.tsx");
+  assert.match(contact, /<AgencySectionIntro/);
+  assert.match(contact, /<ContactOptionCard/);
+  assert.match(read("components/AgencyActionLink.tsx"), /href\.startsWith\("mailto:"\)/);
+  assert.match(read("components/AgencyPageHero.tsx"), /<AgencyActionLink/);
+});
+
 test("speed and motion features do not hide server content or delay provider comparison", () => {
   const home = read("components/LegacyHomepage.tsx");
   const motion = read("components/SiteMotion.tsx");
@@ -270,7 +311,7 @@ test("speed and motion features do not hide server content or delay provider com
   assert.ok(motion.includes("prefers-reduced-motion"));
   assert.ok(motion.includes("site-motion-pending"));
   assert.ok(shell.includes("<SiteMotion"));
-  assert.ok(read("components/MarketingPage.tsx").includes('data-site-motion="card"'));
+  assert.ok(read("components/MarketingTopic.tsx").includes('data-site-motion="card"'));
   assert.ok(read("app/contact/page.tsx").includes('data-site-motion="section"'));
   assert.ok(read("components/AgencyPageHero.tsx").includes('data-site-motion="hero"'));
   assert.ok(read("app/domains/page.tsx").includes("<AgencyPageHero"));
@@ -293,7 +334,8 @@ test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {
   const layout = read("app/layout.tsx");
   const home = read("components/LegacyHomepage.tsx");
   const root = readdirSync(new URL("..", import.meta.url));
-  assert.ok(layout.includes("<LegacyLinkBridge />"));
+  assert.ok(home.includes("<LegacyLinkBridge />"));
+  assert.ok(!layout.includes("LegacyLinkBridge"));
   assert.ok(bridge.includes("router.push(route)"));
   assert.ok(bridge.includes("event.defaultPrevented"));
   assert.ok(bridge.includes("event.metaKey"));

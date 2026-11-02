@@ -1,8 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import { LegacyNavigation } from "./LegacyNavigation";
 import { SiteMotion } from "./SiteMotion";
+import { FooterLinkGroup } from "./FooterLinkGroup";
 
 function Brand() {
   return (
@@ -38,25 +37,31 @@ export function SiteFooter() {
           <p>Technology that moves business forward.</p>
           <span className="agency-foot-location">Dhaka, Bangladesh</span>
         </div>
-        <div>
-          <b>Explore</b>
-          <Link href="/services">Services</Link>
-          <Link href="/domains">Domain Search</Link>
-          <Link href="/hosting">Hosting Deals</Link>
-          <Link href="/solutions">Solutions</Link>
-          <Link href="/work">Work</Link>
-        </div>
-        <div>
-          <b>Company</b>
-          <Link href="/about">About</Link>
-          <Link href="/insights">Insights</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
-        <div>
-          <b>Get in touch</b>
-          <a href="mailto:pincodeit.com.bd@gmail.com">Business email ↗</a>
-          <Link href="/contact" className="agency-footer-contact-link">Start a project ↗</Link>
-        </div>
+        <FooterLinkGroup
+          title="Explore"
+          links={[
+            { label: "Services", href: "/services" },
+            { label: "Domain Search", href: "/domains" },
+            { label: "Hosting Deals", href: "/hosting" },
+            { label: "Solutions", href: "/solutions" },
+            { label: "Work", href: "/work" },
+          ]}
+        />
+        <FooterLinkGroup
+          title="Company"
+          links={[
+            { label: "About", href: "/about" },
+            { label: "Insights", href: "/insights" },
+            { label: "Contact", href: "/contact" },
+          ]}
+        />
+        <FooterLinkGroup
+          title="Get in touch"
+          links={[
+            { label: "Business email ↗", href: "mailto:pincodeit.com.bd@gmail.com" },
+            { label: "Start a project ↗", href: "/contact", className: "agency-footer-contact-link" },
+          ]}
+        />
       </div>
       <div className="copyright agency-copyright">
         <span>© {new Date().getFullYear()} PINCODE IT. All rights reserved.</span>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { LegacyLinkBridge } from "@/components/LegacyLinkBridge";
 import "./globals.css";
 import "./glass.css";
 import "./all-pages.css";
@@ -32,5 +31,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={inter.variable}><body><LegacyLinkBridge />{children}</body></html>;
+  return <html lang="en" className={inter.variable}><body>{children}</body></html>;
 }

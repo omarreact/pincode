@@ -4,7 +4,7 @@ import { LegacyLinkBridge } from "@/components/LegacyLinkBridge";
 import { BusinessIdentity } from "@/components/BusinessIdentity";
 
 export const metadata: Metadata = {
-  title: "PINCODE IT — Coding Made Simple",
+  title: { absolute: "PINCODE IT — Coding Made Simple" },
   alternates: { canonical: "/" },
 };
 

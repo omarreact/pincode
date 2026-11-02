@@ -339,11 +339,15 @@ test("professional site essentials: canonical SEO, policies, errors and domain e
   const domainEmail = "admin@pincodeit.com";
   assert.match(sitemap, /"domains", "hosting", "privacy", "terms"/);
   assert.match(sitemap, /site.url/);
+  assert.match(sitemap, /insightArticles/);
+  assert.match(sitemap, /article.slug/);
   assert.match(robots, /site.url/);
   assert.match(robots, /"\/api\/"/);
   assert.match(layout, /opengraph-image/);
   assert.match(layout, /summary_large_image/);
   assert.match(read("app/opengraph-image.tsx"), /ImageResponse/);
+  assert.ok(read("app/opengraph-image.tsx").includes("public/brand/pincode-email.png"));
+  assert.ok(read("app/page.tsx").includes('title: { absolute:'));
   assert.match(footer, /Privacy Policy/);
   assert.match(footer, /Terms of Use/);
   assert.match(footer, /site.email/);

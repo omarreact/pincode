@@ -32,3 +32,131 @@
 @media(max-width:850px){#pincode-legacy-home .pincode-visual-proof-grid{grid-template-columns:1fr 1fr}#pincode-legacy-home .pincode-preview:last-child{grid-column:span 2}#pincode-legacy-home .pincode-preview:last-child .pincode-preview-window img{aspect-ratio:16/7}}
 @media(max-width:570px){#pincode-legacy-home .pincode-visual-proof-top{display:block}#pincode-legacy-home .pincode-visual-proof-top>a{margin-top:20px}#pincode-legacy-home .pincode-visual-proof-grid{grid-template-columns:1fr}#pincode-legacy-home .pincode-preview:last-child{grid-column:auto}#pincode-legacy-home .pincode-preview:last-child .pincode-preview-window img{aspect-ratio:4/3}#pincode-legacy-home .pincode-preview{border-radius:20px}}
 @media(prefers-reduced-motion:reduce){#pincode-legacy-home .pincode-preview{transition:none}#pincode-legacy-home .pincode-preview:hover{transform:none}}
+
+
+/*
+ * Responsive UI correction (2026-11-03).
+ * Content must be visible without waiting for an IntersectionObserver.
+ * Keep the hero's first-paint animation without hiding below-the-fold sections.
+ */
+#pincode-legacy-home .reveal,
+#pincode-legacy-home .reveal.visible {
+  opacity:1;
+  transform:none;
+  transition:none;
+}
+@media (prefers-reduced-motion:no-preference) {
+  #pincode-legacy-home .hero-copy.reveal {
+    animation:pincode-hero-enter 650ms cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes pincode-hero-enter {
+    from{opacity:0;transform:translate3d(0,18px,0)}
+    to{opacity:1;transform:translate3d(0,0,0)}
+  }
+}
+#pincode-legacy-home .section{padding:clamp(62px,6.5vw,92px) 0}
+#pincode-legacy-home .section-head{gap:20px;margin-bottom:32px}
+#pincode-legacy-home .section-head h2{font-size:clamp(34px,4.7vw,60px);line-height:1.05;text-wrap:balance}
+#pincode-legacy-home .section-head p{line-height:1.65}
+#pincode-legacy-home .pincode-visual-proof{
+  background-color:#0d3021;
+  background-image:linear-gradient(150deg,#08261a,#164832);
+  isolation:isolate;
+  padding:clamp(48px,6vw,80px) 0;
+}
+#pincode-legacy-home .pincode-visual-proof-grid{align-items:stretch}
+#pincode-legacy-home .pincode-preview{display:flex;flex-direction:column;min-width:0}
+#pincode-legacy-home .pincode-preview-window{min-width:0}
+#pincode-legacy-home .pincode-preview-meta{flex:1}
+#pincode-legacy-home .service-tile{min-height:435px}
+#pincode-legacy-home .service-tile .button{margin-bottom:0}
+#pincode-legacy-home .pincode-service-photo{height:130px}
+#pincode-legacy-home .story-card{min-height:330px}
+#pincode-legacy-home .feature-stage{min-height:530px}
+#pincode-legacy-home .feature-copy{padding:clamp(32px,4.2vw,55px)}
+#pincode-legacy-home .process{grid-template-columns:230px minmax(0,1fr);gap:clamp(20px,3.5vw,48px)}
+#pincode-legacy-home .process-list{min-width:0;gap:12px}
+#pincode-legacy-home .process-step{
+  min-height:210px;
+  padding:clamp(22px,2.7vw,34px);
+}
+#pincode-legacy-home .process-step h3{font-size:clamp(30px,3vw,43px);line-height:1.1}
+#pincode-legacy-home .process-step p{font-size:14px;line-height:1.6;margin:12px 0 0}
+#pincode-legacy-home .case-card{min-height:435px;padding:clamp(24px,3vw,36px)}
+#pincode-legacy-home .case-card h3{font-size:clamp(28px,3.1vw,41px);line-height:1.08}
+#pincode-legacy-home .case-screen{
+  left:6%;right:6%;bottom:-2%;height:40%;transform:rotate(-1deg);
+  border-radius:20px 20px 0 0;
+}
+#pincode-legacy-home .case-screen img{object-position:center}
+#pincode-legacy-home .site-footer{padding:48px 0 24px}
+
+@media(max-width:900px){
+  #pincode-legacy-home .process{grid-template-columns:minmax(0,1fr);gap:18px}
+  #pincode-legacy-home .process-nav{position:static;gap:18px}
+  #pincode-legacy-home .menu-button{width:44px;height:44px;flex:none}
+  #pincode-legacy-home .mega-inner{max-height:calc(100dvh - var(--nav));overflow:auto}
+}
+@media(max-width:760px){
+  #pincode-legacy-home{overflow-x:clip}
+  #pincode-legacy-home .section{padding:52px 0}
+  #pincode-legacy-home .section-head{margin-bottom:23px}
+  #pincode-legacy-home .section-head h2{font-size:clamp(32px,8vw,44px)}
+  #pincode-legacy-home .hero{min-height:0;padding:28px 0 45px}
+  #pincode-legacy-home .hero-copy{padding:20px 0 28px}
+  #pincode-legacy-home .hero h1{font-size:clamp(44px,12vw,62px);line-height:.99;letter-spacing:-.058em}
+  #pincode-legacy-home .lede{font-size:clamp(16px,4.2vw,20px);line-height:1.42}
+  #pincode-legacy-home .hero-actions{gap:9px;margin-top:25px}
+  #pincode-legacy-home .hero-actions .button{min-height:43px;padding:0 15px}
+  #pincode-legacy-home .hero-orbit{width:min(91vw,540px);top:55%}
+  #pincode-legacy-home .pincode-visual-proof{padding:44px 0}
+  #pincode-legacy-home .pincode-visual-proof-top{display:block;margin-bottom:23px}
+  #pincode-legacy-home .pincode-visual-proof h2{font-size:clamp(30px,8.2vw,44px);line-height:1.07}
+  #pincode-legacy-home .pincode-visual-proof-top>a{display:inline-flex;margin-top:16px}
+  #pincode-legacy-home .pincode-visual-proof-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  #pincode-legacy-home .pincode-preview:first-child{grid-column:1 / -1}
+  #pincode-legacy-home .pincode-preview:last-child{grid-column:auto}
+  #pincode-legacy-home .pincode-preview:first-child img{aspect-ratio:16/8.5}
+  #pincode-legacy-home .pincode-preview:last-child img{aspect-ratio:4/3}
+  #pincode-legacy-home .pincode-preview{padding:12px;border-radius:18px}
+  #pincode-legacy-home .pincode-preview-meta{gap:6px;margin-top:12px}
+  #pincode-legacy-home .pincode-preview-meta strong{font-size:clamp(14px,4vw,18px);line-height:1.22}
+  #pincode-legacy-home .service-tile{
+    flex:0 0 min(82vw,360px);
+    min-height:405px;
+    padding:25px 22px;
+    border-radius:22px;
+  }
+  #pincode-legacy-home .service-tile h3{font-size:clamp(27px,7.1vw,34px);line-height:1.06;margin:15px 0 12px}
+  #pincode-legacy-home .service-tile p{font-size:14px;line-height:1.5}
+  #pincode-legacy-home .pincode-service-photo{height:118px}
+  #pincode-legacy-home .story-grid{gap:12px}
+  #pincode-legacy-home .story-card{min-height:300px;padding:25px}
+  #pincode-legacy-home .story-card h3{font-size:clamp(25px,7.8vw,34px)}
+  #pincode-legacy-home .story-card .visual-code{opacity:.4}
+  #pincode-legacy-home .feature-stage{min-height:0;border-radius:23px}
+  #pincode-legacy-home .feature-copy{padding:32px 25px}
+  #pincode-legacy-home .feature-copy h3{font-size:clamp(38px,11vw,55px)}
+  #pincode-legacy-home .feature-visual{min-height:255px}
+  #pincode-legacy-home .process-nav{overflow-x:auto;scrollbar-width:none;gap:12px}
+  #pincode-legacy-home .process-nav a{white-space:nowrap;font-size:12px}
+  #pincode-legacy-home .process-step{min-height:165px;padding:22px;border-radius:20px}
+  #pincode-legacy-home .process-step h3{font-size:31px}
+  #pincode-legacy-home .process-step p{font-size:13px}
+  #pincode-legacy-home .case-grid{gap:14px}
+  #pincode-legacy-home .case-card{min-height:360px;padding:23px;border-radius:22px}
+  #pincode-legacy-home .case-card h3{font-size:clamp(27px,7vw,34px)}
+  #pincode-legacy-home .case-screen{height:36%;left:7%;right:7%;bottom:-1%}
+  #pincode-legacy-home .footer-grid{gap:24px}
+  #pincode-legacy-home .site-footer{padding:35px 0 22px}
+}
+@media(max-width:390px){
+  #pincode-legacy-home .hero h1{font-size:clamp(41px,11.5vw,48px)}
+  #pincode-legacy-home .pincode-visual-proof-grid{grid-template-columns:1fr}
+  #pincode-legacy-home .pincode-preview:first-child{grid-column:auto}
+  #pincode-legacy-home .pincode-preview:first-child img{aspect-ratio:4/3}
+  #pincode-legacy-home .pincode-preview-meta strong{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  #pincode-legacy-home .hero-copy.reveal{animation:none!important;opacity:1!important;transform:none!important}
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteHeader, SiteFooter } from "@/components/SiteShell";
+import { AgencyPageHero } from "@/components/AgencyPageHero";
 import { DomainSearch } from "@/components/DomainSearch";
 import { ProviderMarketplace } from "@/components/ProviderMarketplace";
 import { getReferenceMarketplace } from "@/lib/provider-marketplace";
@@ -17,11 +18,15 @@ export default function DomainsPage() {
     <>
       <SiteHeader />
       <main id="main" className="domain-page">
-        <section className="domain-page-hero" data-site-motion="hero" aria-labelledby="domains-heading">
-          <span className="domain-eyebrow">PINCODE IT / DOMAIN SERVICES</span>
-          <h1 id="domains-heading">A great digital idea starts with <span>the right domain.</span></h1>
-          <p>Check whether your preferred name already has a registration record, explore other extensions, compare official registrar prices and promotions, then order directly from trusted providers.</p>
-        </section>
+        <AgencyPageHero
+          headingId="domains-heading"
+          eyebrow="PINCODE IT / DOMAIN SERVICES"
+          title="A great digital idea starts with the right domain."
+          description="Check whether your preferred name already has a registration record, explore other extensions, compare official registrar prices and promotions, then order directly from trusted providers."
+          primary={{ label: "Search a domain", href: "#domain-search-title", arrow: "↓" }}
+          secondary={{ label: "Compare registrars", href: "#domain-provider-comparison", arrow: "↓" }}
+          stages={["FIND", "COMPARE", "LAUNCH"]}
+        />
         <DomainSearch />
         <ProviderMarketplace kind="domain" initialFeed={getReferenceMarketplace("domain")} />
         <div className="domain-page-below" data-site-motion="section">

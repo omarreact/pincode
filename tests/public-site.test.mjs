@@ -128,7 +128,8 @@ test("original homepage orbit, typography and scroll transitions are retained", 
   assert.match(css, /\.reveal/);
   assert.match(component, /originalHomepageHTML/);
   assert.match(component, /data-scroller/);
-  assert.match(component, /IntersectionObserver/);
+  // Scroll-driven stage observer was intentionally removed with the duplicate pills.
+  assert.doesNotMatch(component, /IntersectionObserver/);
 });
 
 test("both restored styling and glass styling are shipped as page resources", () => {

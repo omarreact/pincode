@@ -160,3 +160,177 @@
 @media(prefers-reduced-motion:reduce){
   #pincode-legacy-home .hero-copy.reveal{animation:none!important;opacity:1!important;transform:none!important}
 }
+
+
+/* Display scaling & browser-zoom responsive pass.
+   Windows 1920x1080 @150% presents roughly a 1280px CSS viewport.
+   Card image containers must not expand to several hundred vertical pixels. */
+#pincode-legacy-home .pincode-visual-proof-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+}
+#pincode-legacy-home .pincode-preview{
+  min-width:0;
+  padding:clamp(12px,1.5vw,20px);
+  border-radius:20px;
+}
+#pincode-legacy-home .pincode-preview-window{
+  display:block;
+  width:100%;
+  height:clamp(160px,17vw,232px);
+  flex:none;
+  overflow:hidden;
+  border-radius:13px;
+}
+#pincode-legacy-home .pincode-preview-window img{
+  width:100%;
+  height:100%;
+  aspect-ratio:auto;
+  max-height:100%;
+  object-fit:cover;
+  object-position:center 70%;
+  display:block;
+}
+#pincode-legacy-home .pincode-preview-meta{
+  flex:1;
+  margin-top:14px;
+  gap:7px;
+  min-width:0;
+}
+#pincode-legacy-home .pincode-preview-meta strong{
+  font-size:clamp(16px,1.55vw,21px);
+  overflow-wrap:anywhere;
+}
+/* The former case study photo was absolutely positioned at the bottom of a
+   giant card. Put the photo first instead, with accessible copy directly below. */
+#pincode-legacy-home .case-grid{align-items:stretch}
+#pincode-legacy-home .case-card{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  height:auto;
+  min-height:0;
+  padding:clamp(15px,1.8vw,22px);
+  border-radius:23px;
+}
+#pincode-legacy-home .case-screen,
+#pincode-legacy-home .case-card:nth-child(3n+2) .case-screen{
+  position:relative;
+  left:auto;right:auto;top:auto;bottom:auto;
+  order:-1;
+  width:100%;
+  height:clamp(180px,19vw,245px);
+  flex:none;
+  transform:none;
+  margin:0 0 19px;
+  border-radius:16px;
+  box-shadow:none;
+}
+#pincode-legacy-home .case-screen img{
+  display:block;
+  width:100%;
+  height:100%;
+  max-height:100%;
+  object-fit:cover;
+  object-position:center 52%;
+}
+#pincode-legacy-home .case-card .pill{align-self:flex-start;max-width:100%}
+#pincode-legacy-home .case-card h3{
+  font-size:clamp(25px,2.55vw,34px);
+  line-height:1.12;
+  margin:13px 6px 9px;
+  overflow-wrap:break-word;
+}
+#pincode-legacy-home .case-card p{
+  font-size:14px;
+  line-height:1.6;
+  margin:0 6px 6px;
+  max-width:54ch;
+}
+/* Carousel photos stay below controls rather than visually pushing text away. */
+#pincode-legacy-home .service-tile{
+  display:flex;
+  flex-direction:column;
+  flex:0 0 min(355px,82vw);
+  min-height:425px;
+  padding:clamp(22px,2vw,27px);
+  border-radius:23px;
+}
+#pincode-legacy-home .service-tile h3{
+  font-size:clamp(28px,2.4vw,33px);
+  line-height:1.08;
+  margin:16px 0 12px;
+}
+#pincode-legacy-home .service-tile p{
+  font-size:14px;
+  line-height:1.55;
+  margin:0 0 10px;
+}
+#pincode-legacy-home .service-tile .button{
+  align-self:flex-start;
+  flex:none;
+  margin-top:auto;
+  margin-bottom:120px;
+}
+#pincode-legacy-home .pincode-service-photo{height:106px}
+#pincode-legacy-home .pincode-service-photo img{object-position:center 55%}
+/* The full desktop menu is too dense at the effective viewport width
+   produced by 150% OS scaling. Compress it before switching to the menu. */
+@media(min-width:1181px) and (max-width:1500px){
+  #pincode-legacy-home .nav{gap:13px}
+  #pincode-legacy-home .nav-links{gap:clamp(11px,1.4vw,18px);font-size:11px}
+  #pincode-legacy-home .brand-name{letter-spacing:.09em;font-size:12px}
+  #pincode-legacy-home .nav-actions .button{min-height:38px;padding:0 15px;font-size:12px}
+}
+@media(max-width:1180px){
+  #pincode-legacy-home .nav-links{display:none}
+  #pincode-legacy-home .menu-button{display:grid}
+  #pincode-legacy-home .nav-actions .button{display:none}
+  #pincode-legacy-home .mobile-primary{display:block}
+  #pincode-legacy-home .mega-menu{top:var(--nav)}
+  #pincode-legacy-home .mega-inner{
+    grid-template-columns:minmax(0,1fr);
+    gap:18px;
+    max-height:calc(100dvh - var(--nav));
+    overflow-y:auto;
+  }
+}
+@media(max-width:900px){
+  #pincode-legacy-home .pincode-visual-proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #pincode-legacy-home .pincode-preview:first-child{grid-column:1 / -1}
+  #pincode-legacy-home .pincode-preview:last-child{grid-column:auto}
+  #pincode-legacy-home .pincode-preview-window{height:clamp(150px,27vw,230px)}
+  #pincode-legacy-home .case-grid{grid-template-columns:1fr}
+  #pincode-legacy-home .case-screen,
+  #pincode-legacy-home .case-card:nth-child(3n+2) .case-screen{height:clamp(185px,39vw,300px)}
+}
+@media(max-width:620px){
+  #pincode-legacy-home .pincode-visual-proof-grid{grid-template-columns:1fr}
+  #pincode-legacy-home .pincode-preview:first-child{grid-column:auto}
+  #pincode-legacy-home .pincode-preview-window,
+  #pincode-legacy-home .pincode-preview:last-child .pincode-preview-window{
+    height:clamp(165px,52vw,225px);
+  }
+  #pincode-legacy-home .pincode-preview-window img,
+  #pincode-legacy-home .pincode-preview:first-child img,
+  #pincode-legacy-home .pincode-preview:last-child img{
+    width:100%;
+    height:100%;
+    aspect-ratio:auto;
+    object-fit:cover;
+  }
+  #pincode-legacy-home .service-tile{flex-basis:min(330px,84vw);min-height:410px}
+  #pincode-legacy-home .service-tile h3{font-size:29px}
+  #pincode-legacy-home .case-card{padding:14px;min-height:0}
+  #pincode-legacy-home .case-screen,
+  #pincode-legacy-home .case-card:nth-child(3n+2) .case-screen{
+    height:clamp(170px,51vw,225px);
+    margin-bottom:15px;
+  }
+  #pincode-legacy-home .case-card h3{font-size:clamp(25px,7.5vw,33px)}
+}
+@media(prefers-reduced-motion:reduce){
+  #pincode-legacy-home .pincode-preview,
+  #pincode-legacy-home .service-tile,
+  #pincode-legacy-home .case-card{transition:none!important}
+}

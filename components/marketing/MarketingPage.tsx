@@ -4,7 +4,7 @@ import { AgencySectionIntro } from "./AgencySectionIntro";
 import { MarketingTopicLink, MarketingTopicCard, type MarketingTopicData } from "./MarketingTopic";
 import { MarketingCallToAction } from "./MarketingCallToAction";
 import { MarketingVisualStage, type MarketingStory } from "./MarketingVisualStage";
-import { ProjectShowcase } from "./ProjectShowcase";
+import type { ReactNode } from "react";
 
 export type PageContent = {
   eyebrow: string;
@@ -20,7 +20,7 @@ export type PageContent = {
  * Shared server-rendered design for Services, Solutions, Work, About and Insights.
  * Page-specific copy comes from each route; the glass design stays consistent.
  */
-export function MarketingPage({ data }: { data: PageContent }) {
+export function MarketingPage({ data, feature }: { data: PageContent; feature?: ReactNode }) {
   return (
     <>
       <SiteHeader />
@@ -36,7 +36,7 @@ export function MarketingPage({ data }: { data: PageContent }) {
         />
 
         <MarketingVisualStage variant={data.story} topics={data.cards} />
-        {data.story === "work" ? <ProjectShowcase /> : null}
+        {feature}
 
         <section className="agency-explore" id="explore" aria-labelledby="agency-explore-title">
           <AgencySectionIntro

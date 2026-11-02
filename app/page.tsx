@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LegacyHomepage } from "@/components/home/LegacyHomepage";
 import { LegacyLinkBridge } from "@/components/home/LegacyLinkBridge";
 import { BusinessIdentity } from "@/components/home/BusinessIdentity";
+import { SiteFooter } from "@/components/layout/SiteShell";
 
 export const metadata: Metadata = {
   title: { absolute: "PINCODE IT — Coding Made Simple" },
@@ -17,6 +18,7 @@ export default function HomePage() {
       <link rel="stylesheet" href="/legacy-glass.css" precedence="default" />
       <LegacyLinkBridge />
       <LegacyHomepage />
+      <SiteFooter />
       <BusinessIdentity />
     </>
   );

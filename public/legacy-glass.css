@@ -148,19 +148,8 @@
 
 
 #pincode-legacy-home .case-card:nth-child(3n+2){border-color:rgba(163,229,187,.24)}
-#pincode-legacy-home .cta-band{
-  background:linear-gradient(120deg,rgba(0,151,101,.91),rgba(0,88,62,.88));
-  border:1px solid rgba(255,255,255,.33);
-  -webkit-backdrop-filter:blur(22px);
-  backdrop-filter:blur(22px);
-  box-shadow:0 22px 54px rgba(5,65,41,.17),inset 0 1px 0 rgba(255,255,255,.22);
-}
-#pincode-legacy-home .site-footer{
-  background:rgba(241,248,243,.91);
-  -webkit-backdrop-filter:blur(18px);
-  backdrop-filter:blur(18px);
-  border-top:1px solid rgba(255,255,255,.85);
-}
+
+
 #pincode-legacy-home .floating-contact{background:rgba(18,33,24,.85);color:white}
 #pincode-legacy-home .modal{-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);background:rgba(8,28,18,.39)}
 #pincode-legacy-home .modal-card{background:rgba(252,255,253,.86)}

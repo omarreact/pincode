@@ -421,8 +421,8 @@ test("professional stock photography is shared, responsive and not a fake portfo
   const stage = read("components/marketing/MarketingVisualStage.tsx");
   const portfolio = read("components/marketing/WorkPhotoEditorial.tsx");
   const doc = read("docs/IMAGE-SOURCES.md");
-  const root = readdirSync(new URL("../public/images", import.meta.url));
-  assert.ok(!root.includes("projects"), "Repository screenshots must not ship");
+  const publicFolders = readdirSync(new URL("../public", import.meta.url));
+  assert.ok(!publicFolders.includes("images"), "Old repository screenshots must not ship");
   assert.doesNotMatch(home, /PinCMS|PinAI|images\/projects/i);
   assert.doesNotMatch(read("app/work/page.tsx"), /PinCMS|PinAI|images\/projects/i);
   assert.ok(home.includes("pincode-visual-proof"));
@@ -445,6 +445,7 @@ test("professional stock photography is shared, responsive and not a fake portfo
     assert.match(read(path), /<PhotoMosaic/);
   }
   assert.match(read("app/insights/[slug]/page.tsx"), /agency-article-image/);
+  assert.ok(!read("components/marketing/MarketingPage.tsx").includes("ProjectShowcase"));
   assert.match(read("next.config.ts"), /minimumCacheTTL: 604800/);
   assert.match(doc, /unsplash.com\/license/);
 });

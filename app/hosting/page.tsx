@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteHeader, SiteFooter } from "@/components/SiteShell";
+import { AgencyPageHero } from "@/components/AgencyPageHero";
 import { ProviderMarketplace } from "@/components/ProviderMarketplace";
 import { getReferenceMarketplace } from "@/lib/provider-marketplace";
 import "../domains/domains.css";
@@ -16,12 +17,15 @@ export default function HostingComparison(){
     <>
       <SiteHeader/>
       <main className="domain-page" id="main">
-        <section className="domain-page-hero" data-site-motion="hero">
-          <span className="domain-eyebrow">PINCODE IT / HOSTING MARKETPLACE</span>
-          <h1>Compare hosting providers.<br/><span>Choose with confidence.</span></h1>
-          <p>Understand first-term prices, renewal costs and plan features before you buy.
-            Choose a provider and continue directly to its official order page.</p>
-        </section>
+        <AgencyPageHero
+          headingId="hosting-heading"
+          eyebrow="PINCODE IT / HOSTING MARKETPLACE"
+          title="Compare hosting providers. Choose with confidence."
+          description="Understand first-term prices, renewal costs and plan features before you buy. Choose a provider and continue directly to its official order page."
+          primary={{ label: "Compare hosting plans", href: "#hosting-provider-comparison", arrow: "↓" }}
+          secondary={{ label: "Start a conversation", href: "/contact", arrow: "↗" }}
+          stages={["COMPARE", "CHOOSE", "LAUNCH"]}
+        />
         <ProviderMarketplace kind="hosting" initialFeed={getReferenceMarketplace("hosting")}/>
       </main>
       <SiteFooter/>

@@ -14,7 +14,7 @@ export default function WorkPage() {
     intro: "Explore public engineering work, architecture and practical delivery approaches. Client references are shared only with permission.",
     cta: "Selected public engineering projects.",
     exploreDescription: "These are publicly accessible engineering repositories and examples, not claims of commissioned client projects or independently verified business outcomes.",
-    cards: [
+    story: "work", cards: [
       {
         id: "landbd",
         title: "LandBD — Bangladesh land information",

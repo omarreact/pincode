@@ -42,7 +42,7 @@ test("mobile UI stays visible, compact and free of overlapping duplicate CTAs", 
   assert.ok(site.includes("[data-site-motion].site-motion-pending"));
 
   // A second floating project button obscured the mobile heading.
-  assert.ok(!homepage.includes("floating-contact\\\\\\\""));
+  assert.ok(!homepage.includes("floating-contact"));
   // The homepage's footer is the only visible footer; the organization
   // metadata is still emitted as a JSON-LD script.
   assert.ok(identity.includes("application/ld+json"));

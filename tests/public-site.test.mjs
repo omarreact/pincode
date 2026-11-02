@@ -27,6 +27,31 @@ test("Next.js source tree is organized without unused root snapshots", () => {
   assert.match(read("app/robots.ts"), /site.url/);
 });
 
+test("premium hero keeps the active slide in flow, preventing blank banners", () => {
+  const css = read("components/home/premium-hero-slider.css");
+  const slider = read("components/home/PremiumHeroSlider.tsx");
+  const getRule = selector => {
+    const start = css.indexOf(selector + "{");
+    assert.ok(start >= 0, "Missing CSS rule: " + selector);
+    return css.slice(start, css.indexOf("}", start));
+  };
+  const slide = getRule("#pincode-legacy-home .premium-hero-slide");
+  const active = getRule("#pincode-legacy-home .premium-hero-slide.is-active");
+  const grid = getRule("#pincode-legacy-home .premium-hero-grid");
+  assert.ok(slide.includes("position:relative"), "Slides must stay in document flow");
+  assert.ok(slide.includes("display:none"), "Only the active slide should occupy space");
+  assert.ok(!slide.includes("position:absolute"), "Absolute slides can collapse inside a min-height viewport");
+  assert.ok(active.includes("display:block"), "The visible slide must be a normal block");
+  assert.ok(grid.includes("min-height:clamp(525px,76svh,750px)"), "Hero grid must reserve its own height");
+  assert.ok(css.includes("min-height:505px;padding-top:30px"), "Short desktop viewport layout required");
+  assert.ok(css.includes("min-height:700px;padding-top:35px"), "Small mobile layout required");
+  assert.ok(css.includes(".premium-hero-slide.is-active{animation:none}"), "Reduced-motion must disable reveal");
+  assert.ok(slider.includes("premium-hero-slide"));
+  assert.ok(slider.includes("is-active"));
+  assert.ok(slider.includes("aria-hidden={!isActive}"));
+  assert.ok(slider.includes("inert={!isActive}"));
+});
+
 test("premium three-slide homepage is accessible, performant and motion-aware", () => {
   const home = read("components/home/LegacyHomepage.tsx");
   const slider = read("components/home/PremiumHeroSlider.tsx");
@@ -49,7 +74,7 @@ test("premium three-slide homepage is accessible, performant and motion-aware", 
     assert.ok(slider.includes(path), "Missing slider destination: " + path);
   }
   assert.ok(css.includes(".premium-hero-slide.is-active"));
-  assert.ok(css.includes("transition:opacity 600ms"));
+  assert.ok(css.includes("pincode-premium-slide-in 480ms"));
   assert.ok(css.includes("@media(max-width:760px)"));
   assert.ok(css.includes("@media(max-width:400px)"));
   assert.ok(css.includes("@media(prefers-reduced-motion:reduce)"));
@@ -214,7 +239,7 @@ test("homepage keeps brand, photo sections, original supporting carousels and a 
   assert.ok(home.includes("data-scroller"));
   assert.ok(home.includes("<PremiumHeroSlider />"));
   assert.ok(hero.includes("hero-copy reveal"));
-  assert.ok(read("components/home/premium-hero-slider.css").includes("transition:opacity 600ms"));
+  assert.ok(read("components/home/premium-hero-slider.css").includes("pincode-premium-slide-in 480ms"));
   assert.doesNotMatch(home, /IntersectionObserver/);
 });
 

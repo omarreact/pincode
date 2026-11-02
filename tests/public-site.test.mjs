@@ -13,6 +13,16 @@ function sourceFiles(dir) {
   });
 }
 
+test("stock-photo URLs are checked for permanent 404s during real-browser CI", () => {
+  const workflow = read(".github/workflows/public-website-checks.yml");
+  const checker = read("scripts/check-stock-images.mjs");
+  const packageInfo = JSON.parse(read("package.json"));
+  assert.ok(workflow.includes("npm run test:images"));
+  assert.ok(packageInfo.scripts["test:images"].includes("check-stock-images.mjs"));
+  assert.ok(checker.includes("result.status === 404"));
+  assert.ok(checker.includes("process.exitCode = 1"));
+});
+
 test("LCP photo priority and short-viewport heading are guarded", () => {
   const marketplace = read("components/marketing/MarketplaceVisualLead.tsx");
   const mosaic = read("components/marketing/PhotoMosaic.tsx");

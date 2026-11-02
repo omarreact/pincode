@@ -46,6 +46,8 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Build application in production mode
         run: npm run build
+      - name: Check stock photos for permanent 404/410 errors
+        run: npm run test:images
       - name: Verify pages, slider, navigation, responsive layouts and collect screenshots
         run: npm run test:browser
       - name: Upload browser screenshots, trace and performance results

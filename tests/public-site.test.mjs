@@ -13,6 +13,19 @@ function sourceFiles(dir) {
   });
 }
 
+test("LCP photo priority and short-viewport heading are guarded", () => {
+  const marketplace = read("components/marketing/MarketplaceVisualLead.tsx");
+  const mosaic = read("components/marketing/PhotoMosaic.tsx");
+  const css = read("components/home/premium-hero-slider.css");
+  const photos = read("lib/stock-photos.ts");
+  assert.ok(marketplace.includes('loading="eager" fetchPriority="high"'));
+  assert.ok(mosaic.includes('page === "contact"'));
+  assert.ok(css.includes(".hero.premium-hero h1"));
+  assert.ok(css.includes("font-size:clamp(44px,4.3vw,54px)"));
+  assert.ok(css.includes("@keyframes pincode-copy-settle"));
+  assert.ok(!photos.includes("photo-1512941937669-90a1b58e7e9f"));
+});
+
 test("production homepage uses server markup plus small client islands", () => {
   const homepage = read("components/home/LegacyHomepage.tsx");
   const interactions = read("components/home/LegacyHomepageInteractions.tsx");
@@ -661,7 +674,8 @@ test("professional stock photography is shared, responsive and not a fake portfo
   assert.match(stage, /heroPhoto.src/);
   assert.match(mosaic, /pagePhotography\[page\]/);
   assert.match(mosaic, /sizes=/);
-  assert.match(mosaic, /loading="lazy"/);
+  assert.ok(mosaic.includes('page === "contact"'));
+  assert.ok(mosaic.includes('fetchPriority='));
   assert.match(portfolio, /next\/image/);
   assert.match(portfolio, /illustrative editorial photographs/);
   assert.match(stock, /Unsplash/);

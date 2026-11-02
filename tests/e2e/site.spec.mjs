@@ -31,9 +31,22 @@ async function assertNoOverflow(page, name) {
 }
 
 async function capture(page, info, name, fullPage = false) {
+  // Clicking a slide indicator scrolls the browser to the controls. Reset to
+  // the top before capturing, or later slides misleadingly look blank.
+  await page.evaluate(() => window.scrollTo(0, 0));
+  if (fullPage) {
+    // Full-page screenshots do not automatically trigger native lazy loading
+    // of images far below the fold; make QA captures representative.
+    await page.evaluate(() => {
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        img.loading = "eager";
+      });
+    });
+    await page.waitForTimeout(450);
+  }
   const safeName = name.replace(/[^a-z0-9-]/gi, "_");
   const path = info.outputPath(`${safeName}.png`);
-  await page.screenshot({ path, fullPage, animations: "disabled", timeout: 25_000 });
+  await page.screenshot({ path, fullPage, animations: "disabled", timeout: 30_000 });
   await info.attach(safeName, { path, contentType: "image/png" });
 }
 
@@ -109,6 +122,16 @@ for (const viewport of viewports) {
     expect(rect?.height ?? 0).toBeGreaterThan(40);
     const links = hero.locator(".premium-hero-slide.is-active .premium-hero-actions a");
     await expect(links).toHaveCount(2);
+    if (viewport.name === "windows-150pct") {
+      // Static presence tests alone missed the CTA pushed below the screen
+      // by old legacy CSS specificity.
+      const fontSize = await heading.evaluate(el => parseFloat(getComputedStyle(el).fontSize));
+      expect(fontSize, "Hero h1 is too large at 150% display scaling").toBeLessThanOrEqual(65);
+      const primaryBox = await links.first().boundingBox();
+      expect(primaryBox?.y ?? 9999).toBeGreaterThanOrEqual(0);
+      expect((primaryBox?.y ?? 9999) + (primaryBox?.height ?? 0),
+        "Hero primary button must fit above the fold at 1280x620").toBeLessThanOrEqual(viewport.height - 7);
+    }
     await assertNoOverflow(page, viewport.name);
     await capture(page, info, `homepage-${viewport.name}`, true);
   });

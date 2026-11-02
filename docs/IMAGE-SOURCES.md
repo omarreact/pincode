@@ -23,7 +23,7 @@ The photos originate at `https://images.unsplash.com/`. The following identifier
 - https://images.unsplash.com/photo-1521737711867-e3b97375f902
 - https://images.unsplash.com/photo-1460925895917-afdab827c52f
 - https://images.unsplash.com/photo-1499951360447-b19be8fe80f5
-- https://images.unsplash.com/photo-1512941937669-90a1b58e7e9f
+- https://images.unsplash.com/photo-1754834760252-3e01df56850c
 - https://images.unsplash.com/photo-1518770660439-4636190af475
 - https://images.unsplash.com/photo-1486406146926-c627a92ad1ab
 - https://images.unsplash.com/photo-1522071820081-009f0129c71c

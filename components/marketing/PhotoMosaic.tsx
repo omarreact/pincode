@@ -22,7 +22,8 @@ export function PhotoMosaic({ page, compact = false }: { page: GalleryName; comp
                 fill
                 sizes={i === 0 ? "(max-width: 760px) 92vw, 49vw" : "(max-width: 760px) 46vw, 24vw"}
                 quality={65}
-                loading="lazy"
+                loading={compact && page === "contact" && i === 0 ? "eager" : "lazy"}
+                fetchPriority={compact && page === "contact" && i === 0 ? "high" : "auto"}
               />
               <figcaption>{["THE BIG PICTURE","THE DETAILS","THE PEOPLE"][i]}</figcaption>
             </figure>

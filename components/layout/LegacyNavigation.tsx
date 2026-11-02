@@ -56,7 +56,8 @@ export function LegacyNavigation() {
     };
   }, []);
 
-  const mobile = () => window.matchMedia("(max-width: 900px)").matches;
+  // CSS and JS must use the same breakpoint (also fixes 150% Windows scaling).
+  const mobile = () => window.matchMedia("(max-width: 1180px)").matches;
   return (
     <div className="pincode-navigation" ref={ref}>
       <header className="site-header">

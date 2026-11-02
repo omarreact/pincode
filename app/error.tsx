@@ -1,5 +1,7 @@
 "use client";
 
+import "./all-pages.css";
+
 import { useEffect } from "react";
 import Link from "next/link";
 

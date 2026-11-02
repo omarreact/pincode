@@ -1,19 +1,15 @@
-import Link from "next/link";
-
-type HeroAction = {
-  label: string;
-  href: string;
-  arrow: "↓" | "↗";
-};
+import { AgencyActionLink, type AgencyAction } from "./AgencyActionLink";
 
 type AgencyPageHeroProps = {
   headingId: string;
   eyebrow: string;
   title: string;
   description: string;
-  primary: HeroAction;
-  secondary: HeroAction;
+  primary: AgencyAction;
+  secondary: AgencyAction;
   stages: [string, string, string];
+  signature?: string;
+  scrollLabel?: string;
 };
 
 /**
@@ -28,6 +24,8 @@ export function AgencyPageHero({
   primary,
   secondary,
   stages,
+  signature = "PINCODE IT",
+  scrollLabel = "SCROLL TO EXPLORE ↓",
 }: AgencyPageHeroProps) {
   return (
     <section className="agency-page-hero" aria-labelledby={headingId}>
@@ -37,19 +35,15 @@ export function AgencyPageHero({
         <div className="agency-hero-topline">
           <span className="agency-eyebrow">{eyebrow}</span>
           <span className="agency-hero-signature">
-            PINCODE IT <span aria-hidden="true">↗</span>
+            {signature} <span aria-hidden="true">↗</span>
           </span>
         </div>
         <div className="agency-hero-content">
           <h1 id={headingId}>{title}</h1>
           <p>{description}</p>
           <div className="agency-page-actions">
-            <Link href={primary.href} className="agency-glass-button agency-glass-button-primary">
-              {primary.label} <span aria-hidden="true">{primary.arrow}</span>
-            </Link>
-            <Link href={secondary.href} className="agency-glass-button agency-glass-button-outline">
-              {secondary.label} <span aria-hidden="true">{secondary.arrow}</span>
-            </Link>
+            <AgencyActionLink {...primary} variant="primary" />
+            <AgencyActionLink {...secondary} variant="outline" />
           </div>
         </div>
         <div className="agency-hero-bottomline">
@@ -57,7 +51,7 @@ export function AgencyPageHero({
             {stages[0]} <span className="agency-dot">·</span> {stages[1]}{" "}
             <span className="agency-dot">·</span> {stages[2]}
           </span>
-          <span>SCROLL TO EXPLORE ↓</span>
+          <span>{scrollLabel}</span>
         </div>
       </div>
     </section>

@@ -45,7 +45,7 @@ export function ContactBuilder() {
     message.trim() && "Details: " + message.trim(),
   ].filter(Boolean).join("\n");
 
-  const mailto = "mailto:pincodeit.com.bd@gmail.com?subject=" +
+  const mailto = "mailto:admin@pincodeit.com?subject=" +
     encodeURIComponent("PINCODE IT — new project enquiry") +
     "&body=" + encodeURIComponent("Hello PINCODE IT,\n\n" + summary);
 

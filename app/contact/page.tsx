@@ -23,7 +23,7 @@ export default function ContactPage() {
           description="Start with a guided project brief or contact us directly. You do not need an account, and this site does not store your brief."
           signature="A CLEAR START"
           primary={{ label: "Build a project brief", href: "#project-brief", arrow: "↓" }}
-          secondary={{ label: "Email us", href: "mailto:pincodeit.com.bd@gmail.com", arrow: "↗" }}
+          secondary={{ label: "Email us", href: "mailto:admin@pincodeit.com", arrow: "↗" }}
           stages={["DISCOVER", "PLAN", "DELIVER"]}
           scrollLabel="SCROLL TO BEGIN ↓"
         />
@@ -47,20 +47,20 @@ export default function ContactPage() {
             headingId="direct-contact-heading"
             eyebrow="02 / DIRECT CONTACT"
             title="Prefer a direct message?"
-            description="Choose the simplest way to start a conversation. There is no account requirement and no phone number on this website."
+            description="Choose the simplest way to start a conversation. No account is needed, and business enquiries can be sent to our official domain email."
           />
           <div className="agency-contact-options">
             <ContactOptionCard
               label="BUSINESS EMAIL"
-              title="pincodeit.com.bd@gmail.com"
+              title="admin@pincodeit.com"
               description="Share your challenge, an idea or the next step you'd like to discuss."
-              href="mailto:pincodeit.com.bd@gmail.com"
+              href="mailto:admin@pincodeit.com"
               linkLabel="Compose an email ↗"
             />
             <ContactOptionCard
               label="BASED IN"
               title="Dhaka, Bangladesh"
-              description="PINCODE IT collaborates on digital projects and ongoing technical support. We don't publish an unverified street address."
+              description="PINCODE IT provides digital projects and ongoing technical support in Dhaka. Please contact us before arranging an in-person visit."
             />
           </div>
         </section>

@@ -67,7 +67,7 @@ test("public source and legacy snapshots contain no phone numbers or WhatsApp li
 
 test("the enquiry builder opens email rather than a phone-dependent service", () => {
   const builder = read("components/ContactBuilder.tsx");
-  assert.match(builder, /mailto:pincodeit\.com\.bd@gmail\.com/);
+  assert.match(builder, /mailto:admin@pincodeit\.com/);
   assert.match(builder, /Continue by email/);
 });
 
@@ -80,7 +80,9 @@ test("legacy marketing URLs redirect to Next.js pages", () => {
 
 test("all public Next.js pages use the shared glass design system", () => {
   const layout = read("app/layout.tsx");
-  assert.match(layout, /import "\.\/all-pages\.css"/);
+  assert.doesNotMatch(layout, /import "\.\/all-pages\.css"/);
+  assert.match(read("components/SiteShell.tsx"), /import "@\/app\/all-pages\.css"/);
+  assert.match(read("app/error.tsx"), /import "\.\/all-pages\.css"/);
   const css = read("app/all-pages.css");
   for (const selector of [
     ".agency-page-hero", ".agency-hero-panel", ".agency-glass-button",
@@ -135,7 +137,7 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
   const builder = read("components/ContactBuilder.tsx");
   assert.match(builder, /agency-form-progress/);
   assert.match(builder, /aria-pressed/);
-  assert.match(builder, /mailto:pincodeit\.com\.bd@gmail\.com/);
+  assert.match(builder, /mailto:admin@pincodeit\.com/);
   assert.match(builder, /Start again/);
 });
 
@@ -195,7 +197,7 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
   assert.ok(legacy.includes("/brand/pincode-mark.svg"));
   assert.doesNotMatch(legacy, /M24 3 42 13.5/);
   const layout = read("app/layout.tsx");
-  assert.ok(layout.includes("/brand/pincode-horizontal-light.svg"));
+  assert.ok(layout.includes("/opengraph-image"));
   assert.ok(layout.includes("/favicon.svg"));
   assert.match(read("public/favicon.svg"), /pincode-v2-grad/);
   assert.match(read("app/icon.svg"), /pincode-v2-grad/);
@@ -326,6 +328,51 @@ test("speed and motion features do not hide server content or delay provider com
   assert.ok(read("app/domains/page.tsx").includes('getReferenceMarketplace("domain")'));
   assert.ok(read("app/hosting/page.tsx").includes('getReferenceMarketplace("hosting")'));
   assert.ok(read("app/api/marketplace/offers/route.ts").includes("unstable_cache"));
+});
+
+test("professional site essentials: canonical SEO, policies, errors and domain email", () => {
+  const sitemap = read("app/sitemap.ts");
+  const robots = read("app/robots.ts");
+  const layout = read("app/layout.tsx");
+  const footer = read("components/SiteShell.tsx");
+  const contact = read("app/contact/page.tsx");
+  const domainEmail = "admin@pincodeit.com";
+  assert.match(sitemap, /"domains", "hosting", "privacy", "terms"/);
+  assert.match(sitemap, /site.url/);
+  assert.match(robots, /site.url/);
+  assert.match(robots, /"\/api\/"/);
+  assert.match(layout, /opengraph-image/);
+  assert.match(layout, /summary_large_image/);
+  assert.match(read("app/opengraph-image.tsx"), /ImageResponse/);
+  assert.match(footer, /Privacy Policy/);
+  assert.match(footer, /Terms of Use/);
+  assert.match(footer, /site.email/);
+  assert.match(read("lib/site-config.ts"), /admin@pincodeit.com/);
+  assert.match(contact, /admin@pincodeit.com/);
+  assert.match(read("app/privacy/page.tsx"), /<LegalPage/);
+  assert.match(read("app/terms/page.tsx"), /<LegalPage/);
+  assert.match(read("app/not-found.tsx"), /404/);
+  assert.match(read("app/error.tsx"), /reset/);
+  assert.match(read("components/ContactBuilder.tsx"), /mailto:admin@pincodeit.com/);
+  assert.equal(domainEmail, "admin@pincodeit.com");
+});
+
+test("public work samples and insight articles link to verifiable source", () => {
+  const work = read("app/work/page.tsx");
+  const insights = read("app/insights/page.tsx");
+  const cards = read("components/MarketingTopic.tsx");
+  const articles = read("lib/insight-articles.ts");
+  const articlePage = read("app/insights/[slug]/page.tsx");
+  assert.match(work, /omarreact\/shohoz-jomir-hishab/);
+  assert.match(work, /omarreact\/PinAI/);
+  assert.match(work, /Public engineering projects/i);
+  assert.match(cards, /noopener noreferrer/);
+  assert.match(cards, /topic.href/);
+  assert.match(insights, /\/insights\/life-after-launch/);
+  assert.match(articlePage, /generateStaticParams/);
+  assert.match(articlePage, /generateMetadata/);
+  assert.match(articles, /performance-is-part-of-design/);
+  assert.match(read("components/DomainSearch.tsx"), /www.namecheap.com\/domains\/domain-name-search/);
 });
 
 test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {

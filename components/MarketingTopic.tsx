@@ -5,6 +5,8 @@ export type MarketingTopicData = {
   title: string;
   body: string;
   tag?: string;
+  href?: string;
+  linkLabel?: string;
 };
 
 type TopicProps = { topic: MarketingTopicData; index: number };
@@ -48,9 +50,15 @@ export function MarketingTopicCard({
       <div className="agency-card-symbol" aria-hidden="true"><span>↗</span></div>
       <h3>{topic.title}</h3>
       <p>{topic.body}</p>
-      <Link href="/contact" className="agency-card-link">
-        Discuss this <span aria-hidden="true">↗</span>
-      </Link>
+      {topic.href?.startsWith("https://") ? (
+        <a href={topic.href} className="agency-card-link" target="_blank" rel="noopener noreferrer">
+          {topic.linkLabel ?? "View project"} <span aria-hidden="true">↗</span>
+        </a>
+      ) : (
+        <Link href={topic.href ?? "/contact"} className="agency-card-link">
+          {topic.linkLabel ?? "Discuss this"} <span aria-hidden="true">↗</span>
+        </Link>
+      )}
     </article>
   );
 }

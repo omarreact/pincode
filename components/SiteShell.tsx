@@ -1,7 +1,9 @@
+import "@/app/all-pages.css";
 import Link from "next/link";
 import { LegacyNavigation } from "./LegacyNavigation";
 import { SiteMotion } from "./SiteMotion";
 import { FooterLinkGroup } from "./FooterLinkGroup";
+import { site } from "@/lib/site-config";
 
 function Brand() {
   return (
@@ -53,12 +55,14 @@ export function SiteFooter() {
             { label: "About", href: "/about" },
             { label: "Insights", href: "/insights" },
             { label: "Contact", href: "/contact" },
+            { label: "Privacy Policy", href: "/privacy" },
+            { label: "Terms of Use", href: "/terms" },
           ]}
         />
         <FooterLinkGroup
           title="Get in touch"
           links={[
-            { label: "Business email ↗", href: "mailto:pincodeit.com.bd@gmail.com" },
+            { label: "Business email ↗", href: `mailto:${site.email}` },
             { label: "Start a project ↗", href: "/contact", className: "agency-footer-contact-link" },
           ]}
         />

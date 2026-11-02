@@ -9,6 +9,7 @@ export type PageContent = {
   title: string;
   intro: string;
   cta?: string;
+  exploreDescription?: string;
   cards: MarketingTopicData[];
 };
 
@@ -37,7 +38,7 @@ export function MarketingPage({ data }: { data: PageContent }) {
             headingId="agency-explore-title"
             eyebrow="EXPLORE / PINCODE IT"
             title={data.cta ?? "Build useful technology together."}
-            description="Explore the ideas and capabilities behind what we do, then start a conversation about what your business actually needs."
+            description={data.exploreDescription ?? "Explore the ideas and capabilities behind what we do, then start a conversation about what your business actually needs."}
           />
           <nav className="agency-index" aria-label="Jump to a topic">
             {data.cards.map((topic, index) => (

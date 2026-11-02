@@ -22,7 +22,7 @@ export const photos = {
   digital: { src: unsplash("photo-1460925895917-afdab827c52f"), alt: "Laptop displaying analytics and digital business charts" },
   laptop: { src: unsplash("photo-1499951360447-b19be8fe80f5"), alt: "Laptop on a well-organized modern office desk" },
   userExperience: { src: unsplash("photo-1559028012-481c04fa702d"), alt: "Design and user experience workspace" },
-  mobile: { src: unsplash("photo-1512941937669-90a1b58e7e9f"), alt: "Mobile devices used in digital product development" },
+  mobile: { src: unsplash("photo-1754834760252-3e01df56850c"), alt: "A person browsing a mobile app beside an open laptop" },
   network: { src: unsplash("photo-1518770660439-4636190af475"), alt: "Electronic circuit board representing computing infrastructure" },
   architecture: { src: unsplash("photo-1486406146926-c627a92ad1ab"), alt: "Modern glass architecture from a low angle" },
   security: { src: unsplash("photo-1563013544-824ae1b704d3"), alt: "Digital security and technology illustration" },

@@ -44,8 +44,14 @@
   animation:none;
   opacity:1;transform:none;
 }
-#pincode-legacy-home .premium-hero-slide.is-active:first-child .premium-hero-copy{
-  animation:pincode-hero-enter 650ms cubic-bezier(.22,1,.36,1) both;
+/* Text is visible on the very first paint: a subtle transform, never
+   opacity:0 that can delay perceived loading or trigger a blank hero. */
+#pincode-legacy-home .premium-hero-slide.is-active:first-child .premium-hero-copy.hero-copy{
+  animation:pincode-copy-settle 480ms cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes pincode-copy-settle{
+  from{transform:translate3d(0,9px,0)}
+  to{transform:translate3d(0,0,0)}
 }
 #pincode-legacy-home .premium-hero-eyebrow{
   display:inline-flex;align-items:center;gap:12px;
@@ -55,7 +61,7 @@
   text-transform:uppercase;
 }
 #pincode-legacy-home .premium-hero-spark{width:8px;height:8px;flex:none;border-radius:50%;background:#12b47c;box-shadow:0 0 0 5px rgba(27,188,126,.10)}
-#pincode-legacy-home .premium-hero h1{
+#pincode-legacy-home .hero.premium-hero h1{
   max-width:840px;
   margin:clamp(24px,3vw,39px) 0 25px;
   font-size:clamp(51px,5.9vw,86px);
@@ -65,7 +71,7 @@
   text-wrap:balance;
   color:#111e18;
 }
-#pincode-legacy-home .premium-hero h1 span{
+#pincode-legacy-home .hero.premium-hero h1 span{
   background:linear-gradient(102deg,#008f64,#25b881);
   -webkit-background-clip:text;background-clip:text;
   color:transparent;
@@ -148,7 +154,7 @@
   height:1px;width:1px;overflow:hidden;position:absolute;white-space:nowrap;
 }
 @media(max-width:1100px){
-  #pincode-legacy-home .premium-hero h1{font-size:clamp(46px,5.7vw,70px)}
+  #pincode-legacy-home .hero.premium-hero h1{font-size:clamp(46px,5.7vw,70px)}
   #pincode-legacy-home .premium-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.85fr);gap:25px}
   #pincode-legacy-home .premium-hero-art{height:clamp(320px,35vw,450px)}
 }
@@ -157,11 +163,11 @@
 @media(min-width:761px) and (max-height:700px){
   #pincode-legacy-home .premium-hero-viewport{min-height:505px}
   #pincode-legacy-home .premium-hero-grid{min-height:505px;padding-top:30px;padding-bottom:78px}
-  #pincode-legacy-home .premium-hero h1{font-size:clamp(44px,4.9vw,63px);margin:17px 0 15px;line-height:1.02}
+  #pincode-legacy-home .hero.premium-hero h1{font-size:clamp(44px,4.3vw,54px);margin:15px 0 12px;line-height:1.04}
   #pincode-legacy-home .premium-hero-description{font-size:14px;line-height:1.55}
-  #pincode-legacy-home .premium-hero-actions{margin-top:22px}
-  #pincode-legacy-home .premium-hero-subnote{margin-top:21px}
-  #pincode-legacy-home .premium-hero-art{height:clamp(300px,35vw,365px)}
+  #pincode-legacy-home .premium-hero-actions{margin-top:18px}
+  #pincode-legacy-home .premium-hero-subnote{margin-top:16px}
+  #pincode-legacy-home .premium-hero-art{height:clamp(280px,33vw,340px)}
   #pincode-legacy-home .premium-hero-bottom{bottom:17px}
 }
 @media(max-width:760px){
@@ -173,7 +179,7 @@
     align-items:start;justify-content:stretch;gap:20px;
     padding-top:clamp(40px,7vw,64px);padding-bottom:90px;
   }
-  #pincode-legacy-home .premium-hero h1{font-size:clamp(42px,10.7vw,64px);margin:19px 0 17px;line-height:1.01}
+  #pincode-legacy-home .hero.premium-hero h1{font-size:clamp(42px,10.7vw,64px);margin:19px 0 17px;line-height:1.01}
   #pincode-legacy-home .premium-hero-description{font-size:15px;line-height:1.55}
   #pincode-legacy-home .premium-hero-actions{margin-top:23px;gap:9px}
   #pincode-legacy-home .premium-hero-button{min-height:44px;padding:11px 16px;gap:13px;font-size:12px}
@@ -187,7 +193,7 @@
 @media(max-width:400px){
   #pincode-legacy-home .premium-hero-viewport{min-height:700px}
   #pincode-legacy-home .premium-hero-grid{min-height:700px;padding-top:35px;gap:15px}
-  #pincode-legacy-home .premium-hero h1{font-size:clamp(38px,10.2vw,45px)}
+  #pincode-legacy-home .hero.premium-hero h1{font-size:clamp(38px,10.2vw,45px)}
   #pincode-legacy-home .premium-hero-indicator{min-width:43px;gap:5px}
   #pincode-legacy-home .premium-hero-indicator i{width:20px}
   #pincode-legacy-home .premium-hero-indicator.is-active i{width:28px}

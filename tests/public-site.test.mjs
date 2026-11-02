@@ -13,6 +13,60 @@ function sourceFiles(dir) {
   });
 }
 
+test("stock-photo URLs are checked for permanent 404s during real-browser CI", () => {
+  const workflow = read(".github/workflows/public-website-checks.yml");
+  const checker = read("scripts/check-stock-images.mjs");
+  const packageInfo = JSON.parse(read("package.json"));
+  assert.ok(workflow.includes("npm run test:images"));
+  assert.ok(packageInfo.scripts["test:images"].includes("check-stock-images.mjs"));
+  assert.ok(checker.includes("result.status === 404"));
+  assert.ok(checker.includes("process.exitCode = 1"));
+});
+
+test("LCP photo priority and short-viewport heading are guarded", () => {
+  const marketplace = read("components/marketing/MarketplaceVisualLead.tsx");
+  const mosaic = read("components/marketing/PhotoMosaic.tsx");
+  const css = read("components/home/premium-hero-slider.css");
+  const photos = read("lib/stock-photos.ts");
+  assert.ok(marketplace.includes('loading="eager" fetchPriority="high"'));
+  assert.ok(mosaic.includes('page === "contact"'));
+  assert.ok(css.includes(".hero.premium-hero h1"));
+  assert.ok(css.includes("font-size:clamp(44px,4.3vw,54px)"));
+  assert.ok(css.includes("@keyframes pincode-copy-settle"));
+  assert.ok(!photos.includes("photo-1512941937669-90a1b58e7e9f"));
+});
+
+test("production homepage uses server markup plus small client islands", () => {
+  const homepage = read("components/home/LegacyHomepage.tsx");
+  const interactions = read("components/home/LegacyHomepageInteractions.tsx");
+  const slider = read("components/home/PremiumHeroSlider.tsx");
+  const qaWorkflow = read(".github/workflows/public-website-checks.yml");
+  const playwright = read("playwright.config.mjs");
+  const e2e = read("tests/e2e/site.spec.mjs");
+  assert.ok(!homepage.startsWith('"use client"'));
+  assert.ok(homepage.includes("LegacyHomepageInteractions"));
+  assert.ok(homepage.includes("<DomainHostingSection />"));
+  assert.ok(homepage.includes("originalHomepageHTML"));
+  assert.ok(!homepage.includes("useEffect("));
+  assert.ok(interactions.startsWith('"use client"'));
+  assert.ok(interactions.includes("AbortController"));
+  assert.ok(interactions.includes('document.getElementById("pincode-legacy-home")'));
+  assert.ok(interactions.includes("data-modal-open"));
+  assert.ok(interactions.includes("data-scroller"));
+  assert.ok(slider.startsWith('"use client"'));
+  assert.ok(qaWorkflow.includes("browser-qa:"));
+  assert.ok(qaWorkflow.includes("npx playwright install --with-deps chromium"));
+  assert.ok(qaWorkflow.includes("npm run test:browser"));
+  assert.ok(qaWorkflow.includes("lighthouse:"));
+  assert.ok(qaWorkflow.includes("actions/upload-artifact@v4"));
+  assert.ok(playwright.includes("npm run start -- -p 4173"));
+  assert.ok(e2e.includes("assertNoOverflow"));
+  assert.ok(e2e.includes("premium-hero-slide.is-active"));
+  assert.ok(e2e.includes("1920x1080"));
+  assert.ok(e2e.includes("mobile menu"));
+  assert.ok(e2e.includes("browser-performance.json"));
+});
+
 test("Next.js source tree is organized without unused root snapshots", () => {
   const root = readdirSync(new URL("..", import.meta.url));
   const components = readdirSync(new URL("../components", import.meta.url));
@@ -630,7 +684,8 @@ test("professional stock photography is shared, responsive and not a fake portfo
   assert.match(stage, /heroPhoto.src/);
   assert.match(mosaic, /pagePhotography\[page\]/);
   assert.match(mosaic, /sizes=/);
-  assert.match(mosaic, /loading="lazy"/);
+  assert.ok(mosaic.includes('page === "contact"'));
+  assert.ok(mosaic.includes('fetchPriority='));
   assert.match(portfolio, /next\/image/);
   assert.match(portfolio, /illustrative editorial photographs/);
   assert.match(stock, /Unsplash/);

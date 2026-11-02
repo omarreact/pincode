@@ -14,7 +14,7 @@ export function MarketplaceVisualLead({ kind }: { kind: "domain" | "hosting" }) 
           fill
           sizes="(max-width: 820px) 100vw, 48vw"
           alt={domain ? "Earth viewed from space illustrating an internet-wide presence" : "Server hardware illustrating web-hosting infrastructure"}
-          loading="lazy"
+          loading="eager" fetchPriority="high"
           quality={65}
         />
         <span className="agency-market-photo-note">Illustrative photography · Unsplash</span>

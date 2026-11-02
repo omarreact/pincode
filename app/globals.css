@@ -47,10 +47,11 @@ button:focus-visible,a:focus-visible{outline:3px solid #22b573;outline-offset:3p
     to { opacity: 1; transform: translate3d(0, 0, 0); }
   }
 
-  /* Observer reveal remains for offscreen cards and sections only. */
+  /* Never hide actual server-rendered content while waiting for scrolling,
+     hydration, screenshot capture, or an IntersectionObserver callback. */
   [data-site-motion].site-motion-pending {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0);
+    opacity: 1;
+    transform: none;
   }
   [data-site-motion].site-motion-visible {
     opacity: 1;

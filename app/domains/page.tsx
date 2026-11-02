@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
 import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
 import { MarketplaceVisualLead } from "@/components/marketing/MarketplaceVisualLead";
+import { PhotoMosaic } from "@/components/marketing/PhotoMosaic";
 import { DomainSearch } from "@/components/domains/DomainSearch";
 import { ProviderMarketplace } from "@/components/marketplace/ProviderMarketplace";
 import { getReferenceMarketplace } from "@/lib/provider-marketplace";
@@ -36,6 +37,7 @@ export default function DomainsPage() {
           <article><strong>02 · Verify with a registrar</strong><p>Confirm registration eligibility, premium prices and restrictions with your preferred registrar.</p></article>
           <article><strong>03 · Build your presence</strong><p>PINCODE IT can help connect hosting, DNS, email and your new website.</p></article>
         </div>
+        <PhotoMosaic page="domains" compact />
       </main>
       <SiteFooter />
     </>

@@ -3,6 +3,7 @@ import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
 import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
 import { AgencySectionIntro } from "@/components/marketing/AgencySectionIntro";
 import { ContactOptionCard } from "@/components/contact/ContactOptionCard";
+import { PhotoMosaic } from "@/components/marketing/PhotoMosaic";
 import { ContactBuilder } from "@/components/contact/ContactBuilder";
 
 export const metadata: Metadata = {
@@ -27,6 +28,8 @@ export default function ContactPage() {
           stages={["DISCOVER", "PLAN", "DELIVER"]}
           scrollLabel="SCROLL TO BEGIN ↓"
         />
+
+        <PhotoMosaic page="contact" compact />
 
         <section id="project-brief" className="agency-contact-section" aria-labelledby="project-brief-heading">
           <AgencySectionIntro

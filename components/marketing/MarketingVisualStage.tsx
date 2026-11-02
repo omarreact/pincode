@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { MarketingTopicData } from "./MarketingTopic";
+import { pagePhotography, photo } from "@/lib/stock-photos";
 import "./marketing-visual-stage.css";
 
 export type MarketingStory = "services" | "solutions" | "work" | "about" | "insights";
@@ -12,9 +13,6 @@ const stories: Record<MarketingStory, {
   footnote: string;
   action: string;
   href: string;
-  photo: string;
-  photoAlt: string;
-  photoCaption: string;
 }> = {
   services: {
     eyebrow: "DESIGN × ENGINEERING × CARE",
@@ -23,9 +21,6 @@ const stories: Record<MarketingStory, {
     footnote: "From first idea to working product",
     action: "Explore our work",
     href: "/work",
-    photo: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-    photoAlt: "Developer workspace with a laptop displaying source code",
-    photoCaption: "Illustrative photography / Unsplash",
   },
   solutions: {
     eyebrow: "BUSINESS NEEDS / PRACTICAL SYSTEMS",
@@ -34,20 +29,14 @@ const stories: Record<MarketingStory, {
     footnote: "Define · Design · Deliver",
     action: "Discuss your project",
     href: "/contact",
-    photo: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-    photoAlt: "People collaborating around laptops in a technology workspace",
-    photoCaption: "Illustrative photography / Unsplash",
   },
   work: {
     eyebrow: "PUBLIC WORK / OPEN ENGINEERING",
-    heading: "Explore real work, not inflated claims.",
-    description: "Review public source code and the decisions behind our engineering projects. What you see here is publicly inspectable, not an invented client portfolio.",
-    footnote: "Public repositories · No invented metrics",
+    heading: "Work that is thoughtful from every angle.",
+    description: "Explore the creative and technical disciplines that shape meaningful digital experiences, from concept to lasting support.",
+    footnote: "Design · Development · Improvement",
     action: "See all projects",
     href: "#explore",
-    photo: "/images/projects/pincms-dashboard.webp",
-    photoAlt: "PinCMS dashboard preview from the public project repository",
-    photoCaption: "Real project preview / PinCMS",
   },
   about: {
     eyebrow: "PEOPLE / PROCESS / PURPOSE",
@@ -56,9 +45,6 @@ const stories: Record<MarketingStory, {
     footnote: "Clarity · Craft · Continuity",
     action: "Start a conversation",
     href: "/contact",
-    photo: "https://images.unsplash.com/photo-1497366754035-f200968a6e72",
-    photoAlt: "Contemporary office interior showing an organized workspace",
-    photoCaption: "Illustrative workspace / Unsplash",
   },
   insights: {
     eyebrow: "FIELD NOTES / USEFUL IDEAS",
@@ -67,9 +53,6 @@ const stories: Record<MarketingStory, {
     footnote: "Strategy · Performance · Security",
     action: "Browse the guides",
     href: "#explore",
-    photo: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
-    photoAlt: "People using digital devices in a collaborative workspace",
-    photoCaption: "Illustrative photography / Unsplash",
   },
 };
 
@@ -107,6 +90,7 @@ export function MarketingVisualStage({
   topics: MarketingTopicData[];
 }) {
   const story = stories[variant];
+  const heroPhoto = photo(pagePhotography[variant].hero);
 
   return (
     <section className="agency-story-stage" data-variant={variant} aria-labelledby="agency-story-heading">
@@ -127,8 +111,8 @@ export function MarketingVisualStage({
             <span aria-hidden="true">✦</span>
           </div>
           <figure className="agency-story-photo">
-            <Image src={story.photo} alt={story.photoAlt} fill sizes="(max-width: 930px) 92vw, 42vw" quality={74} loading="lazy" />
-            <figcaption>{story.photoCaption}</figcaption>
+            <Image src={heroPhoto.src} alt={heroPhoto.alt} fill sizes="(max-width: 930px) 92vw, 42vw" quality={65} loading="lazy" />
+            <figcaption>Illustrative photography / Unsplash</figcaption>
           </figure>
           <div className="agency-story-topics">
             {topics.slice(0, 3).map((topic, index) => (

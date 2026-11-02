@@ -5,6 +5,8 @@ import { MarketingTopicLink, MarketingTopicCard, type MarketingTopicData } from 
 import { MarketingCallToAction } from "./MarketingCallToAction";
 import { MarketingVisualStage, type MarketingStory } from "./MarketingVisualStage";
 import type { ReactNode } from "react";
+import { PhotoMosaic } from "./PhotoMosaic";
+import { pagePhotography, photo } from "@/lib/stock-photos";
 
 export type PageContent = {
   eyebrow: string;
@@ -21,6 +23,7 @@ export type PageContent = {
  * Page-specific copy comes from each route; the glass design stays consistent.
  */
 export function MarketingPage({ data, feature }: { data: PageContent; feature?: ReactNode }) {
+  const editorialImages = pagePhotography[data.story].cards;
   return (
     <>
       <SiteHeader />
@@ -54,7 +57,7 @@ export function MarketingPage({ data, feature }: { data: PageContent; feature?: 
           <div className="agency-card-grid">
             {data.cards.map((topic, index) => (
               <MarketingTopicCard
-                topic={topic}
+                topic={{ ...topic, image: photo(editorialImages[index % editorialImages.length]).src, imageAlt: photo(editorialImages[index % editorialImages.length]).alt }}
                 index={index}
                 total={data.cards.length}
                 key={topic.id ?? topic.title}
@@ -63,6 +66,7 @@ export function MarketingPage({ data, feature }: { data: PageContent; feature?: 
           </div>
         </section>
 
+        <PhotoMosaic page={data.story} />
         <MarketingCallToAction />
       </main>
       <SiteFooter />

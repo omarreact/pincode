@@ -238,9 +238,24 @@ test("all subpages share the Insights hero and Home opening reveal", () => {
   assert.match(read("app/domains/page.tsx"), /#domain-search-title/);
   assert.match(read("app/hosting/page.tsx"), /#hosting-provider-comparison/);
   assert.match(style, /pincode-home-reveal 700ms ease both/);
-  assert.match(style, /translate: 0 28px/);
+  assert.match(style, /translate3d\(0, 28px, 0\)/);
+  assert.match(style, /\.agency-page-hero :is\(\.agency-hero-topline, \.agency-hero-content, \.agency-hero-bottomline\)/);
   assert.match(home, /hero-copy reveal/);
   assert.match(read("components/SiteMotion.tsx"), /\[pathname\]/);
+});
+
+test("hero entrance starts with CSS and never restarts after hydration", () => {
+  const style = read("app/globals.css");
+  const motion = read("components/SiteMotion.tsx");
+  const home = read("components/LegacyHomepage.tsx");
+  assert.match(style, /\.agency-page-hero :is\(/);
+  assert.match(style, /pincode-home-reveal 700ms ease both/);
+  assert.doesNotMatch(style, /\[data-site-motion="hero"\]\.site-motion-enter/);
+  assert.doesNotMatch(motion, /classList\.add\("site-motion-enter"\)/);
+  assert.match(motion, /\[data-site-motion="section"\], \[data-site-motion="card"\]/);
+  assert.match(motion, /prefers-reduced-motion: reduce/);
+  assert.match(style, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(home, /hero-copy reveal/);
 });
 
 test("speed and motion features do not hide server content or delay provider comparison", () => {

@@ -51,6 +51,9 @@ test("Windows 150% scaling and browser zoom keep the homepage proportional", () 
   assert.ok(css.includes("@media(max-width:620px)"));
   assert.ok(home.includes("pincode-visual-proof-grid"));
   assert.ok(home.includes("case-grid"));
+  assert.ok(home.includes("(max-width: 620px) 92vw"));
+  assert.ok(home.includes("(max-width: 620px) 84vw"));
+  assert.ok(home.includes("(max-width: 900px) 94vw"));
 });
 
 test("mobile UI stays visible, compact and free of overlapping duplicate CTAs", () => {

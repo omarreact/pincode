@@ -217,6 +217,32 @@ test("all Next.js pages use the original navigation design through native React 
   }
 });
 
+test("all subpages share the Insights hero and Home opening reveal", () => {
+  const hero = read("components/AgencyPageHero.tsx");
+  const pages = ["app/domains/page.tsx", "app/hosting/page.tsx"];
+  const original = read("components/MarketingPage.tsx");
+  const contact = read("app/contact/page.tsx");
+  const home = read("components/LegacyHomepage.tsx");
+  const style = read("app/globals.css");
+  for (const path of pages) {
+    const page = read(path);
+    assert.match(page, /<AgencyPageHero/);
+    assert.doesNotMatch(page, /domain-page-hero/);
+  }
+  for (const source of [hero, original, contact]) {
+    assert.match(source, /agency-page-hero/);
+    assert.match(source, /agency-hero-panel/);
+    assert.match(source, /agency-hero-content/);
+    assert.match(source, /data-site-motion="hero"/);
+  }
+  assert.match(read("app/domains/page.tsx"), /#domain-search-title/);
+  assert.match(read("app/hosting/page.tsx"), /#hosting-provider-comparison/);
+  assert.match(style, /pincode-home-reveal 700ms ease both/);
+  assert.match(style, /translate: 0 28px/);
+  assert.match(home, /hero-copy reveal/);
+  assert.match(read("components/SiteMotion.tsx"), /\[pathname\]/);
+});
+
 test("speed and motion features do not hide server content or delay provider comparison", () => {
   const home = read("components/LegacyHomepage.tsx");
   const motion = read("components/SiteMotion.tsx");
@@ -231,8 +257,9 @@ test("speed and motion features do not hide server content or delay provider com
   assert.ok(shell.includes("<SiteMotion"));
   assert.ok(read("components/MarketingPage.tsx").includes('data-site-motion="card"'));
   assert.ok(read("app/contact/page.tsx").includes('data-site-motion="section"'));
-  assert.ok(read("app/domains/page.tsx").includes('data-site-motion="hero"'));
-  assert.ok(read("app/hosting/page.tsx").includes('data-site-motion="hero"'));
+  assert.ok(read("components/AgencyPageHero.tsx").includes('data-site-motion="hero"'));
+  assert.ok(read("app/domains/page.tsx").includes("<AgencyPageHero"));
+  assert.ok(read("app/hosting/page.tsx").includes("<AgencyPageHero"));
   assert.ok(!style.includes("@import url("));
   assert.ok(layout.includes('from "next/font/google"'));
   assert.ok(home.includes('from "./LegacyNavigation"'));

@@ -63,8 +63,9 @@ test("glass backgrounds cover navigation, controls and card families", () => {
     assert.ok(css.includes(name), "Missing glass style for " + name);
   }
   assert.match(css, /backdrop-filter/);
+  assert.doesNotMatch(read("app/globals.css"), /\.noticebar\{/);
   const pages = read("app/glass.css");
-  for (const name of [".head", ".navigation", ".pill", ".marketing-card", ".contact-builder", ".builder-options button"]) {
+  for (const name of [".contact-builder", ".builder-options button", ".builder-back", ".builder-finish input", ".foot"]) {
     assert.ok(pages.includes(name), "Missing Next.js glass style for " + name);
   }
 });

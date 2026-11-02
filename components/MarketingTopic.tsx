@@ -47,7 +47,9 @@ export function MarketingTopicCard({
         </span>
         <span className="agency-card-tag">{topic.tag ?? "FOCUS"}</span>
       </div>
-      <div className="agency-card-symbol" aria-hidden="true"><span>↗</span></div>
+      <div className="agency-card-symbol" aria-hidden="true">
+        <span>{["◈", "◎", "⌘", "✳", "◇", "↗"][index % 6]}</span>
+      </div>
       <h3>{topic.title}</h3>
       <p>{topic.body}</p>
       {topic.href?.startsWith("https://") ? (

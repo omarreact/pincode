@@ -379,6 +379,27 @@ test("public work samples and insight articles link to verifiable source", () =>
   assert.match(read("components/DomainSearch.tsx"), /www.namecheap.com\/domains\/domain-name-search/);
 });
 
+test("marketing pages include distinctive lightweight visual storytelling", () => {
+  const marketing = read("components/MarketingPage.tsx");
+  const visual = read("components/MarketingVisualStage.tsx");
+  const style = read("components/marketing-visual-stage.css");
+  assert.match(marketing, /<MarketingVisualStage/);
+  assert.match(visual, /type MarketingStory/);
+  assert.match(visual, /noopener noreferrer/);
+  assert.match(style, /prefers-reduced-motion:reduce/);
+  assert.doesNotMatch(visual, /"use client"/);
+  assert.doesNotMatch(visual, /fetch\(/);
+  const expected = [
+    ["services", "services"], ["solutions", "solutions"],
+    ["work", "work"], ["about", "about"], ["insights", "insights"],
+  ];
+  for (const [route, kind] of expected) {
+    const page = read("app/" + route + "/page.tsx");
+    assert.ok(page.includes('story: "' + kind + '"'), "Missing visual story on " + route);
+  }
+  assert.match(read("components/MarketingTopic.tsx"), /index % 6/);
+});
+
 test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {
   const bridge = read("components/LegacyLinkBridge.tsx");
   const nav = read("components/LegacyNavigation.tsx");

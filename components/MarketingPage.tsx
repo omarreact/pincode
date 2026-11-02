@@ -3,6 +3,7 @@ import { AgencyPageHero } from "./AgencyPageHero";
 import { AgencySectionIntro } from "./AgencySectionIntro";
 import { MarketingTopicLink, MarketingTopicCard, type MarketingTopicData } from "./MarketingTopic";
 import { MarketingCallToAction } from "./MarketingCallToAction";
+import { MarketingVisualStage, type MarketingStory } from "./MarketingVisualStage";
 
 export type PageContent = {
   eyebrow: string;
@@ -11,6 +12,7 @@ export type PageContent = {
   cta?: string;
   exploreDescription?: string;
   cards: MarketingTopicData[];
+  story: MarketingStory;
 };
 
 /**
@@ -31,6 +33,8 @@ export function MarketingPage({ data }: { data: PageContent }) {
           secondary={{ label: "Explore below", href: "#explore", arrow: "↓" }}
           stages={["BUILD", "IMPROVE", "SUPPORT"]}
         />
+
+        <MarketingVisualStage variant={data.story} topics={data.cards} />
 
         <section className="agency-explore" id="explore" aria-labelledby="agency-explore-title">
           <AgencySectionIntro

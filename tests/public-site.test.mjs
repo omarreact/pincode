@@ -27,6 +27,27 @@ test("Next.js source tree is organized without unused root snapshots", () => {
   assert.match(read("app/robots.ts"), /site.url/);
 });
 
+test("Process section is compact, responsive and accessible at scaled desktop widths", () => {
+  const home = read("components/home/LegacyHomepage.tsx");
+  const css = read("public/legacy-home.css");
+  assert.ok(home.includes('process-section'));
+  assert.ok(home.includes('aria-labelledby=\\\"process-heading'));
+  assert.ok(home.includes('aria-label=\\\"Project delivery stages'));
+  assert.ok(home.includes('aria-current=\\\"step'));
+  assert.ok(home.includes("activateProcess"));
+  assert.ok(home.includes('rootMargin: "-12% 0px -28% 0px"'));
+  assert.ok(css.includes(".process-section .process-list{"));
+  assert.ok(css.includes("grid-template-columns:repeat(2,minmax(0,1fr))"));
+  assert.ok(css.includes(".process-section .process-nav{"));
+  assert.ok(css.includes("grid-template-columns:repeat(4,minmax(0,1fr))"));
+  assert.ok(css.includes(".process-section .process-step{"));
+  assert.ok(css.includes("min-height:190px"));
+  assert.ok(css.includes("@media(max-width:700px)"));
+  assert.ok(css.includes("grid-template-columns:minmax(0,1fr)"));
+  assert.ok(css.includes("scroll-margin-top:calc(var(--nav) + 18px)"));
+  assert.ok(css.includes("prefers-reduced-motion:reduce"));
+});
+
 test("Windows 150% scaling and browser zoom keep the homepage proportional", () => {
   const css = read("public/legacy-home.css");
   const nav = read("components/layout/LegacyNavigation.tsx");

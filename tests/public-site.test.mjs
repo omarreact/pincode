@@ -333,8 +333,9 @@ test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {
   const nav = read("components/LegacyNavigation.tsx");
   const layout = read("app/layout.tsx");
   const home = read("components/LegacyHomepage.tsx");
+  const homePage = read("app/page.tsx");
   const root = readdirSync(new URL("..", import.meta.url));
-  assert.ok(home.includes("<LegacyLinkBridge />"));
+  assert.ok(homePage.includes("<LegacyLinkBridge />"));
   assert.ok(!layout.includes("LegacyLinkBridge"));
   assert.ok(bridge.includes("router.push(route)"));
   assert.ok(bridge.includes("event.defaultPrevented"));

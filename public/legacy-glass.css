@@ -145,18 +145,8 @@
   backdrop-filter:blur(20px);
 }
 #pincode-legacy-home .feature-visual{background:radial-gradient(circle at 50% 38%,rgba(0,206,143,.33),transparent 48%),linear-gradient(135deg,rgba(19,48,33,.85),rgba(5,20,13,.78))}
-#pincode-legacy-home .process-nav a{
-  border:1px solid rgba(255,255,255,.40);
-  border-radius:999px;
-  background:rgba(255,255,255,.35);
-  -webkit-backdrop-filter:blur(14px);
-  backdrop-filter:blur(14px);
-}
-#pincode-legacy-home .process-nav a.active,
-#pincode-legacy-home .process-nav a:hover{
-  background:rgba(224,255,240,.78);
-  border-color:rgba(0,185,128,.28);
-}
+
+
 #pincode-legacy-home .case-card:nth-child(3n+2){border-color:rgba(163,229,187,.24)}
 #pincode-legacy-home .cta-band{
   background:linear-gradient(120deg,rgba(0,151,101,.91),rgba(0,88,62,.88));

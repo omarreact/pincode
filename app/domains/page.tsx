@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
 import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
+import { MarketplaceVisualLead } from "@/components/marketing/MarketplaceVisualLead";
 import { DomainSearch } from "@/components/domains/DomainSearch";
 import { ProviderMarketplace } from "@/components/marketplace/ProviderMarketplace";
 import { getReferenceMarketplace } from "@/lib/provider-marketplace";
@@ -27,6 +28,7 @@ export default function DomainsPage() {
           secondary={{ label: "Compare registrars", href: "#domain-provider-comparison", arrow: "↓" }}
           stages={["FIND", "COMPARE", "LAUNCH"]}
         />
+        <MarketplaceVisualLead kind="domain" />
         <DomainSearch />
         <ProviderMarketplace kind="domain" initialFeed={getReferenceMarketplace("domain")} />
         <div className="domain-page-below" data-site-motion="section">

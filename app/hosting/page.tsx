@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteHeader, SiteFooter } from "@/components/layout/SiteShell";
 import { AgencyPageHero } from "@/components/marketing/AgencyPageHero";
+import { MarketplaceVisualLead } from "@/components/marketing/MarketplaceVisualLead";
 import { ProviderMarketplace } from "@/components/marketplace/ProviderMarketplace";
 import { getReferenceMarketplace } from "@/lib/provider-marketplace";
 import "../domains/domains.css";
@@ -26,6 +27,7 @@ export default function HostingComparison(){
           secondary={{ label: "Start a conversation", href: "/contact", arrow: "↗" }}
           stages={["COMPARE", "CHOOSE", "LAUNCH"]}
         />
+        <MarketplaceVisualLead kind="hosting" />
         <ProviderMarketplace kind="hosting" initialFeed={getReferenceMarketplace("hosting")}/>
       </main>
       <SiteFooter/>

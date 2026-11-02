@@ -24,6 +24,14 @@ export default function WorkPage() {
         linkLabel: "Review source",
       },
       {
+        id: "pincms",
+        title: "PinCMS — Next.js content studio",
+        body: "Content editing and page-building interfaces from an open development project. Explore the public source and repository screenshots to understand its current scope.",
+        tag: "PUBLIC PROJECT",
+        href: "https://github.com/omarreact/PinCMS",
+        linkLabel: "Review source",
+      },
+      {
         id: "pinai",
         title: "PinAI — developer AI workspace",
         body: "OpenAI-powered development workspace with authenticated chat, project tools and diagnostic workflows. Features and release readiness are documented in the public repository.",

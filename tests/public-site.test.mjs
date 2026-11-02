@@ -325,7 +325,7 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
 });
 
 test("domain search is reachable from public navigation", () => {
-  assert.ok(read("components/home/LegacyHomepage.tsx").includes("/domains"));
+  assert.ok(read("components/home/DomainHostingSection.tsx").includes('href: "/domains"'));
   assert.ok(read("components/layout/SiteShell.tsx").includes("<LegacyNavigation"));
   assert.ok(read("components/layout/LegacyNavigation.tsx").includes('label: "Domain Search"'));
   assert.ok(read("app/domains/page.tsx").includes("<DomainSearch"));
@@ -365,7 +365,7 @@ test("marketplace feed is restricted and transparently cached", () => {
   const api=read("app/api/marketplace/offers/route.ts");
   assert.ok(api.includes('kind!=="hosting"&&kind!=="domain"'));
   assert.ok(api.includes("s-maxage=900"));
-  assert.ok(read("components/home/LegacyHomepage.tsx").includes("/hosting"));
+  assert.ok(read("components/home/DomainHostingSection.tsx").includes('href: "/hosting"'));
   assert.ok(read("app/domains/marketplace.css").includes("@media(max-width:760px)"));
 });
 

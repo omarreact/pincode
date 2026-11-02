@@ -27,6 +27,55 @@ test("Next.js source tree is organized without unused root snapshots", () => {
   assert.match(read("app/robots.ts"), /site.url/);
 });
 
+test("premium three-slide homepage is accessible, performant and motion-aware", () => {
+  const home = read("components/home/LegacyHomepage.tsx");
+  const slider = read("components/home/PremiumHeroSlider.tsx");
+  const css = read("components/home/premium-hero-slider.css");
+  assert.ok(home.includes("<PremiumHeroSlider />"));
+  assert.ok(home.includes("<DomainHostingSection />"));
+  assert.ok(home.includes('<main id="main">'));
+  assert.ok(home.includes("homepageModalHTML"));
+  assert.ok(slider.includes('"use client"'));
+  for(const phrase of [
+    'aria-roledescription="carousel"', 'aria-roledescription="slide"',
+    'aria-label="Previous slide"', 'aria-label="Next slide"',
+    'Pause automatic slides', 'Resume automatic slides', 'Go to slide',
+    'inert={!isActive}', 'tabIndex={isActive ? 0 : -1}', 'prefers-reduced-motion: reduce',
+    'visibilitychange', 'IntersectionObserver', 'observer?.disconnect()',
+    'window.clearTimeout(timeout)', 'visited.includes(index)', 'ROTATION_MS = 8000',
+    'priority={index === 0}', 'aria-live="polite"',
+  ]) assert.ok(slider.includes(phrase), "Missing slider accessibility/performance behavior: " + phrase);
+  for(const path of ["/contact","/services","/domains","/hosting","/work","/solutions"]) {
+    assert.ok(slider.includes(path), "Missing slider destination: " + path);
+  }
+  assert.ok(css.includes(".premium-hero-slide.is-active"));
+  assert.ok(css.includes("transition:opacity 600ms"));
+  assert.ok(css.includes("@media(max-width:760px)"));
+  assert.ok(css.includes("@media(max-width:400px)"));
+  assert.ok(css.includes("@media(prefers-reduced-motion:reduce)"));
+  assert.doesNotMatch(slider, /swiper|slick|framer-motion|gsap/i);
+});
+
+test("domain and hosting homepage showcase has real destinations and cautious language", () => {
+  const showcase = read("components/home/DomainHostingSection.tsx");
+  const css = read("components/home/domain-hosting-section.css");
+  assert.ok(!showcase.includes('"use client"'));
+  assert.ok(showcase.includes('home-domain-hosting-heading'));
+  for(const target of ['href: "/domains"','href: "/hosting"','href: "/domains#domain-provider-comparison"','href: "/contact"']) {
+    assert.ok(showcase.includes(target), "Missing service link: " + target);
+  }
+  assert.ok(showcase.includes("registration records"));
+  assert.ok(showcase.includes("renewal pricing"));
+  assert.ok(showcase.includes("final registration availability"));
+  assert.ok(showcase.includes('from "next/image"'));
+  assert.ok(showcase.includes('loading="lazy"'));
+  assert.ok(showcase.includes("sizes="));
+  assert.ok(css.includes("grid-template-columns:repeat(2,minmax(0,1fr))"));
+  assert.ok(css.includes("@media(max-width:760px)"));
+  assert.ok(css.includes("grid-template-columns:1fr"));
+  assert.ok(css.includes("prefers-reduced-motion:reduce"));
+});
+
 test("one branded footer and conversion CTA on every public page", () => {
   const shell = read("components/layout/SiteShell.tsx");
   const homepage = read("components/home/LegacyHomepage.tsx");
@@ -155,16 +204,18 @@ test("homepage has no announcement top bar and dropdown stays aligned", () => {
   assert.doesNotMatch(css, /top:calc\(38px \+ var\(--nav\)\)/);
 });
 
-test("original homepage orbit, typography and scroll transitions are retained", () => {
+test("homepage keeps brand, photo sections, original supporting carousels and a smooth hero", () => {
   const css = read("public/legacy-home.css");
-  const component = read("components/home/LegacyHomepage.tsx");
+  const home = read("components/home/LegacyHomepage.tsx");
+  const hero = read("components/home/PremiumHeroSlider.tsx");
   assert.match(css, /--brand:#00b980/);
-  assert.match(css, /@keyframes spin/);
-  assert.match(css, /\.reveal/);
-  assert.match(component, /originalHomepageHTML/);
-  assert.match(component, /data-scroller/);
-  // Scroll-driven stage observer was intentionally removed with the duplicate pills.
-  assert.doesNotMatch(component, /IntersectionObserver/);
+  assert.ok(css.includes(".reveal"));
+  assert.ok(home.includes("originalHomepageHTML"));
+  assert.ok(home.includes("data-scroller"));
+  assert.ok(home.includes("<PremiumHeroSlider />"));
+  assert.ok(hero.includes("hero-copy reveal"));
+  assert.ok(read("components/home/premium-hero-slider.css").includes("transition:opacity 600ms"));
+  assert.doesNotMatch(home, /IntersectionObserver/);
 });
 
 test("both restored styling and glass styling are shipped as page resources", () => {
@@ -274,7 +325,7 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
 });
 
 test("domain search is reachable from public navigation", () => {
-  assert.ok(read("components/home/LegacyHomepage.tsx").includes("/domains"));
+  assert.ok(read("components/home/DomainHostingSection.tsx").includes('href: "/domains"'));
   assert.ok(read("components/layout/SiteShell.tsx").includes("<LegacyNavigation"));
   assert.ok(read("components/layout/LegacyNavigation.tsx").includes('label: "Domain Search"'));
   assert.ok(read("app/domains/page.tsx").includes("<DomainSearch"));
@@ -314,7 +365,7 @@ test("marketplace feed is restricted and transparently cached", () => {
   const api=read("app/api/marketplace/offers/route.ts");
   assert.ok(api.includes('kind!=="hosting"&&kind!=="domain"'));
   assert.ok(api.includes("s-maxage=900"));
-  assert.ok(read("components/home/LegacyHomepage.tsx").includes("/hosting"));
+  assert.ok(read("components/home/DomainHostingSection.tsx").includes('href: "/hosting"'));
   assert.ok(read("app/domains/marketplace.css").includes("@media(max-width:760px)"));
 });
 
@@ -384,7 +435,7 @@ test("all subpages share the Insights hero and Home opening reveal", () => {
   assert.match(style, /pincode-home-reveal 700ms ease both/);
   assert.match(style, /translate3d\(0, 28px, 0\)/);
   assert.match(style, /\.agency-page-hero :is\(\.agency-hero-topline, \.agency-hero-content, \.agency-hero-bottomline\)/);
-  assert.match(home, /hero-copy reveal/);
+  assert.match(read("components/home/PremiumHeroSlider.tsx"), /hero-copy reveal/);
   assert.match(read("components/layout/SiteMotion.tsx"), /\[pathname\]/);
 });
 
@@ -399,7 +450,7 @@ test("hero entrance starts with CSS and never restarts after hydration", () => {
   assert.match(motion, /\[data-site-motion="section"\], \[data-site-motion="card"\]/);
   assert.match(motion, /prefers-reduced-motion: reduce/);
   assert.match(style, /@media \(prefers-reduced-motion: reduce\)/);
-  assert.match(home, /hero-copy reveal/);
+  assert.match(read("components/home/PremiumHeroSlider.tsx"), /hero-copy reveal/);
 });
 
 test("shared design is server-rendered and homepage-only JS stays on Home", () => {

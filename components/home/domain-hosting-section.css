@@ -1,0 +1,112 @@
+/* Two practical service discovery cards, tuned for 150% OS scaling and mobile. */
+#pincode-legacy-home .home-domain-hosting{
+  padding:clamp(66px,7vw,100px) 0 clamp(65px,7vw,97px);
+  background:linear-gradient(180deg,#f7fbf8,#edf6ef);
+  color:#14281e;
+}
+#pincode-legacy-home .home-domain-hosting-inner{max-width:1390px}
+#pincode-legacy-home .home-domain-hosting-intro{
+  display:flex;justify-content:space-between;align-items:end;
+  gap:30px;margin-bottom:30px;
+}
+#pincode-legacy-home .home-domain-hosting-eyebrow{
+  display:block;font-size:10px;font-weight:850;
+  letter-spacing:.13em;color:#008a5e;
+}
+#pincode-legacy-home .home-domain-hosting-intro h2{
+  font-size:clamp(35px,4.55vw,66px);
+  line-height:1.04;
+  letter-spacing:-.067em;
+  font-weight:840;
+  max-width:770px;
+  margin:17px 0 0;
+  text-wrap:balance;
+}
+#pincode-legacy-home .home-domain-hosting-intro h2 span{color:#059b6e}
+#pincode-legacy-home .home-domain-hosting-intro>p{
+  color:#607668;font-size:14px;line-height:1.75;max-width:355px;
+  margin:0 0 2px;flex:0 0 31%;
+}
+#pincode-legacy-home .home-domain-hosting-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+#pincode-legacy-home .home-domain-hosting-card{
+  min-width:0;overflow:hidden;border-radius:29px;
+  display:flex;flex-direction:column;
+  border:1px solid #cee6d3;
+  background:#fff;
+  box-shadow:0 19px 40px rgba(14,71,39,.07);
+}
+#pincode-legacy-home .home-domain-hosting-card.is-hosting{background:#123a2c;border-color:#225f47;color:#fff}
+#pincode-legacy-home .home-domain-hosting-copy{
+  flex:1;display:flex;flex-direction:column;align-items:flex-start;
+  padding:clamp(25px,3.2vw,42px);
+}
+#pincode-legacy-home .home-domain-hosting-card-label{
+  font-size:10px;font-weight:850;letter-spacing:.15em;color:#008c62
+}
+#pincode-legacy-home .is-hosting .home-domain-hosting-card-label{color:#a0f2c4}
+#pincode-legacy-home .home-domain-hosting-card h3{
+  max-width:470px;margin:19px 0 14px;
+  font-size:clamp(27px,2.75vw,42px);
+  line-height:1.1;letter-spacing:-.057em;font-weight:830;
+}
+#pincode-legacy-home .home-domain-hosting-card p{
+  max-width:500px;color:#61766a;font-size:14px;line-height:1.7;margin:0;
+}
+#pincode-legacy-home .is-hosting p{color:#c4dfd1}
+#pincode-legacy-home .home-domain-hosting-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}
+#pincode-legacy-home .home-domain-hosting-chips span{
+  font-size:10px;font-weight:800;color:#237451;
+  background:#eaf8ef;border:1px solid #cce8d5;
+  border-radius:99px;padding:8px 11px;
+}
+#pincode-legacy-home .is-hosting .home-domain-hosting-chips span{
+  color:#c8efdb;background:rgba(219,255,229,.08);border-color:rgba(213,255,225,.25);
+}
+#pincode-legacy-home .home-domain-hosting-actions{
+  display:flex;gap:13px;align-items:center;flex-wrap:wrap;
+  margin-top:auto;padding-top:25px;
+}
+#pincode-legacy-home .home-domain-hosting-actions a{
+  display:inline-flex;align-items:center;justify-content:space-between;gap:18px;
+  font-size:12px;font-weight:850;
+  text-decoration:none;min-height:41px;border-radius:99px;
+  transition:transform .2s ease,background .2s ease;
+}
+#pincode-legacy-home .home-domain-hosting-actions a:hover{transform:translateY(-2px)}
+#pincode-legacy-home .home-domain-hosting-actions a:focus-visible{outline:3px solid #0da777;outline-offset:3px}
+#pincode-legacy-home .home-domain-hosting-primary{padding:10px 16px;color:#fff;background:#068961}
+#pincode-legacy-home .is-hosting .home-domain-hosting-primary{color:#135037;background:#e8f9ed}
+#pincode-legacy-home .home-domain-hosting-secondary{padding:10px 2px;color:#126a4a}
+#pincode-legacy-home .is-hosting .home-domain-hosting-secondary{color:#d1f0df}
+#pincode-legacy-home .home-domain-hosting-photo{height:clamp(180px,19vw,245px);position:relative;background:#1b5640;overflow:hidden}
+#pincode-legacy-home .home-domain-hosting-photo img{object-fit:cover;object-position:center 48%;filter:saturate(.82)}
+#pincode-legacy-home .home-domain-hosting-photo-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,26,18,.73),transparent 75%)}
+#pincode-legacy-home .home-domain-hosting-photo>span{
+  position:absolute;bottom:21px;left:28px;
+  font-size:11px;font-weight:850;letter-spacing:.12em;color:#fff;
+}
+#pincode-legacy-home .home-domain-hosting-note{color:#718578;font-size:11px;line-height:1.7;margin:16px 0 0}
+@media(max-width:920px){
+  #pincode-legacy-home .home-domain-hosting-intro{display:block}
+  #pincode-legacy-home .home-domain-hosting-intro>p{max-width:660px;margin-top:15px}
+  #pincode-legacy-home .home-domain-hosting-card h3{font-size:clamp(27px,3.5vw,37px)}
+  #pincode-legacy-home .home-domain-hosting-photo{height:200px}
+}
+@media(max-width:760px){
+  #pincode-legacy-home .home-domain-hosting{padding:54px 0 62px}
+  #pincode-legacy-home .home-domain-hosting-intro h2{font-size:clamp(33px,8vw,47px)}
+  #pincode-legacy-home .home-domain-hosting-grid{grid-template-columns:1fr;gap:14px}
+  #pincode-legacy-home .home-domain-hosting-card{border-radius:22px}
+  #pincode-legacy-home .home-domain-hosting-copy{padding:26px}
+  #pincode-legacy-home .home-domain-hosting-card h3{font-size:clamp(29px,7vw,37px)}
+  #pincode-legacy-home .home-domain-hosting-photo{height:190px}
+}
+@media(max-width:400px){
+  #pincode-legacy-home .home-domain-hosting-actions{display:flex;flex-direction:column;align-items:stretch}
+  #pincode-legacy-home .home-domain-hosting-actions a{justify-content:space-between}
+  #pincode-legacy-home .home-domain-hosting-secondary{padding:11px 3px}
+}
+@media(prefers-reduced-motion:reduce){
+  #pincode-legacy-home .home-domain-hosting-actions a{transition:none}
+  #pincode-legacy-home .home-domain-hosting-actions a:hover{transform:none}
+}

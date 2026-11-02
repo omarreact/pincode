@@ -30,9 +30,14 @@ test("Next.js source tree is organized without unused root snapshots", () => {
 test("premium hero keeps the active slide in flow, preventing blank banners", () => {
   const css = read("components/home/premium-hero-slider.css");
   const slider = read("components/home/PremiumHeroSlider.tsx");
-  const slide = css.match(/#pincode-legacy-home \\.premium-hero-slide\\{([^}]+)\\}/)?.[1] ?? "";
-  const active = css.match(/#pincode-legacy-home \\.premium-hero-slide\\.is-active\\{([^}]+)\\}/)?.[1] ?? "";
-  const grid = css.match(/#pincode-legacy-home \\.premium-hero-grid\\{([^}]+)\\}/)?.[1] ?? "";
+  const getRule = selector => {
+    const start = css.indexOf(selector + "{");
+    assert.ok(start >= 0, "Missing CSS rule: " + selector);
+    return css.slice(start, css.indexOf("}", start));
+  };
+  const slide = getRule("#pincode-legacy-home .premium-hero-slide");
+  const active = getRule("#pincode-legacy-home .premium-hero-slide.is-active");
+  const grid = getRule("#pincode-legacy-home .premium-hero-grid");
   assert.ok(slide.includes("position:relative"), "Slides must stay in document flow");
   assert.ok(slide.includes("display:none"), "Only the active slide should occupy space");
   assert.ok(!slide.includes("position:absolute"), "Absolute slides can collapse inside a min-height viewport");

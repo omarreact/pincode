@@ -1,3 +1,4 @@
+import "@/app/all-pages.css";
 import Link from "next/link";
 import { LegacyNavigation } from "./LegacyNavigation";
 import { SiteMotion } from "./SiteMotion";

@@ -346,8 +346,8 @@ test("professional site essentials: canonical SEO, policies, errors and domain e
   assert.match(layout, /opengraph-image/);
   assert.match(layout, /summary_large_image/);
   assert.match(read("app/opengraph-image.tsx"), /ImageResponse/);
-  assert.match(read("app/opengraph-image.tsx"), /public\\/brand\\/pincode-email\\.png/);
-  assert.match(read("app/page.tsx"), /title: \\{ absolute:/);
+  assert.ok(read("app/opengraph-image.tsx").includes("public/brand/pincode-email.png"));
+  assert.ok(read("app/page.tsx").includes('title: { absolute:'));
   assert.match(footer, /Privacy Policy/);
   assert.match(footer, /Terms of Use/);
   assert.match(footer, /site.email/);

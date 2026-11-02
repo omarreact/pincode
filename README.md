@@ -56,3 +56,6 @@ docs/                     Architecture and maintenance notes
 The separate `/nid_dob` identity-verification HTML and authentication files are compatibility resources outside the marketing SPA. They have not been migrated or removed because they require independent security and functional verification. The email HTML template is an externally used asset, not a Next.js page.
 
 No AI-generated folders are required for production.
+
+## Project imagery
+The image-rich pages combine repository-backed PinCMS/PinAI screenshots and credited, illustrative Unsplash photography. Screenshots are copied into `public/images/projects`, while editorial photographs use responsive Next.js Image optimization; see `docs/IMAGE-SOURCES.md` for provenance. They are not represented as staff photos, client work or verified production results.

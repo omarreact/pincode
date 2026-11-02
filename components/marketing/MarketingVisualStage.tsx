@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { MarketingTopicData } from "./MarketingTopic";
 import "./marketing-visual-stage.css";
@@ -11,6 +12,9 @@ const stories: Record<MarketingStory, {
   footnote: string;
   action: string;
   href: string;
+  photo: string;
+  photoAlt: string;
+  photoCaption: string;
 }> = {
   services: {
     eyebrow: "DESIGN × ENGINEERING × CARE",
@@ -19,6 +23,9 @@ const stories: Record<MarketingStory, {
     footnote: "From first idea to working product",
     action: "Explore our work",
     href: "/work",
+    photo: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+    photoAlt: "Developer workspace with a laptop displaying source code",
+    photoCaption: "Illustrative photography / Unsplash",
   },
   solutions: {
     eyebrow: "BUSINESS NEEDS / PRACTICAL SYSTEMS",
@@ -27,6 +34,9 @@ const stories: Record<MarketingStory, {
     footnote: "Define · Design · Deliver",
     action: "Discuss your project",
     href: "/contact",
+    photo: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+    photoAlt: "People collaborating around laptops in a technology workspace",
+    photoCaption: "Illustrative photography / Unsplash",
   },
   work: {
     eyebrow: "PUBLIC WORK / OPEN ENGINEERING",
@@ -35,6 +45,9 @@ const stories: Record<MarketingStory, {
     footnote: "Public repositories · No invented metrics",
     action: "See all projects",
     href: "#explore",
+    photo: "/images/projects/pincms-dashboard.webp",
+    photoAlt: "PinCMS dashboard preview from the public project repository",
+    photoCaption: "Real project preview / PinCMS",
   },
   about: {
     eyebrow: "PEOPLE / PROCESS / PURPOSE",
@@ -43,6 +56,9 @@ const stories: Record<MarketingStory, {
     footnote: "Clarity · Craft · Continuity",
     action: "Start a conversation",
     href: "/contact",
+    photo: "https://images.unsplash.com/photo-1497366754035-f200968a6e72",
+    photoAlt: "Contemporary office interior showing an organized workspace",
+    photoCaption: "Illustrative workspace / Unsplash",
   },
   insights: {
     eyebrow: "FIELD NOTES / USEFUL IDEAS",
@@ -51,6 +67,9 @@ const stories: Record<MarketingStory, {
     footnote: "Strategy · Performance · Security",
     action: "Browse the guides",
     href: "#explore",
+    photo: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
+    photoAlt: "People using digital devices in a collaborative workspace",
+    photoCaption: "Illustrative photography / Unsplash",
   },
 };
 
@@ -78,7 +97,7 @@ function VisualStageTopic({ topic, index }: { topic: MarketingTopicData; index: 
 
 /**
  * A lightweight, server-rendered visual feature shared by marketing routes.
- * No image downloads, counters, extra hydration or large animated layers.
+ * Uses responsive, lazy-loaded imagery without introducing extra hydration.
  */
 export function MarketingVisualStage({
   variant,
@@ -107,12 +126,10 @@ export function MarketingVisualStage({
             <span>PINCODE IT / EXPLORE</span>
             <span aria-hidden="true">✦</span>
           </div>
-          <div className="agency-story-orbit" aria-hidden="true">
-            <span className="agency-story-orbit-ring" />
-            <span className="agency-story-orbit-core">P</span>
-            <span className="agency-story-orbit-node agency-story-orbit-node-one" />
-            <span className="agency-story-orbit-node agency-story-orbit-node-two" />
-          </div>
+          <figure className="agency-story-photo">
+            <Image src={story.photo} alt={story.photoAlt} fill sizes="(max-width: 930px) 92vw, 42vw" quality={74} loading="lazy" />
+            <figcaption>{story.photoCaption}</figcaption>
+          </figure>
           <div className="agency-story-topics">
             {topics.slice(0, 3).map((topic, index) => (
               <VisualStageTopic topic={topic} index={index} key={topic.id ?? topic.title} />

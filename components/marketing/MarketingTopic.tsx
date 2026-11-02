@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export type MarketingTopicData = {
@@ -7,6 +8,8 @@ export type MarketingTopicData = {
   tag?: string;
   href?: string;
   linkLabel?: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 type TopicProps = { topic: MarketingTopicData; index: number };
@@ -47,9 +50,15 @@ export function MarketingTopicCard({
         </span>
         <span className="agency-card-tag">{topic.tag ?? "FOCUS"}</span>
       </div>
-      <div className="agency-card-symbol" aria-hidden="true">
-        <span>{["◈", "◎", "⌘", "✳", "◇", "↗"][index % 6]}</span>
-      </div>
+      {topic.image ? (
+        <div className="agency-card-cover">
+          <Image src={topic.image} alt={topic.imageAlt ?? ""} fill sizes="(max-width: 740px) 92vw, (max-width: 1100px) 44vw, 28vw" loading="lazy" quality={72} />
+        </div>
+      ) : (
+        <div className="agency-card-symbol" aria-hidden="true">
+          <span>{["◈", "◎", "⌘", "✳", "◇", "↗"][index % 6]}</span>
+        </div>
+      )}
       <h3>{topic.title}</h3>
       <p>{topic.body}</p>
       {topic.href?.startsWith("https://") ? (

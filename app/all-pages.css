@@ -681,3 +681,9 @@
     background:#f4fbf6;
   }
 }
+
+/* Editorial photography on select topic cards, with fixed aspect ratio (no CLS). */
+.agency-card-cover{position:relative;width:100%;aspect-ratio:16/9;margin:25px 0 24px;border-radius:18px;overflow:hidden;background:#204e38;border:1px solid rgba(206,255,227,.28)}
+.agency-card-cover img{object-fit:cover;transition:transform 280ms ease}
+.agency-detail-card:hover .agency-card-cover img{transform:scale(1.025)}
+@media(prefers-reduced-motion:reduce){.agency-card-cover img{transition:none!important}.agency-detail-card:hover .agency-card-cover img{transform:none}}

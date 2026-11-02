@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { LegacyNavigation } from "./LegacyNavigation";
+import { LegacyNavigation } from "../layout/LegacyNavigation";
 
 /* The exact original homepage markup is retained so the former layout and
    typography can be restored without maintaining a second public HTML page.

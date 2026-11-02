@@ -67,7 +67,7 @@ test("public source and legacy snapshots contain no phone numbers or WhatsApp li
 
 test("the enquiry builder opens email rather than a phone-dependent service", () => {
   const builder = read("components/ContactBuilder.tsx");
-  assert.match(builder, /mailto:pincodeit\.com\.bd@gmail\.com/);
+  assert.match(builder, /mailto:admin@pincodeit\.com/);
   assert.match(builder, /Continue by email/);
 });
 
@@ -135,7 +135,7 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
   const builder = read("components/ContactBuilder.tsx");
   assert.match(builder, /agency-form-progress/);
   assert.match(builder, /aria-pressed/);
-  assert.match(builder, /mailto:pincodeit\.com\.bd@gmail\.com/);
+  assert.match(builder, /mailto:admin@pincodeit\.com/);
   assert.match(builder, /Start again/);
 });
 
@@ -195,7 +195,7 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
   assert.ok(legacy.includes("/brand/pincode-mark.svg"));
   assert.doesNotMatch(legacy, /M24 3 42 13.5/);
   const layout = read("app/layout.tsx");
-  assert.ok(layout.includes("/brand/pincode-horizontal-light.svg"));
+  assert.ok(layout.includes("/opengraph-image"));
   assert.ok(layout.includes("/favicon.svg"));
   assert.match(read("public/favicon.svg"), /pincode-v2-grad/);
   assert.match(read("app/icon.svg"), /pincode-v2-grad/);

@@ -13,8 +13,22 @@ function sourceFiles(dir) {
   });
 }
 
+test("Next.js source tree is organized without unused root snapshots", () => {
+  const root = readdirSync(new URL("..", import.meta.url));
+  const components = readdirSync(new URL("../components", import.meta.url));
+  for (const artifact of ["robots.txt", "sitemap.xml", "favicon.svg"]) {
+    assert.ok(!root.includes(artifact), "Obsolete root asset: " + artifact);
+  }
+  assert.ok(!components.includes("PublicWebsite.tsx"));
+  for (const folder of ["home", "layout", "marketing", "contact", "domains", "marketplace"]) {
+    assert.ok(components.includes(folder), "Missing component group: " + folder);
+  }
+  assert.match(read("app/sitemap.ts"), /insightArticles/);
+  assert.match(read("app/robots.ts"), /site.url/);
+});
+
 test("homepage has no announcement top bar and dropdown stays aligned", () => {
-  const home = read("components/LegacyHomepage.tsx");
+  const home = read("components/home/LegacyHomepage.tsx");
   const css = read("public/legacy-home.css");
   const glass = read("public/legacy-glass.css");
   assert.match(home, /<LegacyNavigation \/>/);
@@ -27,7 +41,7 @@ test("homepage has no announcement top bar and dropdown stays aligned", () => {
 
 test("original homepage orbit, typography and scroll transitions are retained", () => {
   const css = read("public/legacy-home.css");
-  const component = read("components/LegacyHomepage.tsx");
+  const component = read("components/home/LegacyHomepage.tsx");
   assert.match(css, /--brand:#00b980/);
   assert.match(css, /@keyframes spin/);
   assert.match(css, /\.reveal/);
@@ -40,7 +54,7 @@ test("both restored styling and glass styling are shipped as page resources", ()
   const page = read("app/page.tsx");
   assert.match(page, /\/legacy-home\.css/);
   assert.match(page, /\/legacy-glass\.css/);
-  assert.doesNotMatch(read("components/LegacyHomepage.tsx"), /legacy-home\.js/);
+  assert.doesNotMatch(read("components/home/LegacyHomepage.tsx"), /legacy-home\.js/);
 });
 
 test("glass backgrounds cover navigation, controls and card families", () => {
@@ -66,7 +80,7 @@ test("public source and legacy snapshots contain no phone numbers or WhatsApp li
 });
 
 test("the enquiry builder opens email rather than a phone-dependent service", () => {
-  const builder = read("components/ContactBuilder.tsx");
+  const builder = read("components/contact/ContactBuilder.tsx");
   assert.match(builder, /mailto:admin@pincodeit\.com/);
   assert.match(builder, /Continue by email/);
 });
@@ -81,7 +95,7 @@ test("legacy marketing URLs redirect to Next.js pages", () => {
 test("all public Next.js pages use the shared glass design system", () => {
   const layout = read("app/layout.tsx");
   assert.doesNotMatch(layout, /import "\.\/all-pages\.css"/);
-  assert.match(read("components/SiteShell.tsx"), /import "@\/app\/all-pages\.css"/);
+  assert.match(read("components/layout/SiteShell.tsx"), /import "@\/app\/all-pages\.css"/);
   assert.match(read("app/error.tsx"), /import "\.\/all-pages\.css"/);
   const css = read("app/all-pages.css");
   for (const selector of [
@@ -94,11 +108,11 @@ test("all public Next.js pages use the shared glass design system", () => {
   }
 
   const shared = [
-    ["components/AgencyPageHero.tsx", ["agency-page-hero", "agency-hero-panel"]],
-    ["components/AgencyActionLink.tsx", ["agency-glass-button"]],
-    ["components/MarketingPage.tsx", ["agency-index", "agency-card-grid"]],
-    ["components/MarketingTopic.tsx", ["agency-index-link", "agency-detail-card"]],
-    ["components/MarketingCallToAction.tsx", ["agency-footer-cta"]],
+    ["components/marketing/AgencyPageHero.tsx", ["agency-page-hero", "agency-hero-panel"]],
+    ["components/marketing/AgencyActionLink.tsx", ["agency-glass-button"]],
+    ["components/marketing/MarketingPage.tsx", ["agency-index", "agency-card-grid"]],
+    ["components/marketing/MarketingTopic.tsx", ["agency-index-link", "agency-detail-card"]],
+    ["components/marketing/MarketingCallToAction.tsx", ["agency-footer-cta"]],
   ];
   for (const [file, classNames] of shared) {
     const source = read(file);
@@ -121,8 +135,8 @@ test("all public Next.js pages use the shared glass design system", () => {
 });
 
 test("navigation, enquiry and accessibility fallback work across screen sizes", () => {
-  const header = read("components/SiteShell.tsx");
-  const nav = read("components/LegacyNavigation.tsx");
+  const header = read("components/layout/SiteShell.tsx");
+  const nav = read("components/layout/LegacyNavigation.tsx");
   assert.match(nav, /usePathname/);
   assert.match(nav, /aria-current/);
   assert.match(nav, /aria-expanded/);
@@ -134,7 +148,7 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
   assert.match(styles, /prefers-reduced-motion/);
   assert.match(styles, /prefers-reduced-transparency/);
   assert.match(styles, /@supports not/);
-  const builder = read("components/ContactBuilder.tsx");
+  const builder = read("components/contact/ContactBuilder.tsx");
   assert.match(builder, /agency-form-progress/);
   assert.match(builder, /aria-pressed/);
   assert.match(builder, /mailto:admin@pincodeit\.com/);
@@ -142,16 +156,16 @@ test("navigation, enquiry and accessibility fallback work across screen sizes", 
 });
 
 test("domain search is reachable from public navigation", () => {
-  assert.ok(read("components/LegacyHomepage.tsx").includes("/domains"));
-  assert.ok(read("components/SiteShell.tsx").includes("<LegacyNavigation"));
-  assert.ok(read("components/LegacyNavigation.tsx").includes('label: "Domain Search"'));
+  assert.ok(read("components/home/LegacyHomepage.tsx").includes("/domains"));
+  assert.ok(read("components/layout/SiteShell.tsx").includes("<LegacyNavigation"));
+  assert.ok(read("components/layout/LegacyNavigation.tsx").includes('label: "Domain Search"'));
   assert.ok(read("app/domains/page.tsx").includes("<DomainSearch"));
   assert.ok(read("app/domains/page.tsx").includes("<SiteHeader"));
 });
 
 test("domain lookup uses validated RDAP and cautious availability wording", () => {
   const api = read("app/api/domains/check/route.ts");
-  const ui = read("components/DomainSearch.tsx");
+  const ui = read("components/domains/DomainSearch.tsx");
   for (const phrase of ["rdap.verisign.com", "rdap.publicinterestregistry.org", "pubapi.registry.google", "rateLimited", "possibly-available"]) {
     assert.ok(api.includes(phrase), "Missing domain lookup feature: " + phrase);
   }
@@ -160,15 +174,15 @@ test("domain lookup uses validated RDAP and cautious availability wording", () =
 });
 
 test("provider comparisons show source, renewal and external provider checkout", () => {
-  const market=read("components/ProviderMarketplace.tsx");
+  const market=read("components/marketplace/ProviderMarketplace.tsx");
   const domainPage=read("app/domains/page.tsx");
   const hosting=read("app/hosting/page.tsx");
-  const shell=read("components/SiteShell.tsx");
+  const shell=read("components/layout/SiteShell.tsx");
   const catalog=read("lib/provider-marketplace.ts");
   assert.match(domainPage, /kind="domain"/);
   assert.match(hosting, /kind="hosting"/);
   assert.ok(shell.includes("<LegacyNavigation"));
-  assert.ok(read("components/LegacyNavigation.tsx").includes('label: "Hosting Deals"'));
+  assert.ok(read("components/layout/LegacyNavigation.tsx").includes('label: "Hosting Deals"'));
   assert.ok(market.includes('rel="noopener noreferrer"'));
   assert.ok(market.includes("Published renewal equivalent"));
   assert.ok(market.includes('basis==="refreshed"'));
@@ -182,7 +196,7 @@ test("marketplace feed is restricted and transparently cached", () => {
   const api=read("app/api/marketplace/offers/route.ts");
   assert.ok(api.includes('kind!=="hosting"&&kind!=="domain"'));
   assert.ok(api.includes("s-maxage=900"));
-  assert.ok(read("components/LegacyHomepage.tsx").includes("/hosting"));
+  assert.ok(read("components/home/LegacyHomepage.tsx").includes("/hosting"));
   assert.ok(read("app/domains/marketplace.css").includes("@media(max-width:760px)"));
 });
 
@@ -190,10 +204,10 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
   const symbol = read("public/brand/pincode-mark.svg");
   assert.match(symbol, /pincode-v2-grad/);
   assert.match(symbol, /fill-rule="evenodd"/);
-  const header = read("components/SiteShell.tsx");
+  const header = read("components/layout/SiteShell.tsx");
   assert.match(header, /img src="\/brand\/pincode-mark\.svg"/);
   assert.doesNotMatch(header, /<svg viewBox="0 0 48 48"/);
-  const legacy = read("components/LegacyHomepage.tsx");
+  const legacy = read("components/home/LegacyHomepage.tsx");
   assert.ok(legacy.includes("/brand/pincode-mark.svg"));
   assert.doesNotMatch(legacy, /M24 3 42 13.5/);
   const layout = read("app/layout.tsx");
@@ -205,11 +219,11 @@ test("refined PINCODE IT logo is consistent across header, footer, legacy homepa
 
 
 test("all Next.js pages use the original navigation design through native React and Next Link", () => {
-  const home = read("components/LegacyHomepage.tsx");
-  const shell = read("components/SiteShell.tsx");
-  const nav = read("components/LegacyNavigation.tsx");
+  const home = read("components/home/LegacyHomepage.tsx");
+  const shell = read("components/layout/SiteShell.tsx");
+  const nav = read("components/layout/LegacyNavigation.tsx");
   const css = read("app/globals.css");
-  assert.ok(home.includes('import { LegacyNavigation } from "./LegacyNavigation"'));
+  assert.ok(home.includes('import { LegacyNavigation } from "../layout/LegacyNavigation"'));
   assert.ok(home.includes("<LegacyNavigation />"));
   assert.ok(shell.includes("<LegacyNavigation />"));
   assert.ok(shell.includes("/legacy-home.css"));
@@ -220,17 +234,17 @@ test("all Next.js pages use the original navigation design through native React 
   assert.ok(nav.includes("setOpen"));
   assert.ok(nav.includes("mega-menu"));
   assert.ok(css.includes("pincode-legacy-home.pincode-shared-nav"));
-  for (const file of ["components/MarketingPage.tsx", "app/contact/page.tsx", "app/domains/page.tsx", "app/hosting/page.tsx"]) {
+  for (const file of ["components/marketing/MarketingPage.tsx", "app/contact/page.tsx", "app/domains/page.tsx", "app/hosting/page.tsx"]) {
     assert.ok(read(file).includes("<SiteHeader"), file + " should use the shared header");
   }
 });
 
 test("all subpages share the Insights hero and Home opening reveal", () => {
-  const hero = read("components/AgencyPageHero.tsx");
+  const hero = read("components/marketing/AgencyPageHero.tsx");
   const pages = ["app/domains/page.tsx", "app/hosting/page.tsx"];
-  const original = read("components/MarketingPage.tsx");
+  const original = read("components/marketing/MarketingPage.tsx");
   const contact = read("app/contact/page.tsx");
-  const home = read("components/LegacyHomepage.tsx");
+  const home = read("components/home/LegacyHomepage.tsx");
   const style = read("app/globals.css");
   for (const path of pages) {
     const page = read(path);
@@ -250,13 +264,13 @@ test("all subpages share the Insights hero and Home opening reveal", () => {
   assert.match(style, /translate3d\(0, 28px, 0\)/);
   assert.match(style, /\.agency-page-hero :is\(\.agency-hero-topline, \.agency-hero-content, \.agency-hero-bottomline\)/);
   assert.match(home, /hero-copy reveal/);
-  assert.match(read("components/SiteMotion.tsx"), /\[pathname\]/);
+  assert.match(read("components/layout/SiteMotion.tsx"), /\[pathname\]/);
 });
 
 test("hero entrance starts with CSS and never restarts after hydration", () => {
   const style = read("app/globals.css");
-  const motion = read("components/SiteMotion.tsx");
-  const home = read("components/LegacyHomepage.tsx");
+  const motion = read("components/layout/SiteMotion.tsx");
+  const home = read("components/home/LegacyHomepage.tsx");
   assert.match(style, /\.agency-page-hero :is\(/);
   assert.match(style, /pincode-home-reveal 700ms ease both/);
   assert.doesNotMatch(style, /\[data-site-motion="hero"\]\.site-motion-enter/);
@@ -269,15 +283,15 @@ test("hero entrance starts with CSS and never restarts after hydration", () => {
 
 test("shared design is server-rendered and homepage-only JS stays on Home", () => {
   const files = [
-    "components/AgencyPageHero.tsx",
-    "components/AgencyActionLink.tsx",
-    "components/AgencySectionIntro.tsx",
-    "components/MarketingTopic.tsx",
-    "components/MarketingCallToAction.tsx",
-    "components/ContactOptionCard.tsx",
-    "components/FooterLinkGroup.tsx",
-    "components/MarketingPage.tsx",
-    "components/SiteShell.tsx",
+    "components/marketing/AgencyPageHero.tsx",
+    "components/marketing/AgencyActionLink.tsx",
+    "components/marketing/AgencySectionIntro.tsx",
+    "components/marketing/MarketingTopic.tsx",
+    "components/marketing/MarketingCallToAction.tsx",
+    "components/contact/ContactOptionCard.tsx",
+    "components/layout/FooterLinkGroup.tsx",
+    "components/marketing/MarketingPage.tsx",
+    "components/layout/SiteShell.tsx",
   ];
   for (const file of files) {
     assert.doesNotMatch(read(file), /^["']use client["'];/m, "Unexpected client bundle: " + file);
@@ -286,10 +300,10 @@ test("shared design is server-rendered and homepage-only JS stays on Home", () =
   const layout = read("app/layout.tsx");
   assert.match(home, /<LegacyLinkBridge \/>/);
   assert.doesNotMatch(layout, /LegacyLinkBridge/);
-  const shell = read("components/SiteShell.tsx");
+  const shell = read("components/layout/SiteShell.tsx");
   assert.match(shell, /<FooterLinkGroup/);
   assert.match(shell, /<LegacyNavigation \/>/);
-  const marketing = read("components/MarketingPage.tsx");
+  const marketing = read("components/marketing/MarketingPage.tsx");
   assert.match(marketing, /<AgencySectionIntro/);
   assert.match(marketing, /<MarketingCallToAction/);
   assert.match(marketing, /<MarketingTopicLink/);
@@ -297,33 +311,33 @@ test("shared design is server-rendered and homepage-only JS stays on Home", () =
   const contact = read("app/contact/page.tsx");
   assert.match(contact, /<AgencySectionIntro/);
   assert.match(contact, /<ContactOptionCard/);
-  assert.match(read("components/AgencyActionLink.tsx"), /href\.startsWith\("mailto:"\)/);
-  assert.match(read("components/AgencyPageHero.tsx"), /<AgencyActionLink/);
+  assert.match(read("components/marketing/AgencyActionLink.tsx"), /href\.startsWith\("mailto:"\)/);
+  assert.match(read("components/marketing/AgencyPageHero.tsx"), /<AgencyActionLink/);
 });
 
 test("speed and motion features do not hide server content or delay provider comparison", () => {
-  const home = read("components/LegacyHomepage.tsx");
-  const motion = read("components/SiteMotion.tsx");
-  const shell = read("components/SiteShell.tsx");
+  const home = read("components/home/LegacyHomepage.tsx");
+  const motion = read("components/layout/SiteMotion.tsx");
+  const shell = read("components/layout/SiteShell.tsx");
   const style = read("app/globals.css");
   const layout = read("app/layout.tsx");
-  const homepage = read("components/LegacyHomepage.tsx");
-  const nav = read("components/LegacyNavigation.tsx");
+  const homepage = read("components/home/LegacyHomepage.tsx");
+  const nav = read("components/layout/LegacyNavigation.tsx");
   assert.ok(motion.includes("IntersectionObserver"));
   assert.ok(motion.includes("prefers-reduced-motion"));
   assert.ok(motion.includes("site-motion-pending"));
   assert.ok(shell.includes("<SiteMotion"));
-  assert.ok(read("components/MarketingTopic.tsx").includes('data-site-motion="card"'));
+  assert.ok(read("components/marketing/MarketingTopic.tsx").includes('data-site-motion="card"'));
   assert.ok(read("app/contact/page.tsx").includes('data-site-motion="section"'));
-  assert.ok(read("components/AgencyPageHero.tsx").includes('data-site-motion="hero"'));
+  assert.ok(read("components/marketing/AgencyPageHero.tsx").includes('data-site-motion="hero"'));
   assert.ok(read("app/domains/page.tsx").includes("<AgencyPageHero"));
   assert.ok(read("app/hosting/page.tsx").includes("<AgencyPageHero"));
   assert.ok(!style.includes("@import url("));
   assert.ok(layout.includes('from "next/font/google"'));
-  assert.ok(home.includes('from "./LegacyNavigation"'));
+  assert.ok(home.includes('from "../layout/LegacyNavigation"'));
   assert.ok(!shell.includes('from "./LegacyHomepage"'));
   assert.ok(nav.length < homepage.length);
-  const market = read("components/ProviderMarketplace.tsx");
+  const market = read("components/marketplace/ProviderMarketplace.tsx");
   assert.ok(market.includes("initialFeed"));
   assert.ok(read("app/domains/page.tsx").includes('getReferenceMarketplace("domain")'));
   assert.ok(read("app/hosting/page.tsx").includes('getReferenceMarketplace("hosting")'));
@@ -334,7 +348,7 @@ test("professional site essentials: canonical SEO, policies, errors and domain e
   const sitemap = read("app/sitemap.ts");
   const robots = read("app/robots.ts");
   const layout = read("app/layout.tsx");
-  const footer = read("components/SiteShell.tsx");
+  const footer = read("components/layout/SiteShell.tsx");
   const contact = read("app/contact/page.tsx");
   const domainEmail = "admin@pincodeit.com";
   assert.match(sitemap, /"domains", "hosting", "privacy", "terms"/);
@@ -357,14 +371,14 @@ test("professional site essentials: canonical SEO, policies, errors and domain e
   assert.match(read("app/terms/page.tsx"), /<LegalPage/);
   assert.match(read("app/not-found.tsx"), /404/);
   assert.match(read("app/error.tsx"), /reset/);
-  assert.match(read("components/ContactBuilder.tsx"), /mailto:admin@pincodeit.com/);
+  assert.match(read("components/contact/ContactBuilder.tsx"), /mailto:admin@pincodeit.com/);
   assert.equal(domainEmail, "admin@pincodeit.com");
 });
 
 test("public work samples and insight articles link to verifiable source", () => {
   const work = read("app/work/page.tsx");
   const insights = read("app/insights/page.tsx");
-  const cards = read("components/MarketingTopic.tsx");
+  const cards = read("components/marketing/MarketingTopic.tsx");
   const articles = read("lib/insight-articles.ts");
   const articlePage = read("app/insights/[slug]/page.tsx");
   assert.match(work, /omarreact\/shohoz-jomir-hishab/);
@@ -376,13 +390,13 @@ test("public work samples and insight articles link to verifiable source", () =>
   assert.match(articlePage, /generateStaticParams/);
   assert.match(articlePage, /generateMetadata/);
   assert.match(articles, /performance-is-part-of-design/);
-  assert.match(read("components/DomainSearch.tsx"), /www.namecheap.com\/domains\/domain-name-search/);
+  assert.match(read("components/domains/DomainSearch.tsx"), /www.namecheap.com\/domains\/domain-name-search/);
 });
 
 test("marketing pages include distinctive lightweight visual storytelling", () => {
-  const marketing = read("components/MarketingPage.tsx");
-  const visual = read("components/MarketingVisualStage.tsx");
-  const style = read("components/marketing-visual-stage.css");
+  const marketing = read("components/marketing/MarketingPage.tsx");
+  const visual = read("components/marketing/MarketingVisualStage.tsx");
+  const style = read("components/marketing/marketing-visual-stage.css");
   assert.match(marketing, /<MarketingVisualStage/);
   assert.match(visual, /type MarketingStory/);
   assert.match(visual, /noopener noreferrer/);
@@ -397,14 +411,14 @@ test("marketing pages include distinctive lightweight visual storytelling", () =
     const page = read("app/" + route + "/page.tsx");
     assert.ok(page.includes('story: "' + kind + '"'), "Missing visual story on " + route);
   }
-  assert.match(read("components/MarketingTopic.tsx"), /index % 6/);
+  assert.match(read("components/marketing/MarketingTopic.tsx"), /index % 6/);
 });
 
 test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {
-  const bridge = read("components/LegacyLinkBridge.tsx");
-  const nav = read("components/LegacyNavigation.tsx");
+  const bridge = read("components/home/LegacyLinkBridge.tsx");
+  const nav = read("components/layout/LegacyNavigation.tsx");
   const layout = read("app/layout.tsx");
-  const home = read("components/LegacyHomepage.tsx");
+  const home = read("components/home/LegacyHomepage.tsx");
   const homePage = read("app/page.tsx");
   const root = readdirSync(new URL("..", import.meta.url));
   assert.ok(homePage.includes("<LegacyLinkBridge />"));

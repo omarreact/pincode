@@ -1,5 +1,5 @@
 /* Hero slider: scoped to the PINCODE IT homepage, no external slider package. */
-#pincode-legacy-home .premium-hero{
+#pincode-legacy-home .hero.premium-hero{
   width:100%;
   position:relative;
   display:block;
@@ -28,7 +28,7 @@
   padding-bottom:100px;
   min-height:inherit;
 }
-#pincode-legacy-home .premium-hero .premium-hero-copy{
+#pincode-legacy-home .premium-hero .premium-hero-copy.hero-copy{
   text-align:left;max-width:none;min-width:0;
   margin:0;padding:0;
   position:relative;z-index:2;
@@ -143,8 +143,20 @@
   #pincode-legacy-home .premium-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.85fr);gap:25px}
   #pincode-legacy-home .premium-hero-art{height:clamp(320px,35vw,450px)}
 }
+/* At 150% Windows scaling, 1920x1080 becomes roughly 1280 CSS pixels;
+   the first fold must fit without clipping copy behind the slide controls. */
+@media(min-width:761px) and (max-height:700px){
+  #pincode-legacy-home .premium-hero-viewport{min-height:505px}
+  #pincode-legacy-home .premium-hero-grid{padding-top:30px;padding-bottom:78px}
+  #pincode-legacy-home .premium-hero h1{font-size:clamp(44px,4.9vw,63px);margin:17px 0 15px;line-height:1.02}
+  #pincode-legacy-home .premium-hero-description{font-size:14px;line-height:1.55}
+  #pincode-legacy-home .premium-hero-actions{margin-top:22px}
+  #pincode-legacy-home .premium-hero-subnote{margin-top:21px}
+  #pincode-legacy-home .premium-hero-art{height:clamp(300px,35vw,365px)}
+  #pincode-legacy-home .premium-hero-bottom{bottom:17px}
+}
 @media(max-width:760px){
-  #pincode-legacy-home .premium-hero{padding:0;min-height:0}
+  #pincode-legacy-home .hero.premium-hero{padding:0;min-height:0}
   #pincode-legacy-home .premium-hero-viewport{min-height:clamp(670px,91svh,780px)}
   #pincode-legacy-home .premium-hero-grid{
     grid-template-columns:1fr;grid-template-rows:auto minmax(175px,1fr);

@@ -21,7 +21,7 @@ npm run build
 ```
 
 ## Pages
-`/`, `/services`, `/solutions`, `/work`, `/about`, `/insights`, `/contact`, `/domains`, `/hosting`, `/privacy`, `/terms`.
+`/`, `/services`, `/solutions`, `/work`, `/about`, `/insights`, `/contact`, `/domains`, `/hosting`, `/privacy`, `/terms`, and four articles under `/insights/[slug]`.
 Legacy URLs like `/services.html` redirect to clean App Router routes.
 
 Contact uses a browser-only project brief that prepares a email message; **it does not send or persist records to the administration system**. Only publish genuine testimonials, client references and portfolio metrics.

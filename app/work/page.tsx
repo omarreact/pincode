@@ -1,4 +1,44 @@
 import type { Metadata } from "next";
-import {MarketingPage} from "@/components/MarketingPage";
-export const metadata:Metadata={title:"Proof belongs in the product.",description:"We publish client work only when its details and results can be verified. Our standard is transparent, useful case studies—not invented testimonials or metrics.",alternates:{canonical:"/work"}};
-export default function Page(){return <MarketingPage data={{eyebrow:"PINCODE IT / OUR WORK",title:"Proof belongs in the product.",intro:"We publish client work only when its details and results can be verified. Our standard is transparent, useful case studies—not invented testimonials or metrics.",cta:"How we evaluate real work.",cards:[{"id":"challenge","title":"Understand the challenge","body":"Describe the problem, users and business constraints with clarity.","tag":"Discovery"},{"id":"approach","title":"Explain the approach","body":"Make technology choices understandable and show the delivery process.","tag":"Method"},{"id":"delivery","title":"Show the deliverables","body":"Share real screenshots, artifacts or features when permission has been obtained.","tag":"Evidence"},{"id":"outcome","title":"Measure the outcome","body":"Use verifiable performance, usability or operational metrics.","tag":"Result"}]}}/>}
+import { MarketingPage } from "@/components/MarketingPage";
+
+export const metadata: Metadata = {
+  title: "Selected Engineering Work & Public Projects",
+  description: "Explore public PINCODE IT engineering projects and how we approach digital delivery. No fabricated client results or testimonials.",
+  alternates: { canonical: "/work" },
+};
+
+export default function WorkPage() {
+  return <MarketingPage data={{
+    eyebrow: "PINCODE IT / OUR WORK",
+    title: "Proof belongs in the product.",
+    intro: "Explore public engineering work, architecture and practical delivery approaches. Client references are shared only with permission.",
+    cta: "Selected public engineering projects.",
+    exploreDescription: "These are publicly accessible engineering repositories and examples, not claims of commissioned client projects or independently verified business outcomes.",
+    cards: [
+      {
+        id: "landbd",
+        title: "LandBD — Bangladesh land information",
+        body: "Public Next.js codebase for Bangladesh-focused land information, calculations and map-enabled workflows. Review the repository to see its architecture and current implementation status.",
+        tag: "PUBLIC PROJECT",
+        href: "https://github.com/omarreact/shohoz-jomir-hishab",
+        linkLabel: "Review source",
+      },
+      {
+        id: "pinai",
+        title: "PinAI — developer AI workspace",
+        body: "OpenAI-powered development workspace with authenticated chat, project tools and diagnostic workflows. Features and release readiness are documented in the public repository.",
+        tag: "PUBLIC PROJECT",
+        href: "https://github.com/omarreact/PinAI",
+        linkLabel: "Review source",
+      },
+      {
+        id: "pincode-site",
+        title: "PINCODE IT — the public website",
+        body: "The Next.js website you are using: shared React components, responsive marketing pages, domain tools and a publishing workflow backed by GitHub and Vercel.",
+        tag: "THIS WEBSITE",
+        href: "https://github.com/omarreact/pincode",
+        linkLabel: "Review source",
+      },
+    ],
+  }} />;
+}

@@ -140,7 +140,9 @@ export function DomainSearch() {
                 );
               })}
             </ul>
-            <a className="domain-contact-link" href="/contact">Need hosting, DNS or a website for your domain? Talk to PINCODE IT ↗</a>
+            <p className="domain-help">Final registration availability and checkout pricing must be confirmed with a registrar.</p>
+            <a className="domain-contact-link" href="https://www.namecheap.com/domains/domain-name-search/" target="_blank" rel="noopener noreferrer">Verify your selected domain at Namecheap ↗</a>
+            <a className="domain-contact-link" style={{ marginLeft: 20 }} href="/contact">Need hosting, DNS or a website? Talk to PINCODE IT ↗</a>
           </div>
         )}
         <p className="domain-disclaimer">

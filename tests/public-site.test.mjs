@@ -355,6 +355,24 @@ test("professional site essentials: canonical SEO, policies, errors and domain e
   assert.equal(domainEmail, "admin@pincodeit.com");
 });
 
+test("public work samples and insight articles link to verifiable source", () => {
+  const work = read("app/work/page.tsx");
+  const insights = read("app/insights/page.tsx");
+  const cards = read("components/MarketingTopic.tsx");
+  const articles = read("lib/insight-articles.ts");
+  const articlePage = read("app/insights/[slug]/page.tsx");
+  assert.match(work, /omarreact\/shohoz-jomir-hishab/);
+  assert.match(work, /omarreact\/PinAI/);
+  assert.match(work, /Public engineering projects/i);
+  assert.match(cards, /noopener noreferrer/);
+  assert.match(cards, /topic.href/);
+  assert.match(insights, /\/insights\/life-after-launch/);
+  assert.match(articlePage, /generateStaticParams/);
+  assert.match(articlePage, /generateMetadata/);
+  assert.match(articles, /performance-is-part-of-design/);
+  assert.match(read("components/DomainSearch.tsx"), /www.namecheap.com\/domains\/domain-name-search/);
+});
+
 test("SPA navigation, clean Next.js routes and historical HTML cleanup", () => {
   const bridge = read("components/LegacyLinkBridge.tsx");
   const nav = read("components/LegacyNavigation.tsx");
